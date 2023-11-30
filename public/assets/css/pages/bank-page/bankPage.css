@@ -1,0 +1,116 @@
+.bankPage {
+  display: grid;
+  -moz-column-gap: 1.5rem;
+       column-gap: 1.5rem;
+  row-gap: 1rem;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+.bankPage .bankCard {
+  border-radius: 15px;
+  background: var(--bg);
+  box-shadow: 0px 3px 17px -4px rgba(131, 131, 131, 0.5);
+  padding: 1rem;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.8rem;
+}
+.bankPage .bankCard .bankLogo {
+  max-width: 260px;
+  max-height: 60px;
+  -o-object-fit: contain;
+     object-fit: contain;
+  margin: 1rem auto 0;
+}
+.bankPage .bankCard .bankDetail {
+  width: 100%;
+  border-radius: 15px;
+  background: rgba(131, 131, 131, 0.1882352941);
+  padding: 1rem;
+}
+.bankPage .bankCard .bankDetail .detailItem {
+  flex-wrap: wrap;
+  font-size: 14px;
+  color: var(--textPrimary);
+}
+.bankPage .bankCard .bankDetail .detailItem .key {
+  min-width: 100px;
+}
+.bankPage .bankCard .bankDetail .detailItem .value {
+  flex: 1;
+}
+.bankPage .bankCard .balanceAmount {
+  padding-left: 1rem;
+  height: 34px;
+  font-size: 20px;
+  line-height: 20px;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  color: var(--secondaryColor);
+  font-weight: 500;
+  font-family: "Montserrat";
+}
+.bankPage .bankCard .balanceAmount svg {
+  height: 18px;
+  width: 18px;
+  fill: var(--secondaryColor);
+}
+.bankPage .bankCard .balanceBlock {
+  width: 100%;
+  flex: 1;
+  margin-top: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  position: relative;
+  gap: 0.6rem;
+}
+.bankPage .bankCard .balanceBlock label {
+  width: 100%;
+}
+.bankPage .bankCard .balanceBlock .actionLabel {
+  position: absolute;
+  right: 0;
+  top: 0;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  background-color: var(--secondaryColorAlpha);
+  color: var(--textSecondary);
+  padding: 0 8px;
+  border-radius: 12px;
+  min-width: 60px;
+  text-align: center;
+  border: none;
+}
+.bankPage .bankCard .balanceBlock .balanceUpdate {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 8px;
+}
+.bankPage .bankCard .balanceBlock .updateBalance {
+  min-width: 80px;
+}
+
+body.darkMode .bankPage .bankCard {
+  background: rgba(131, 131, 131, 0.1882352941);
+  box-shadow: none;
+}
+body.darkMode .bankPage .bankCard .bankDetail {
+  background: #373737;
+}
+body.darkMode .bankPage .bankCard .bankDetail .detailItem {
+  color: var(--textPrimary);
+}
+body.darkMode .bankPage .bankCard .balanceBlock .actionLabel {
+  background-color: var(--secondaryColorAlpha);
+}
+
+@media (max-width: 600px) {
+  .bankPage {
+    grid-template-columns: 1fr;
+  }
+}/*# sourceMappingURL=bankPage.css.map */

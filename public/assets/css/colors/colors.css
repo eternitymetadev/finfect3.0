@@ -1,0 +1,69 @@
+body {
+  --primaryColor: #13c7a8;
+  --primaryColorAlpha: #13c7a830;
+  --primaryText: #fff;
+  --secondaryColor: #186e93;
+  --secondaryColorAlpha: #186e9330;
+  --secondaryText: #fff;
+  --text: #333333;
+  --textPrimary: #333333;
+  --textSecondary: #555555;
+  --textDisabled: #cacaca;
+  --background: #fbfbfb;
+  --bg: #fbfbfb;
+  --bs-table-color: var(--textPrimary) !important;
+  --bs-table-bg: var(--bg) !important;
+}
+body.darkMode {
+  --textPrimary: #f7f7f7 !important;
+  --textSecondary: #cfcfcf !important;
+  --textDisabled: #777777 !important;
+  --background: #0d0d0d !important;
+  --bg: #0d0d0d !important;
+  --bg: #fbfbfb;
+}
+body.darkMode div.modal {
+  --bs-modal-bg: #333 !important;
+}
+body.darkMode .tableContainer table {
+  --bs-table-color: #f7f7f7 !important;
+  --bs-table-bg: #0d0d0d !important;
+}
+
+.warning {
+  color: #f5a524 !important;
+  background: rgba(245, 165, 36, 0.1254901961) !important;
+}
+
+.error {
+  color: #f31260 !important;
+  background: rgba(243, 18, 96, 0.1254901961) !important;
+}
+
+.success {
+  color: #17c964 !important;
+  background: rgba(23, 201, 100, 0.1254901961) !important;
+}
+
+.info {
+  color: #338ef7 !important;
+  background: rgba(51, 142, 247, 0.1254901961) !important;
+}
+
+.primary {
+  color: var(--primaryColor) !important;
+  background: var(--primaryColorAlpha) !important;
+}
+
+.secondary {
+  color: var(--secondaryColor) !important;
+  background: var(--secondaryColorAlpha) !important;
+}
+
+.positive {
+  color: #17c964;
+}
+
+.negative {
+  color: #f31260;
+}/*# sourceMappingURL=colors.css.map */

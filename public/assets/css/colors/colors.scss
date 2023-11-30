@@ -1,0 +1,65 @@
+body {
+    --primaryColor: #13c7a8;
+    --primaryColorAlpha: #13c7a830;
+    --primaryText: #fff;
+    --secondaryColor: #186e93;
+    --secondaryColorAlpha: #186e9330;
+    --secondaryText: #fff;
+    --text: #333333;
+
+    --textPrimary: #333333;
+    --textSecondary: #555555;
+    --textDisabled: #cacaca;
+    --background: #fbfbfb;
+    --bg: #fbfbfb;
+    --bs-table-color: var(--textPrimary) !important;
+    --bs-table-bg: var(--bg) !important;
+    &.darkMode {
+        --textPrimary: #f7f7f7 !important;
+        --textSecondary: #cfcfcf !important;
+        --textDisabled: #777777 !important;
+        --background: #0d0d0d !important;
+        --bg: #0d0d0d !important;
+        --bg: #fbfbfb;
+        & div.modal {
+            --bs-modal-bg: #333 !important;
+        }
+        & .tableContainer {
+            & table {
+                --bs-table-color: #f7f7f7 !important;
+                --bs-table-bg: #0d0d0d !important;
+            }
+        }
+    }
+}
+
+.warning {
+    color: #f5a524 !important;
+    background: #f5a52420 !important;
+}
+.error {
+    color: #f31260 !important;
+    background: #f3126020 !important;
+}
+.success {
+    color: #17c964 !important;
+    background: #17c96420 !important;
+}
+.info {
+    color: #338ef7 !important;
+    background: #338ef720 !important;
+}
+.primary {
+    color: var(--primaryColor) !important;
+    background: var(--primaryColorAlpha) !important;
+}
+.secondary {
+    color: var(--secondaryColor) !important;
+    background: var(--secondaryColorAlpha) !important;
+}
+.positive {
+    color: #17c964;
+}
+.negative {
+    color: #f31260;
+}

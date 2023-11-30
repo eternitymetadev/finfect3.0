@@ -1,0 +1,39 @@
+.uploadFormDialog {
+    padding: 2rem 1rem 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    & img {
+        max-width: min(80%, 160px);
+    }
+    & .subject {
+        color: var(--secondaryColor);
+        font-family: Montserrat;
+        font-size: 17px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 22px;
+    }
+    & .helperText {
+        padding-right: 8px;
+        color: #838383;
+        font-family: Montserrat;
+        font-size: 12px;
+        &.right {
+            align-self: flex-end;
+            text-align: right;
+        }
+    }
+    & .btn-primary {
+        margin-top: 0.5rem;
+        min-width: 120px !important;
+    }
+    & .link {
+        font-size: 12px;
+        text-decoration: none;
+        color: var(--secondaryColor);
+        margin: 6px auto 0;
+        cursor: pointer;
+    }
+}

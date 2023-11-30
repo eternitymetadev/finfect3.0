@@ -1,0 +1,82 @@
+.form-row {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  -moz-column-gap: 1rem;
+       column-gap: 1rem;
+}
+.form-row.dropDownSelection {
+  box-shadow: 0 0 12px -3px rgba(131, 131, 131, 0.3137254902) inset;
+  border-radius: 12px;
+  padding: 0.3rem 1rem 1rem;
+}
+.form-row.dropDownSelection label.label {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--secondaryColor);
+  margin-bottom: 0.5rem;
+}
+.form-row.dropDownSelection ul.main {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  -moz-column-gap: 1rem;
+       column-gap: 1rem;
+  row-gap: 0.3rem;
+  height: -moz-max-content;
+  height: max-content;
+  font-size: 14px;
+  line-height: 14px;
+  list-style: none;
+  padding: 0 0 0 14px;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+}
+.form-row.dropDownSelection ul.main li {
+  flex: 1 0 200px;
+  display: inline-flex;
+  gap: 6px;
+  align-items: flex-start;
+  align-self: stretch;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  border-radius: 12px;
+  padding: 6px 6px 6px 14px;
+  color: var(--secondaryColor);
+}
+.form-row.dropDownSelection ul.main li input {
+  accent-color: var(--secondaryColor);
+  cursor: pointer;
+}
+.form-row.dropDownSelection ul.main li label {
+  cursor: pointer;
+}
+.form-row.dropDownSelection ul.main li svg {
+  height: 14px;
+  width: 14px;
+  cursor: pointer;
+}
+.form-row.dropDownSelection ul.main li ul.subMain {
+  width: 100%;
+  padding-left: 14px;
+}
+.form-row.dropDownSelection ul.main li ul.subMain li {
+  width: 100%;
+  background: transparent;
+  padding: 2px;
+  color: var(--textSecondary);
+}
+.form-row .form-group {
+  flex: 1 1 300px;
+}
+.form-row .form-group.pfuGroup {
+  max-width: calc(50% - 0.5rem);
+}
+
+@media only screen and (max-width: 600px) {
+  .pfuGroup {
+    max-width: 100%;
+  }
+}/*# sourceMappingURL=usersPage.css.map */

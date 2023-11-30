@@ -1,0 +1,13 @@
+.pfuModal .innerSection {
+  padding: 1rem;
+  flex: 1 1 300px;
+}
+.pfuModal .innerSection .form-group {
+  width: 100%;
+}
+.pfuModal img {
+  max-width: 240px;
+  max-height: 160px;
+  -o-object-fit: contain;
+     object-fit: contain;
+}/*# sourceMappingURL=pfu-page.css.map */

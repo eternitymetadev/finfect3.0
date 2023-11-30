@@ -1,0 +1,79 @@
+.form-row {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    column-gap: 1rem;
+    &.dropDownSelection {
+        box-shadow: 0 0 12px -3px #83838350 inset;
+        border-radius: 12px;
+        padding: 0.3rem 1rem 1rem;
+        & label.label {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--secondaryColor);
+            margin-bottom: 0.5rem;
+        }
+        & ul.main {
+            width: 100%;
+            display: flex;
+            flex-wrap: wrap;
+            // grid-template-columns: repeat(auto-fit, 180px);
+            column-gap: 1rem;
+            row-gap: 0.3rem;
+            height: max-content;
+            font-size: 14px;
+            line-height: 14px;
+            list-style: none;
+            padding: 0 0 0 14px;
+            user-select: none;
+            & li {
+                flex: 1 0 200px;
+                display: inline-flex;
+                gap: 6px;
+                align-items: flex-start;
+                align-self: stretch;
+                justify-content: flex-start;
+                flex-wrap: wrap;
+                // background: var(--secondaryColorAlpha);
+                border-radius: 12px;
+                padding: 6px 6px 6px 14px;
+                color: var(--secondaryColor);
+                & input {
+                    accent-color: var(--secondaryColor);
+                    cursor: pointer;
+                }
+                & label {
+                    cursor: pointer;
+                }
+                & svg {
+                    height: 14px;
+                    width: 14px;
+                    cursor: pointer;
+                }
+                & ul.subMain {
+                    width: 100%;
+                    padding-left: 14px;
+                    & li {
+                        width: 100%;
+                        background: transparent;
+                        padding: 2px;
+                        color: var(--textSecondary);
+                    }
+                }
+            }
+        }
+    }
+    & .form-group {
+        flex: 1 1 300px;
+        &.pfuGroup {
+            max-width: calc(50% - 0.5rem);
+        }
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    .pfuGroup {
+        max-width: 100%;
+    }
+}
