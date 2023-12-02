@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Pfu;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use Illuminate\View\View;
@@ -33,7 +34,8 @@ class UserController extends Controller
     { 
         return view('admin.users.users', [
             'users' => User::latest('id')->get(),
-            'roles' => Role::pluck('name')->all()
+            'roles' => Role::pluck('name')->all(),
+            'pfus' => Pfu::select('id','pfu')->where('status', 1)->get(),
         ]); 
     }
 

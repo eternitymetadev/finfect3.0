@@ -6,6 +6,7 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\PfuController;
+use App\Http\Controllers\Auth\LoginController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,25 +29,26 @@ use App\Http\Controllers\PfuController;
 Auth::routes();
 
 Route::get('/', function () {
-    return view('auth.login'); 
+    return view('auth.login');
 });
 
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
+Route::post('/login', [LoginController::class, 'index']);
 
-Route::middleware(['auth.check'])->group(function (){
+Route::middleware(['auth.check'])->group(function () {
 
-    Route::post('/save-pfu',[PfuController::class, 'storePfu']);
-    Route::get('pfu-list',[PfuController::class, 'pfuList']);
+    Route::post('/save-pfu', [PfuController::class, 'storePfu']);
+    Route::get('pfu-list', [PfuController::class, 'pfuList']);
 
     Route::get('/my-bank-balance', function () {
         return view('my-bank-balance.my-bank-balance');
     });
-    
+
     Route::get('/my-ledger-sheet', function () {
         return view('ledger-sheet.my-ledger-sheet');
     });
-    
+
     Route::get('/emp-ledger-sheet', function () {
         return view('ledger-sheet.emp-ledger-sheet');
     });
@@ -56,9 +58,9 @@ Route::middleware(['auth.check'])->group(function (){
     Route::get('/transaction-sheet', function () {
         return view('transaction-sheet.transaction-sheet');
     });
-    
-    
-    
+
+
+
     Route::get('/user-list', function () {
         return view('admin.users.users');
     });
@@ -75,5 +77,3 @@ Route::middleware(['auth.check'])->group(function (){
         'products' => ProductController::class,
     ]);
 });
-
-

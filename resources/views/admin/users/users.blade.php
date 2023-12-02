@@ -58,7 +58,7 @@
                 <a class="actionLink" data-bs-toggle="modal" data-bs-target="#invoiceDuesUploadDialog">Import</a>
             </div>
         @elseif(true)
-        
+
         <div class="tableContainer">
             <div class="table-responsive">
                 <table id="qwerty" class="table table-sm">
@@ -77,13 +77,24 @@
                     </thead>
 
                     <tbody>
-                        @php 
+                        @php
                         $i = 1;
                         @endphp
                     @foreach ($users as $user)
+                    @php
+                    if (!empty($user->pfu)){
+                       $assign_pfu = json_decode($user->pfu);
+                        $pfu = App\Models\Pfu::select('id','pfu')->whereIn('id',$assign_pfu)->get();
+                        $pfuValues = $pfu->pluck('pfu')->toArray();
+                        $result = implode(',', $pfuValues);
+                    }else{
+                        $result = '-';
+                    }
+
+                    @endphp
                         <tr>
                             <td>{{$i}}</td>
-                            <td>{{$user->pfu}}</td>
+                            <td>{{$result}}</td>
                             <td>{{$user->name}}</td>
                             <td>{{$user->mobile}}</td>
                             <td>{{$user->email}}</td>
@@ -118,23 +129,23 @@
                             <td class="actionCol text-center">
                                 <div class="iconButtonsContainer d-flex align-items-center justify-content-center" style="gap: 0.5rem">
                                     <a class="iconButton" data-bs-toggle="modal" data-bs-target="#addUserDialog">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg>                                    
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg>
                                     </a>
                                 </div>
                             </td>
                         </tr>
-                        @php 
+                        @php
                         $i++;
                         @endphp
                     @endforeach
                     </tbody>
-                </table>     
+                </table>
             </div>
         </div>
 
         @endif
     </div>
-    
+
 </div>
 
 
@@ -185,12 +196,12 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-            
-            <div class="d-flex align-items-center flex-wrap"> 
+
+            <div class="d-flex align-items-center flex-wrap">
                 <div class="form-row">
-                    <div class="form-group col-md-6"> 
+                    <div class="form-group col-md-6">
                         <label for="mobileNumber" class="form-label">Role</label>
-                        <select class="form-select @error('roles') is-invalid @enderror" aria-label="Roles" id="roles" name="roles[]">
+                        <select class="form-control form-select @error('roles') is-invalid @enderror" aria-label="Roles" id="roles" name="roles[]">
                             <option value="">--select role--</option>
                                 @forelse ($roles as $role)
 
@@ -199,7 +210,7 @@
                                         {{ $role }}
                                         </option>
                                     @else
-                                        @if (Auth::user()->hasRole('Super Admin'))   
+                                        @if (Auth::user()->hasRole('Super Admin'))
                                             <option value="{{ $role }}" {{ in_array($role, old('roles') ?? []) ? 'selected' : '' }}>
                                             {{ $role }}
                                             </option>
@@ -223,7 +234,7 @@
                         <div class="invalid-feedback">Enter a valid pfu name </div>
                     </div>
                 </div>
-            
+
                 <div class="form-row">
                     <div class="form-group">
                         <label for="mobileNumber" class="form-label">Name</label>
@@ -251,21 +262,21 @@
 
                     <ul class="main animate__animated animate__fadeIn">
                         <?php
-                        $columnsAvailable = array(
-                            array("label" => "label 1"),
-                            array("label" => "label 2", "child" => array(array("label" => "L2 child 1"), array("label" => "L2 child 2"))),
-                            array("label" => "label 3"),
-                            array("label" => "label 4", "child" => array(array("label" => "L4 child 1"), array("label" => "L4 child 2"))),
-                            array("label" => "label 5"),
-                            array("label" => "label 6", "child" => array(array("label" => "L6 child 1"), array("label" => "L6 child 2"))),
-                            array("label" => "label 7"),
-                            array("label" => "label 8", "child" => array(array("label" => "L8 child 1"), array("label" => "L8 child 2"))),
-                            array("label" => "label 9"),
-                            array("label" => "label 10", "child" => array(array("label" => "L10 child 1"), array("label" => "L10 child 2"))),
-                            array("label" => "label 11"),
-                            array("label" => "label 12", "child" => array(array("label" => "L12 child 1"), array("label" => "L12 child 2"))),
-                        );
-                        ?>
+$columnsAvailable = array(
+    array("label" => "label 1"),
+    array("label" => "label 2", "child" => array(array("label" => "L2 child 1"), array("label" => "L2 child 2"))),
+    array("label" => "label 3"),
+    array("label" => "label 4", "child" => array(array("label" => "L4 child 1"), array("label" => "L4 child 2"))),
+    array("label" => "label 5"),
+    array("label" => "label 6", "child" => array(array("label" => "L6 child 1"), array("label" => "L6 child 2"))),
+    array("label" => "label 7"),
+    array("label" => "label 8", "child" => array(array("label" => "L8 child 1"), array("label" => "L8 child 2"))),
+    array("label" => "label 9"),
+    array("label" => "label 10", "child" => array(array("label" => "L10 child 1"), array("label" => "L10 child 2"))),
+    array("label" => "label 11"),
+    array("label" => "label 12", "child" => array(array("label" => "L12 child 1"), array("label" => "L12 child 2"))),
+);
+?>
 
                         @foreach($columnsAvailable as $columnsItem)
                             <li class="animate__animated animate__fadeIn">
@@ -314,10 +325,15 @@
 </div>
 <!-- end of Modal to add user -->
 
-
+<script>
+    var pfu = `<?php echo $pfus; ?>`;
+</script>
 <script>
 
 $(document).ready(function() {
+
+    var pfus = pfu;
+    const simplifiedData = JSON.parse(pfus);
 
     // initializatoin of dataTable
     const table = $('#qwerty').DataTable({
@@ -336,7 +352,7 @@ $(document).ready(function() {
     });
     table.draw();
 
-    
+
     // custom serach input for datatable
     $('.keywordSearch').on( 'keyup', function () {
         // const searchKeyword = this.value.replace(/[^a-zA-Z0-9 ]/g, ''); // written to remove special characters
@@ -356,18 +372,18 @@ $(document).ready(function() {
 
     $('#addUserForm').on('submit', function(e){
     e.preventDefault();
-    
+
     // $('#userSubmitButton span').html('...');
     // $('#userSubmitButton').attr('disabled', true);
     // $('#userSubmitButton').siblings('.discard').attr('disabled', true);
     // $('.btn-close').attr('disabled', true);
 
-    
+
     var formData = $(this).serialize();
 
     $.ajax({
-        url: `{{ route('users.store') }}`, 
-        type: 'POST', 
+        url: `{{ route('users.store') }}`,
+        type: 'POST',
         data: formData,
         success: function(response) {
             // Clear previous error messages
@@ -402,7 +418,7 @@ $(document).ready(function() {
                         location.reload();
                     });
                 }
-           
+
         },
         error: function(xhr, status, error) {
             // Handle error response
@@ -412,21 +428,13 @@ $(document).ready(function() {
     });
 });
 
-    let selectOptions = [
-                    {value: 'sd1', title: 'SD 1'},
-                    {value: 'sd2', title: 'SD 2'},
-                    {value: 'sd3', title: 'SD 3'},
-                    {value: 'sd4', title: 'SD 4'},
-                    {value: 'ma1', title: 'MA 1'},
-                    {value: 'ma2', title: 'MA 2'},
-                    {value: 'ma3', title: 'MA 3'},
-                ]
+    let selectOptions = simplifiedData;
 
     function initiatePfuSelect(forInput, maxItems, options) {
-        $(`${forInput}`).selectize({ 
-            valueField: 'value',
-            labelField: 'title',
-            searchField: 'title',
+        $(`${forInput}`).selectize({
+            valueField: 'id',
+            labelField: 'pfu',
+            searchField: 'pfu',
             maxItems: maxItems,
             options: options,
             create: false
