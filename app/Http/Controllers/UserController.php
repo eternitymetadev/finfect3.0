@@ -2,16 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
-use App\Models\Pfu;
-use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
-use Illuminate\View\View;
+use App\Models\Pfu;
+use App\Models\User;
 use Illuminate\Http\RedirectResponse;
-use Spatie\Permission\Models\Role;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Http\Request;
+use Illuminate\View\View;
+use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
@@ -21,9 +20,9 @@ class UserController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware('permission:create-user|edit-user|delete-user', ['only' => ['index','show']]);
-        $this->middleware('permission:create-user', ['only' => ['create','store']]);
-        $this->middleware('permission:edit-user', ['only' => ['edit','update']]);
+        $this->middleware('permission:create-user|edit-user|delete-user', ['only' => ['index', 'show']]);
+        $this->middleware('permission:create-user', ['only' => ['create', 'store']]);
+        $this->middleware('permission:edit-user', ['only' => ['edit', 'update']]);
         $this->middleware('permission:delete-user', ['only' => ['destroy']]);
     }
 
@@ -31,12 +30,12 @@ class UserController extends Controller
      * Display a listing of the resource.
      */
     public function index(): View
-    { 
+    {
         return view('admin.users.users', [
             'users' => User::latest('id')->get(),
             'roles' => Role::pluck('name')->all(),
-            'pfus' => Pfu::select('id','pfu')->where('status', 1)->get(),
-        ]); 
+            'pfus' => Pfu::select('id', 'pfu')->where('status', 1)->get(),
+        ]);
     }
 
     /**
@@ -45,7 +44,7 @@ class UserController extends Controller
     public function create(): View
     {
         return view('users.create', [
-            'roles' => Role::pluck('name')->all()
+            'roles' => Role::pluck('name')->all(),
         ]);
     }
 
@@ -53,44 +52,43 @@ class UserController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    { 
+    {
 
-        $rules= array(
+        $rules = array(
             'name' => 'required|string|max:250',
             'email' => 'required|string|email:rfc,dns|max:250|unique:users,email',
             'password' => 'required|string|min:8',
             'roles' => 'required',
-             'mobile' => 'required|unique:users,mobile',
-             'pfu' => 'required',
-       
-       );
+            'mobile' => 'required|unique:users,mobile',
+            'pfu' => 'required',
 
-        $validator = Validator::make($request->all(),$rules);
-   
-        if($validator->fails())
-        {
-            $errors                  = $validator->errors();
-            $response['success']     = false;
-            $response['validation']  = false;
-            $response['formErrors']  = true;
-            $response['errors']      = $errors;
+        );
+
+        $validator = Validator::make($request->all(), $rules);
+
+        if ($validator->fails()) {
+            $errors = $validator->errors();
+            $response['success'] = false;
+            $response['validation'] = false;
+            $response['formErrors'] = true;
+            $response['errors'] = $errors;
             return response()->json($response);
         }
 
         $input = $request->all();
         $input['password'] = Hash::make($request->password);
-        $input['pfu'] = json_encode($request->pfu);
+        $input['pfu'] = $request->pfu;
 
         $user = User::create($input);
-        if($user){
+        if ($user) {
             $user->assignRole($request->roles);
-            $response['success']     = true;
-        }else{
-            $response['success']     = false;
+            $response['success'] = true;
+        } else {
+            $response['success'] = false;
         }
 
         return response()->json($response);
-        
+
     }
 
     /**
@@ -99,48 +97,74 @@ class UserController extends Controller
     public function show(User $user): View
     {
         return view('users.show', [
-            'user' => $user
+            'user' => $user,
         ]);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(User $user): View
+    public function edit(Request $request)
     {
         // Check Only Super Admin can update his own Profile
-        if ($user->hasRole('Super Admin')){
-            if($user->id != auth()->user()->id){
-                abort(403, 'USER DOES NOT HAVE THE RIGHT PERMISSIONS');
-            }
-        }
+        // if ($user->hasRole('Super Admin')){
+        //     if($user->id != auth()->user()->id){
+        //         abort(403, 'USER DOES NOT HAVE THE RIGHT PERMISSIONS');
+        //     }
+        // }
+        $user = $request->user_id;
+        $getUser = User::find($user);
 
-        return view('users.edit', [
-            'user' => $user,
-            'roles' => Role::pluck('name')->all(),
-            'userRoles' => $user->roles->pluck('name')->all()
-        ]);
+        $response['user'] = $getUser;
+        $response['userRoles'] = $getUser->roles->pluck('name')->first();
+        return response()->json($response);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateUserRequest $request, User $user): RedirectResponse
+    public function update(Request $request, User $user)
     {
+    //  echo'<pre>'; print_r($request->all()); die;
+        $rules = array(
+            'name' => 'required|string|max:250',
+            'email' => 'required|string|email:rfc,dns|max:250|unique:users,email,'.$request->user_id,
+            'password' => 'required|string|min:8',
+            'roles' => 'required',
+            'mobile' => 'required|unique:users,mobile,'.$request->user_id, 
+            'pfu' => 'required',
+
+        );
+
+        $validator = Validator::make($request->all(), $rules);
+
+        if ($validator->fails()) {
+            $errors = $validator->errors();
+            $response['success'] = false;
+            $response['validation'] = false;
+            $response['formErrors'] = true;
+            $response['errors'] = $errors;
+            return response()->json($response);
+        }
+
         $input = $request->all();
- 
-        if(!empty($request->password)){
+
+        if (!empty($request->password)) {
             $input['password'] = Hash::make($request->password);
-        }else{
+        } else {
             $input = $request->except('password');
         }
-        
+
         $user->update($input);
+        if ($user) {
+            $user->syncRoles($request->roles);
+            $response['success'] = true;
+        } else {
+            $response['success'] = false;
+        }
 
-        $user->syncRoles($request->roles);
+        return response()->json($response);
 
-        return redirect()->back()
-                ->withSuccess('User is updated successfully.');
     }
 
     /**
@@ -149,14 +173,13 @@ class UserController extends Controller
     public function destroy(User $user): RedirectResponse
     {
         // About if user is Super Admin or User ID belongs to Auth User
-        if ($user->hasRole('Super Admin') || $user->id == auth()->user()->id)
-        {
+        if ($user->hasRole('Super Admin') || $user->id == auth()->user()->id) {
             abort(403, 'USER DOES NOT HAVE THE RIGHT PERMISSIONS');
         }
 
         $user->syncRoles([]);
         $user->delete();
         return redirect()->route('users.index')
-                ->withSuccess('User is deleted successfully.');
+            ->withSuccess('User is deleted successfully.');
     }
 }
