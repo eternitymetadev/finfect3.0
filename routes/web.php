@@ -34,7 +34,7 @@ Route::get('/', function () {
 
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
-Route::post('/login', [LoginController::class, 'index']);
+Route::post('/login', [LoginController::class, 'login']);
 
 Route::middleware(['auth.check'])->group(function () {
 

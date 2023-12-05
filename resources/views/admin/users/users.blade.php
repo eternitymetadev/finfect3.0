@@ -86,7 +86,6 @@
                             <th>Name</th>
                             <th>Mobile</th>
                             <th>Email</th>
-                            <th>password</th>
                             <th>Role</th>
                             <th class="text-center">Status</th>
                             <th class="actionCol text-center">Action</th>
@@ -115,7 +114,7 @@
                             <td>{{$user->name}}</td>
                             <td>{{$user->mobile}}</td>
                             <td>{{$user->email}}</td>
-                            <td><span class="swan-tooltip" data-tooltip="kkkkkkkk">***********</span></td>
+                           
                             <td>{{$user->getRoleNames()->first();}}</td>
                             <td class="text-center">
                                 @php
@@ -624,7 +623,7 @@ $(document).ready(function() {
                     // $('.btn-close').removeAttr('disabled');
                     Swal.fire({
                         title: 'Success!',
-                        text: 'User created successfully',
+                        text: 'User updated successfully',
                         icon: 'success',
                         confirmButtonText: 'OK'
                     }).then(() => {
