@@ -124,7 +124,7 @@
                             <td class="actionCol text-center">
                                 <div class="iconButtonsContainer d-flex align-items-center justify-content-center"
                                     style="gap: 0.5rem">
-                                    <a class="iconButton" data-bs-toggle="modal" data-bs-target="#addPfuDialog">
+                                    <a class="iconButton edit_pfu" data-id="{{$pfu->id}}" data-pfu="{{$pfu->pfu}}" data-domain="{{$pfu->domain}}" data-client-code="{{$pfu->client_code}}">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                             viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                             stroke-linecap="round" stroke-linejoin="round"
@@ -165,7 +165,8 @@
                 <div class="d-flex align-items-center flex-wrap">
                     <div class="d-flex justify-content-center align-items-center innerSection relative">
                         <div class="form-check form-switch" style="position: absolute; right: 1rem; top: 0.5rem">
-                            <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+                            <input class="form-check-input" name="is_active" type="checkbox" role="switch" checked
+                                id="flexSwitchCheckDefault">
                         </div>
                         <img src="{{asset('assets/images/vendor.svg')}}" alt="" onclick="resetFrom()"
                             class="animate__animated animate__fadeIn" />
@@ -173,7 +174,7 @@
                     <div class="d-flex flex-wrap innerSection">
                         <div class="form-group">
                             <label for="mobileNumber" class="form-label">PFU Name</label>
-                            <input name="pfuName" type="text" id="pfuName" class="form-control" placeholder="eg. SD-1"
+                            <input name="pfuName" type="text" id="pfuName" class="form-control" placeholder="eg. SD-1" oninput="this.value = this.value.toUpperCase()"
                                 required autofocus />
                             <svg xmlns="http://www.w3.org/2000/svg" class="inputIcon" width="24" height="24"
                                 viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
@@ -223,6 +224,92 @@
                 <button type="submit" class="btn btn-sm btn-primary animate__animated animate__fadeInUp"
                     id="pfuSubmitButton">
                     <span>Submit</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon right" width="24" height="24"
+                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" class="feather feather-chevron-right">
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+<!-- end of Modal to add pfu -->
+
+<!-- Modal to Update pfu -->
+<div class="modal fade" id="editPfuDialog" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false"
+    aria-labelledby="addPfuDialogLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+        <form id="updatePfuForm" method="post" class="modal-content">
+            @csrf
+            <div class="modal-header">
+                <h6 class="modal-title" id="exampleModalLabel">Update Pfu</h6>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body pfuModal" style="max-width: 700px">
+            <input name="edit_pfu_id" type="hidden" id="edit_pfu_id" />
+                <div class="d-flex align-items-center flex-wrap">
+                    <div class="d-flex justify-content-center align-items-center innerSection relative">
+                        <div class="form-check form-switch" style="position: absolute; right: 1rem; top: 0.5rem">
+                            <input class="form-check-input" name="is_active" type="checkbox" role="switch" checked
+                                id="flexSwitchCheckDefault">
+                        </div>
+                        <img src="{{asset('assets/images/vendor.svg')}}" alt="" onclick="resetFrom()"
+                            class="animate__animated animate__fadeIn" />
+                    </div>
+                    <div class="d-flex flex-wrap innerSection">
+                        <div class="form-group">
+                            <label for="mobileNumber" class="form-label">PFU Name</label>
+                            <input name="pfuName" type="text" id="editPfuName" class="form-control" placeholder="eg. SD-1" oninput="this.value = this.value.toUpperCase()"
+                                required autofocus />
+                            <svg xmlns="http://www.w3.org/2000/svg" class="inputIcon" width="24" height="24"
+                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round" class="feather feather-at-sign">
+                                <circle cx="12" cy="12" r="4"></circle>
+                                <path d="M16 8v5a3 3 0 0 0 6 0v-1a10 10 0 1 0-3.92 7.94"></path>
+                            </svg>
+                            <span class="error-message" style="color:red;" id="pfuName-error"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="mobileNumber" class="form-label">Domain</label>
+                            <input name="domain" type="text" class="form-control" id="edit_domain" placeholder="eg. frontiers.com"
+                                required />
+                            <svg xmlns="http://www.w3.org/2000/svg" class="inputIcon" width="24" height="24"
+                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round" class="feather feather-globe">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <line x1="2" y1="12" x2="22" y2="12"></line>
+                                <path
+                                    d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z">
+                                </path>
+                            </svg>
+                            <div class="invalid-feedback">Enter a valid domain name </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="mobileNumber" class="form-label">Client Code</label>
+                            <input name="clientCode" type="text" id="edit_client_code" class="form-control" placeholder="eg. FRC-CHD-00473" />
+                            <svg xmlns="http://www.w3.org/2000/svg" class="inputIcon" width="24" height="24"
+                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                <polyline points="14 2 14 8 20 8"></polyline>
+                                <line x1="16" y1="13" x2="8" y2="13"></line>
+                                <line x1="16" y1="17" x2="8" y2="17"></line>
+                                <polyline points="10 9 9 9 8 9"></polyline>
+                            </svg>
+                            <div class="invalid-feedback">Enter a valid client code</div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-sm btn-secondary animate__animated animate__fadeInUp discard"
+                    data-bs-dismiss="modal1">Discard & Close</button>
+                <button type="submit" class="btn btn-sm btn-primary animate__animated animate__fadeInUp"
+                    id="pfuSubmitButton">
+                    <span>Update</span>
                     <svg xmlns="http://www.w3.org/2000/svg" class="icon right" width="24" height="24"
                         viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                         stroke-linejoin="round" class="feather feather-chevron-right">
@@ -323,7 +410,65 @@ $(document).ready(function() {
                 $.each(errors, function(field, errorMessage) {
                     var errorElement = $('#' + field + '-error');
                     errorElement.text(
-                    errorMessage); // Show only the first error message
+                        errorMessage); // Show only the first error message
+                    errorElement.show(); // Show error message
+                });
+            }
+        });
+    });
+
+    $('.edit_pfu').click(function() {
+
+        var pfu_id = $(this).attr('data-id');
+        $('#editPfuDialog').modal('show');
+        var pfu = $(this).attr('data-pfu');
+        var domain = $(this).attr('data-domain');
+        var client_code = $(this).attr('data-client-code');
+        var pfu_status = $(this).attr('data-status');
+
+        $('#edit_pfu_id').val(pfu_id);
+        $('#editPfuName').val(pfu);
+        $('#edit_domain').val(domain);
+        $('#edit_client_code').val(client_code);
+
+
+
+    });
+
+    $('#updatePfuForm').submit(function(event) {
+        event.preventDefault();
+        var formData = $(this).serialize();
+
+        $.ajax({
+            url: '/update-pfu',
+            type: 'POST',
+            data: formData,
+            dataType: 'json',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function(response) {
+                // Handle success response
+                Swal.fire({
+                    title: 'Success!',
+                    text: 'Pfu updated successful',
+                    icon: 'success',
+                    confirmButtonText: 'OK'
+                }).then(() => {
+                    location.reload();
+                });
+                // Perform any other actions on successful form submission
+            },
+            error: function(xhr) {
+
+                // Handle validation errors
+                console.log(xhr.responseJSON)
+                var errors = xhr.responseJSON.errors;
+
+                $.each(errors, function(field, errorMessage) {
+                    var errorElement = $('#' + field + '-error');
+                    errorElement.text(
+                        errorMessage); // Show only the first error message
                     errorElement.show(); // Show error message
                 });
             }
