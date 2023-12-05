@@ -86,7 +86,6 @@
                             <th>Name</th>
                             <th>Mobile</th>
                             <th>Email</th>
-                            <th>password</th>
                             <th>Role</th>
                             <th class="text-center">Status</th>
                             <th class="actionCol text-center">Action</th>
@@ -115,7 +114,7 @@
                             <td>{{$user->name}}</td>
                             <td>{{$user->mobile}}</td>
                             <td>{{$user->email}}</td>
-                            <td><span class="swan-tooltip" data-tooltip="kkkkkkkk">***********</span></td>
+                           
                             <td>{{$user->getRoleNames()->first();}}</td>
                             <td class="text-center">
                                 @php
@@ -364,19 +363,19 @@
                             <label for="mobileNumber" class="form-label">Mobile</label>
                             <input name="mobile" class="form-control number" placeholder="XXXX XXX XXX"
                                 pattern="^[6789][0-9]{9}$" maxlength="10" id="edit_mobile" required />
-                            <span class="error" id="mobileError"></span>
+                            <span class="error" id="editMobileError"></span>
                         </div>
                         <div class="form-group">
                             <label for="mobileNumber" class="form-label">Email</label>
                             <input type="email" class="form-control @error('email') is-invalid @enderror"
                                 id="edit_email" name="email" value="{{ old('email') }}">
-                            <span class="error" id="emailError"></span>
+                            <span class="error" id="editEmailError"></span>
                         </div>
                         <div class="form-group">
                             <label for="mobileNumber" class="form-label">Password</label>
                             <input type="text" class="form-control @error('password') is-invalid @enderror"
                                 id="password" name="password">
-                            <span class="error" id="passwordError"></span>
+                            <span class="error" id="editPasswordError"></span>
                         </div>
                     </div>
 
@@ -604,13 +603,13 @@ $(document).ready(function() {
 
                 if (response.success === false && response.formErrors === true) {
                     if (response.errors.hasOwnProperty('email')) {
-                        $('#emailError').text(response.errors.email[0]);
+                        $('#editEmailError').text(response.errors.email[0]);
                     }
                     if (response.errors.hasOwnProperty('mobile')) {
-                        $('#mobileError').text(response.errors.mobile[0]);
+                        $('#editMobileError').text(response.errors.mobile[0]);
                     }
                     if (response.errors.hasOwnProperty('password')) {
-                        $('#passwordError').text(response.errors.password[0]);
+                        $('#editPasswordError').text(response.errors.password[0]);
                     }
                     // Handle other error fields similarly if needed
                 } else if (response.validation === false) {
@@ -624,7 +623,7 @@ $(document).ready(function() {
                     // $('.btn-close').removeAttr('disabled');
                     Swal.fire({
                         title: 'Success!',
-                        text: 'User created successfully',
+                        text: 'User updated successfully',
                         icon: 'success',
                         confirmButtonText: 'OK'
                     }).then(() => {

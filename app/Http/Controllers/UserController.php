@@ -125,11 +125,11 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-    //  echo'<pre>'; print_r($request->all()); die;
+    
         $rules = array(
             'name' => 'required|string|max:250',
             'email' => 'required|string|email:rfc,dns|max:250|unique:users,email,'.$request->user_id,
-            'password' => 'required|string|min:8',
+            'password' => 'nullable|string|min:8',
             'roles' => 'required',
             'mobile' => 'required|unique:users,mobile,'.$request->user_id, 
             'pfu' => 'required',
