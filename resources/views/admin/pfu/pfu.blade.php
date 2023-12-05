@@ -7,15 +7,13 @@
 <link href="{{asset('assets/css/pages/pfu-page/pfu-page.css')}}" rel="stylesheet" />
 <link href="{{asset('assets/css/pages/common/common.css')}}" rel="stylesheet" />
 
-<!-- for dataTable -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet" />
-<link href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css" rel="stylesheet" />
+<!-- css for dataTable -->
+<link href="{{asset('assets/css/dataTable/bootstrapDatatable.min.css')}}" rel="stylesheet" />
+<!-- js for dataTable -->
+<script src="{{asset('assets/js/dataTable/jqueryDatatable.min.js')}}"></script>
+<script src="{{asset('assets/js/dataTable/bootStrapDatatable.min.js')}}"></script>
+<script src="{{asset('assets/js/dataTable/fixedHeaderDatatable.min.js')}}"></script>
 
-<script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
-
-
-<!-- custom style -->
 
 <!-- topbar -->
 <div class="topbar sticky d-flex align-items-center justify-content-between animate__animated animate__fadeInDown">
@@ -53,10 +51,10 @@
                 <a class="actionLink" data-bs-toggle="modal" data-bs-target="#invoiceDuesUploadDialog">Import</a>
             </div>
         @elseif(true)
-        
+
         <div class="tableContainer">
             <div class="table-responsive">
-                <table id="qwerty" class="table table-sm">
+                <table id="pfuTable" class="table table-sm">
                     <thead>
                         <tr>
                             <th>Sr No.</th>
@@ -72,7 +70,7 @@
                         @php
                         $i = 1;
                         @endphp
-                    @foreach ($pfuLists as $pfu)
+                        @foreach ($pfuLists as $pfu)
                         <tr>
                             <td>{{$i}}</td>
                             <td>{{$pfu->pfu}}</td>
@@ -107,7 +105,7 @@
                             <td class="actionCol text-center">
                                 <div class="iconButtonsContainer d-flex align-items-center justify-content-center" style="gap: 0.5rem">
                                     <a class="iconButton" data-bs-toggle="modal" data-bs-target="#addPfuDialog">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg>                                    
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg>
                                     </a>
                                 </div>
                             </td>
@@ -115,15 +113,14 @@
                         @php
                         $i++;
                         @endphp
-                    @endforeach
+                        @endforeach
                     </tbody>
-                </table>     
+                </table>
             </div>
         </div>
-
         @endif
     </div>
-    
+
 </div>
 
 
@@ -150,7 +147,7 @@
                         <label for="mobileNumber" class="form-label">PFU Name</label>
                         <input name="pfuName" type="text" id="pfuName" class="form-control" placeholder="eg. SD-1" required autofocus />
                         <svg xmlns="http://www.w3.org/2000/svg" class="inputIcon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-at-sign"><circle cx="12" cy="12" r="4"></circle><path d="M16 8v5a3 3 0 0 0 6 0v-1a10 10 0 1 0-3.92 7.94"></path></svg>
-                        <span class="error-message" style="color:red;" id="pfuName-error"></span>
+                        <span class="invalid-feedback" id="pfuName-error"></span>
                     </div>
                     <div class="form-group">
                         <label for="mobileNumber" class="form-label">Domain</label>
@@ -165,7 +162,7 @@
                         <div class="invalid-feedback">Enter a valid client code</div>
                   </div>
                 </div>
-          
+
             </div>
         </div>
 
@@ -187,7 +184,7 @@
 $(document).ready(function() {
 
     // initializatoin of dataTable
-    const table = $('#qwerty').DataTable({
+    const table = $('#pfuTable').DataTable({
         dom: '<"dt-row"<rtb>><"footer-row"lp><"clear">',
         "language": {
             "lengthMenu": "Rows _MENU_"
@@ -203,7 +200,7 @@ $(document).ready(function() {
     });
     table.draw();
 
-    
+
     // custom serach input for datatable
     $('.keywordSearch').on( 'keyup', function () {
         // const searchKeyword = this.value.replace(/[^a-zA-Z0-9 ]/g, ''); // written to remove special characters
@@ -247,10 +244,17 @@ $(document).ready(function() {
             data: formData,
             dataType: 'json',
             headers: {
-        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-              },
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            beforeSend: function() {
+                $('#pfuSubmitButton span').html('...');
+                $('#pfuSubmitButton').attr('disabled', true);
+                $('#pfuSubmitButton').siblings('.discard').attr('disabled', true);
+                $('.btn-close').attr('disabled', true);
+            },
             success: function(response) {
                 // Handle success response
+                resetFrom();
                 Swal.fire({
                         title: 'Success!',
                         text: 'Pfu added successful',
@@ -259,20 +263,25 @@ $(document).ready(function() {
                     }).then(() => {
                         location.reload();
                     });
-                // Perform any other actions on successful form submission
             },
             error: function(xhr) {
-                
-                // Handle validation errors
                 console.log(xhr.responseJSON)
                 var errors = xhr.responseJSON.errors;
-                
+
                 $.each(errors, function(field, errorMessage) {
                     var errorElement = $('#' + field + '-error');
                     errorElement.text(errorMessage); // Show only the first error message
                     errorElement.show(); // Show error message
                 });
+            },
+            complete: function() {
+                $('#pfuSubmitButton span').html('Submit');
+                $('#pfuSubmitButton').removeAttr('disabled');
+                $('#pfuSubmitButton').siblings('.discard').removeAttr('disabled');
+                $('.btn-close').removeAttr('disabled');
             }
+
+
         });
     });
 

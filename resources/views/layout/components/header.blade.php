@@ -32,7 +32,7 @@
 <script src="https://kit.fontawesome.com/8bbc4470ee.js" crossorigin="anonymous"></script>
 
 <!-- jquery-3.7.1 -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-<!-- <script src="{{asset('assets/js/jquery/jquery-3-7-1.min.js')}}"></script> -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="{{asset('assets/js/jquery/jquery-3-7-1.min.js')}}"></script>
+
+<!-- swal js -->
+<script src="{{asset('assets/js/swal/swal.min.js')}}"></script>

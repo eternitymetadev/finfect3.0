@@ -252,6 +252,10 @@ input.form-check-input {
     }
 }
 
+.invalid-feedback {
+    color: var(--textError);
+}
+
 // button css
 
 .btn {

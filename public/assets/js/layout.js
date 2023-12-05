@@ -90,7 +90,6 @@ $(document).ready(function () {
         }
     });
 
-
     // indian currency formatter
     function formatIndianCurrency(amount) {
         var number = parseFloat(amount);
@@ -104,4 +103,9 @@ $(document).ready(function () {
         }
         return amount;
     }
+
+    // remove error on input change
+    $(document).on("keyup", "input", (event) => {
+        $(event.target).siblings(".invalid-feedback").hide();
+    });
 });
