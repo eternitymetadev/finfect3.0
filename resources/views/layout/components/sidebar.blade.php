@@ -6,7 +6,7 @@
     <nav>
         <ul class="mainMenu" id="mainMenu">
             <li class="menu">
-                <a class="nav-link" href="{{url('home')}}">
+                <a class="nav-link" href="{{url('/dashboard')}}">
                     <svg xmlns="http://www.w3.org/2000/svg" class="menuIcon" width="24px" height="24px" viewBox="0 0 24 24"  stroke-linecap="round" stroke-linejoin="round" id="home">
                         <path d="M8.98,20.77v-3.06c0-0.78,0.67-1.41,1.5-1.41h3.03c0.4,0,0.78,0.15,1.06,0.41c0.28,0.27,0.44,0.62,0.44,1v3.06
                             c0,0.32,0.13,0.64,0.37,0.87S15.95,22,16.3,22h2.06c0.96,0,1.89-0.36,2.57-1c0.68-0.64,1.07-1.51,1.07-2.42V9.87

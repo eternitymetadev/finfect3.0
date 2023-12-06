@@ -118,7 +118,7 @@
                             <td>{{$user->getRoleNames()->first();}}</td>
                             <td class="text-center">
                                 @php
-                                switch($user->status == '1') {
+                                switch($user->status) {
                                 case 1:
                                 $status = 'success';
                                 $statusText = 'Active';
