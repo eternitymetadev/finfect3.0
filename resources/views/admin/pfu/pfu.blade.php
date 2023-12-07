@@ -392,31 +392,42 @@ $(document).ready(function() {
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
+            beforeSend: function() {
+                $('#pfuSubmitButton span').html('...');
+                $('#pfuSubmitButton').attr('disabled', true);
+                $('#pfuSubmitButton').siblings('.discard').attr('disabled', true);
+                $('.btn-close').attr('disabled', true);
+            },
             success: function(response) {
                 // Handle success response
+                resetFrom();
                 Swal.fire({
-                    title: 'Success!',
-                    text: 'Pfu added successful',
-                    icon: 'success',
-                    confirmButtonText: 'OK'
-                }).then(() => {
-                    location.reload();
-                });
-                // Perform any other actions on successful form submission
+                        title: 'Success!',
+                        text: 'Pfu added successful',
+                        icon: 'success',
+                        confirmButtonText: 'OK'
+                    }).then(() => {
+                        location.reload();
+                    });
             },
             error: function(xhr) {
-
-                // Handle validation errors
                 console.log(xhr.responseJSON)
                 var errors = xhr.responseJSON.errors;
 
                 $.each(errors, function(field, errorMessage) {
                     var errorElement = $('#' + field + '-error');
-                    errorElement.text(
-                        errorMessage); // Show only the first error message
+                    errorElement.text(errorMessage); // Show only the first error message
                     errorElement.show(); // Show error message
                 });
+            },
+            complete: function() {
+                $('#pfuSubmitButton span').html('Submit');
+                $('#pfuSubmitButton').removeAttr('disabled');
+                $('#pfuSubmitButton').siblings('.discard').removeAttr('disabled');
+                $('.btn-close').removeAttr('disabled');
             }
+
+
         });
     });
 
