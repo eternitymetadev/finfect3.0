@@ -70,6 +70,6 @@ class LoginController extends Controller
         // Authentication passed
         Auth::login($user);
 
-        return redirect()->intended('/home'); // Redirect to the intended URL after login
+        return redirect()->intended('/dashboard'); // Redirect to the intended URL after login
     }
 }

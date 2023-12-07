@@ -433,7 +433,6 @@ $(document).ready(function() {
         $('#editPfuName').val(pfu);
         $('#edit_domain').val(domain);
         $('#edit_client_code').val(client_code);
-        alert(pfu_status);
         if (pfu_status == 1) {
             $('.pfu_status').prop('checked', true);
         }else{

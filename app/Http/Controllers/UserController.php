@@ -12,6 +12,8 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\View\View;
 use Spatie\Permission\Models\Role;
 use Auth;
+use App\Exports\UsersExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class UserController extends Controller
 {
@@ -184,4 +186,10 @@ class UserController extends Controller
         return redirect()->route('users.index')
             ->withSuccess('User is deleted successfully.');
     }
+
+    public function exportUsers() 
+    {
+        return Excel::download(new UsersExport, 'users.xlsx');
+    }
+
 }
