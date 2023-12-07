@@ -3,11 +3,11 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 
 class LoginController extends Controller
@@ -21,7 +21,7 @@ class LoginController extends Controller
     | redirecting them to your home screen. The controller uses a trait
     | to conveniently provide its functionality to your applications.
     |
-    */
+     */
 
     use AuthenticatesUsers;
 
@@ -70,6 +70,6 @@ class LoginController extends Controller
         // Authentication passed
         Auth::login($user);
 
-        return redirect()->intended('/home'); // Redirect to the intended URL after login
+        return redirect()->intended('/dashboard'); // Redirect to the intended URL after login
     }
 }

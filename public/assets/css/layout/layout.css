@@ -887,7 +887,7 @@ body aside nav .stickyBottom .profileLink div {
 }
 body aside nav .stickyBottom .profileLink div .name {
   color: #fff;
-  font-family: Montserrat;
+  font-family: "Montserrat", sans-serif;
   font-size: 18px;
   font-weight: 500;
   line-height: 22px;
@@ -899,7 +899,7 @@ body aside nav .stickyBottom .profileLink div .name {
 }
 body aside nav .stickyBottom .profileLink div .designation {
   color: #fff;
-  font-family: Montserrat;
+  font-family: "Montserrat", sans-serif;
   font-size: 13px;
   font-style: normal;
   font-weight: 400;
@@ -911,7 +911,7 @@ body aside nav .stickyBottom .profileLink div .designation span {
   background: var(--primary, #186e93);
   color: #fff;
   text-align: center;
-  font-family: Montserrat;
+  font-family: "Montserrat", sans-serif;
   font-size: 12px;
   line-height: 12px;
   padding: 2px 10px;
@@ -1011,7 +1011,7 @@ body main .header .titleSlug {
 }
 body main .header .titleSlug h1 {
   color: var(--secondaryColor);
-  font-family: Montserrat;
+  font-family: "Montserrat", sans-serif;
   font-size: 20px;
   font-weight: 500;
   line-height: 14px;
