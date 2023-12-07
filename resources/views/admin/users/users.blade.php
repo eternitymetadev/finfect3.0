@@ -112,7 +112,7 @@
                             <td>{{$i}}</td>
                             <td>{{$result}}</td>
                             <td>{{$user->name}}</td>
-                            <td>{{$user->mobile}}</td>
+                            <td>{{$user->mobile ?? '-'}}</td>
                             <td>{{$user->email}}</td>
                            
                             <td>{{$user->getRoleNames()->first();}}</td>
