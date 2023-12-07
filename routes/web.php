@@ -35,7 +35,9 @@ Route::post('/login', [LoginController::class, 'login']);
 Route::middleware(['auth.check'])->group(function () {
 
     Route::post('/save-pfu', [PfuController::class, 'storePfu']);
+    Route::post('/update-pfu', [PfuController::class, 'updatePfu']);
     Route::get('pfu-list', [PfuController::class, 'pfuList']);
+    Route::get('/export-users',[UserController::class,'exportUsers']);
 
     Route::get('/my-bank-balance', function () {
         return view('my-bank-balance.my-bank-balance');
