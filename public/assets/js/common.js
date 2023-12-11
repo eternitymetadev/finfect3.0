@@ -16,3 +16,12 @@ $(".currency").each(function () {
     if (+$(this).text() >= 0) $(this).addClass("positive");
     $(this).text(formatIndianCurrency($(this).text()));
 });
+
+// for password input
+$(document).on("click", ".inputIcon", function () {
+    if ($(this).siblings("input").attr("type") == "password")
+        $(this).siblings("input").attr("type", "text");
+    else $(this).siblings("input").attr("type", "password");
+
+    $(this).parent().children(".right").toggle();
+});

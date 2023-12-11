@@ -429,6 +429,25 @@ body {
             }
         }
     }
+
+    & #loading {
+        height: 100%;
+        width: 100vw;
+        position: fixed;
+        top: 0;
+        left: 0;
+        background-color: #00000040;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        & .spinner {
+            animation: rotate 2200ms infinite linear;
+            color: var(--secondaryColor);
+        }
+        &.working {
+            display: flex;
+        }
+    }
 }
 
 @media (max-width: 600px) {
@@ -469,5 +488,14 @@ body {
                 }
             }
         }
+    }
+}
+
+@keyframes rotate {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
     }
 }

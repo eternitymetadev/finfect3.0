@@ -1,5 +1,13 @@
 let drawerState = localStorage.getItem("drawerState");
-let activeRoute = window.location;
+
+var urlSlashCount = window.location.href.split("/").length - 1;
+
+if (urlSlashCount > 3)
+    var activeRoute = window.location.href.replace(
+        /^(([^\/]*\/){3}[^\/]*)\/.*/,
+        "$1"
+    );
+else var activeRoute = window.location.href;
 
 $(document).ready(function () {
     // to change theme onload
@@ -132,4 +140,63 @@ $(document).ready(function () {
     //         );
     //     });
     // })();
+
+    // ---for drag and drop file input---
+    $(".dragAndDrop").change(function () {
+        const file = this.files[0];
+        const nameTag = $(this).siblings("span.fileName");
+        const rendorImage = $(this).siblings("img.rendoredImage");
+        const openImage = $(this).parent().siblings("a.openImage");
+        const uploadButton = $(this).parent().siblings(".uploadButton");
+        if (file) {
+            let reader = new FileReader();
+            reader.onload = function (event) {
+                nameTag.html(`${file.name}`);
+                rendorImage.attr("src", event.target.result);
+                openImage.attr("href", event.target.result);
+                uploadButton.removeClass("disabled");
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+
+    $(".clearFileInput").on("click", function (event) {
+        const input = $(this)
+            .siblings("label.dropArea")
+            .children("input.dragAndDrop");
+        const nameTag = $(this)
+            .siblings("label.dropArea")
+            .children("span.fileName");
+        const rendorImage = $(this)
+            .siblings("label.dropArea")
+            .children("img.rendoredImage");
+        const uploadButton = $(this).siblings(".uploadButton");
+
+        input.val("");
+        nameTag.html("");
+        rendorImage.attr("src", "/assets/images/dragAndDrop.png");
+        uploadButton.addClass("disabled");
+    });
+
+    $(".uploadButton").on("click", function (event) {
+        const processBlock = $(this).siblings(".process");
+        processBlock.addClass("processing");
+        const input = $(this)
+            .siblings("label.dropArea")
+            .children("input.dragAndDrop");
+        setTimeout(() => {
+            processBlock.removeClass("processing");
+            $(this).addClass("disabled");
+            input.val("");
+        }, 1500);
+    });
+    // ---for drag and drop file input end---
+
+    // for global loading
+    function startWorking() {
+        $("#loading").addClass("working");
+    }
+    function stopWorking() {
+        $("#loading").removeClass("working");
+    }
 });

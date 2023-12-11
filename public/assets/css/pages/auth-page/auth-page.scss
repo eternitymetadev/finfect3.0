@@ -1,0 +1,164 @@
+// @import "../assets/css/globalStyle";
+
+main {
+    padding: 1rem;
+    background: var(--secondaryColor);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    & .link {
+        color: var(--primaryColor);
+        cursor: poRoboto;
+    }
+    &.login {
+        min-width: calc(100vw - 2rem);
+        min-height: 100vh;
+    }
+    & .content {
+        flex: 1;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
+        gap: 1rem;
+        & .illustration {
+            flex: 1 1 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            & img {
+                max-height: 400px;
+                width: 80%;
+                object-fit: contain;
+            }
+        }
+        & .loginBlock {
+            flex: 1 1 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            & .loginFormBlock {
+                border-radius: 18px;
+                padding: 1.5rem 1rem 0.25rem;
+                background-color: var(--primaryText);
+                min-height: min(70vh, 460px);
+                width: 90vw;
+                max-width: 350px;
+                display: flex;
+                flex-flow: column;
+                align-items: center;
+                justify-content: space-between;
+                gap: 1.5rem;
+                & .textContainer {
+                    flex: 1;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: flex-end;
+                    align-items: stretch;
+                    & .title {
+                        margin: 0;
+                    }
+                    & .description {
+                        font-size: 12px;
+                    }
+                }
+                & .logo {
+                    max-height: 60px;
+                    width: 80%;
+                    margin: 0 auto;
+                    object-fit: contain;
+                }
+                & form {
+                    flex: 1;
+                    display: flex;
+                    flex-flow: column;
+                    align-items: center;
+                    justify-content: flex-end;
+                    & .otpInputs {
+                        display: flex;
+                        flex-wrap: wrap;
+                        align-items: flex-start;
+                        justify-content: space-between;
+                        -moz-column-gap: 12px;
+                        column-gap: 12px;
+                        row-gap: 4px;
+                        min-height: 70px;
+                        align-content: flex-start;
+                        & .otpInput {
+                            flex: 1 0 30px;
+                            display: block;
+                            width: 100%;
+                            padding: 0.375rem 0.75rem;
+                            font-size: 1rem;
+                            font-weight: 400;
+                            line-height: 1.5;
+                            color: var(--bs-body-color);
+                            -webkit-appearance: none;
+                            -moz-appearance: none;
+                            appearance: none;
+                            background-color: var(--bs-body-bg);
+                            background-clip: padding-box;
+                            border: var(--bs-border-width) solid
+                                var(--bs-border-color);
+                            border-radius: var(--bs-border-radius);
+                            transition: border-color 0.15s ease-in-out,
+                                box-shadow 0.15s ease-in-out;
+                            border-radius: 12px !important;
+                            font-size: 15px !important;
+                            line-height: 24px !important;
+                            color: #333333 !important;
+                            &:focus {
+                                border-color: #186e93 !important;
+                                box-shadow: 0 0 0 3px
+                                    rgba(24, 110, 147, 0.1882352941) !important;
+                                color: #186e93 !important;
+                                outline: 0;
+                            }
+                        }
+                    }
+                }
+                & .helpLineBottom {
+                    margin: 1rem auto;
+                    font-size: 12px;
+                    line-height: 12px;
+                    color: #838383;
+
+                    & a {
+                        color: var(--primaryColor);
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    body {
+        min-height: auto;
+    }
+    main {
+        &.login {
+            min-height: 94vh;
+            align-items: stretch;
+        }
+        & .content {
+            flex-flow: column;
+            align-items: stretch;
+            & .illustration {
+                flex: 0;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                & img {
+                    max-height: 160px;
+                    width: 80%;
+                    object-fit: contain;
+                }
+            }
+            & .loginBlock {
+                flex: 1;
+            }
+        }
+    }
+}
