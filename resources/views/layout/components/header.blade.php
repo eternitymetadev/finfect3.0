@@ -34,6 +34,8 @@
 
 <!-- jquery-3.7.1 -->
 <script src="{{asset('assets/js/jquery/jquery-3-7-1.min.js')}}"></script>
+<script src="{{asset('assets/js/jquery/jquery-validate-1-19-5.min.js')}}"></script>
+<script src="{{asset('assets/js/jquery/additional-validate-jq.min.js')}}"></script>
 
 <!-- swal js -->
 <script src="{{asset('assets/js/swal/swal.min.js')}}"></script>
