@@ -30,15 +30,15 @@
   padding: 1rem;
 }
 .bankPage .bankCard .bankDetail .detailItem {
-  flex-wrap: wrap;
   font-size: 14px;
   color: var(--textPrimary);
 }
 .bankPage .bankCard .bankDetail .detailItem .key {
-  min-width: 100px;
+  min-width: 90px;
 }
 .bankPage .bankCard .bankDetail .detailItem .value {
   flex: 1;
+  white-space: nowrap;
 }
 .bankPage .bankCard .balanceAmount {
   padding-left: 1rem;
@@ -107,6 +107,21 @@ body.darkMode .bankPage .bankCard .bankDetail .detailItem {
 }
 body.darkMode .bankPage .bankCard .balanceBlock .actionLabel {
   background-color: var(--secondaryColorAlpha);
+}
+
+.bankModal .bankLogo {
+  max-width: 200px;
+  max-height: 70px;
+  -o-object-fit: contain;
+     object-fit: contain;
+  margin-bottom: 2rem;
+}
+.bankModal .innerSection {
+  -moz-column-gap: 1rem;
+       column-gap: 1rem;
+}
+.bankModal .innerSection .form-group {
+  flex: 1 1 260px;
 }
 
 @media (max-width: 600px) {

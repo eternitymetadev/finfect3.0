@@ -6,6 +6,7 @@ body {
   --secondaryColorAlpha: #186e9330;
   --secondaryText: #fff;
   --text: #333333;
+  --textError: #f31260;
   --textPrimary: #333333;
   --textSecondary: #555555;
   --textDisabled: #cacaca;
@@ -26,7 +27,7 @@ body.darkMode div.modal {
   --bs-modal-bg: #333 !important;
 }
 body.darkMode .tableContainer table {
-  --bs-table-color: #f7f7f7 !important;
+  --bs-table-color: #cfcfcf !important;
   --bs-table-bg: #0d0d0d !important;
 }
 
@@ -325,6 +326,10 @@ input.form-check-input {
 input.form-check-input:checked {
   background-color: #17c964 !important;
   border-color: #17c964 !important;
+}
+
+.invalid-feedback {
+  color: var(--textError);
 }
 
 .btn {
@@ -882,7 +887,7 @@ body aside nav .stickyBottom .profileLink div {
 }
 body aside nav .stickyBottom .profileLink div .name {
   color: #fff;
-  font-family: Montserrat;
+  font-family: "Montserrat", sans-serif;
   font-size: 18px;
   font-weight: 500;
   line-height: 22px;
@@ -894,7 +899,7 @@ body aside nav .stickyBottom .profileLink div .name {
 }
 body aside nav .stickyBottom .profileLink div .designation {
   color: #fff;
-  font-family: Montserrat;
+  font-family: "Montserrat", sans-serif;
   font-size: 13px;
   font-style: normal;
   font-weight: 400;
@@ -906,7 +911,7 @@ body aside nav .stickyBottom .profileLink div .designation span {
   background: var(--primary, #186e93);
   color: #fff;
   text-align: center;
-  font-family: Montserrat;
+  font-family: "Montserrat", sans-serif;
   font-size: 12px;
   line-height: 12px;
   padding: 2px 10px;
@@ -1006,7 +1011,7 @@ body main .header .titleSlug {
 }
 body main .header .titleSlug h1 {
   color: var(--secondaryColor);
-  font-family: Montserrat;
+  font-family: "Montserrat", sans-serif;
   font-size: 20px;
   font-weight: 500;
   line-height: 14px;

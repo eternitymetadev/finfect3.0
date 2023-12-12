@@ -97,7 +97,11 @@
                             <td>{{$pfu->client_code}}</td>
                             <td class="text-center">
                                 @php
-                                switch($i) {
+                                switch($pfu->status) {
+                                case 0:
+                                $status = 'error';
+                                $statusText = 'Inactive';
+                                break;
                                 case 1:
                                 $status = 'success';
                                 $statusText = 'Active';
@@ -105,10 +109,6 @@
                                 case 2:
                                 $status = 'warning';
                                 $statusText = 'Pending';
-                                break;
-                                case 3:
-                                $status = 'error';
-                                $statusText = 'Inactive';
                                 break;
                                 default:
                                 $status = 'success';
@@ -124,7 +124,8 @@
                             <td class="actionCol text-center">
                                 <div class="iconButtonsContainer d-flex align-items-center justify-content-center"
                                     style="gap: 0.5rem">
-                                    <a class="iconButton edit_pfu" data-id="{{$pfu->id}}" data-pfu="{{$pfu->pfu}}" data-domain="{{$pfu->domain}}" data-client-code="{{$pfu->client_code}}">
+                                    <a class="iconButton edit_pfu" data-id="{{$pfu->id}}" data-pfu="{{$pfu->pfu}}"
+                                        data-domain="{{$pfu->domain}}" data-client-code="{{$pfu->client_code}}" data-status="{{$pfu->status}}">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                             viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                             stroke-linecap="round" stroke-linejoin="round"
@@ -174,8 +175,8 @@
                     <div class="d-flex flex-wrap innerSection">
                         <div class="form-group">
                             <label for="mobileNumber" class="form-label">PFU Name</label>
-                            <input name="pfuName" type="text" id="pfuName" class="form-control" placeholder="eg. SD-1" oninput="this.value = this.value.toUpperCase()"
-                                required autofocus />
+                            <input name="pfuName" type="text" id="pfuName" class="form-control" placeholder="eg. SD-1"
+                                oninput="this.value = this.value.toUpperCase()" required autofocus />
                             <svg xmlns="http://www.w3.org/2000/svg" class="inputIcon" width="24" height="24"
                                 viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                 stroke-linecap="round" stroke-linejoin="round" class="feather feather-at-sign">
@@ -247,11 +248,11 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body pfuModal" style="max-width: 700px">
-            <input name="edit_pfu_id" type="hidden" id="edit_pfu_id" />
+                <input name="edit_pfu_id" type="hidden" id="edit_pfu_id" />
                 <div class="d-flex align-items-center flex-wrap">
                     <div class="d-flex justify-content-center align-items-center innerSection relative">
                         <div class="form-check form-switch" style="position: absolute; right: 1rem; top: 0.5rem">
-                            <input class="form-check-input" name="is_active" type="checkbox" role="switch" checked
+                            <input class="form-check-input pfu_status" name="is_active" type="checkbox" role="switch"
                                 id="flexSwitchCheckDefault">
                         </div>
                         <img src="{{asset('assets/images/vendor.svg')}}" alt="" onclick="resetFrom()"
@@ -260,20 +261,21 @@
                     <div class="d-flex flex-wrap innerSection">
                         <div class="form-group">
                             <label for="mobileNumber" class="form-label">PFU Name</label>
-                            <input name="pfuName" type="text" id="editPfuName" class="form-control" placeholder="eg. SD-1" oninput="this.value = this.value.toUpperCase()"
-                                required autofocus />
+                            <input name="pfuName" type="text" id="editPfuName" class="form-control"
+                                placeholder="eg. SD-1" oninput="this.value = this.value.toUpperCase()" required
+                                autofocus />
                             <svg xmlns="http://www.w3.org/2000/svg" class="inputIcon" width="24" height="24"
                                 viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                 stroke-linecap="round" stroke-linejoin="round" class="feather feather-at-sign">
                                 <circle cx="12" cy="12" r="4"></circle>
                                 <path d="M16 8v5a3 3 0 0 0 6 0v-1a10 10 0 1 0-3.92 7.94"></path>
                             </svg>
-                            <span class="error-message" style="color:red;" id="pfuName-error"></span>
+                            <span class="error-message" style="color:red;" id="pfuName-editError"></span>
                         </div>
                         <div class="form-group">
                             <label for="mobileNumber" class="form-label">Domain</label>
-                            <input name="domain" type="text" class="form-control" id="edit_domain" placeholder="eg. frontiers.com"
-                                required />
+                            <input name="domain" type="text" class="form-control" id="edit_domain"
+                                placeholder="eg. frontiers.com" required />
                             <svg xmlns="http://www.w3.org/2000/svg" class="inputIcon" width="24" height="24"
                                 viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                 stroke-linecap="round" stroke-linejoin="round" class="feather feather-globe">
@@ -287,7 +289,8 @@
                         </div>
                         <div class="form-group">
                             <label for="mobileNumber" class="form-label">Client Code</label>
-                            <input name="clientCode" type="text" id="edit_client_code" class="form-control" placeholder="eg. FRC-CHD-00473" />
+                            <input name="clientCode" type="text" id="edit_client_code" class="form-control"
+                                placeholder="eg. FRC-CHD-00473" />
                             <svg xmlns="http://www.w3.org/2000/svg" class="inputIcon" width="24" height="24"
                                 viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                 stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text">
@@ -389,31 +392,42 @@ $(document).ready(function() {
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
+            beforeSend: function() {
+                $('#pfuSubmitButton span').html('...');
+                $('#pfuSubmitButton').attr('disabled', true);
+                $('#pfuSubmitButton').siblings('.discard').attr('disabled', true);
+                $('.btn-close').attr('disabled', true);
+            },
             success: function(response) {
                 // Handle success response
+                resetFrom();
                 Swal.fire({
-                    title: 'Success!',
-                    text: 'Pfu added successful',
-                    icon: 'success',
-                    confirmButtonText: 'OK'
-                }).then(() => {
-                    location.reload();
-                });
-                // Perform any other actions on successful form submission
+                        title: 'Success!',
+                        text: 'Pfu added successful',
+                        icon: 'success',
+                        confirmButtonText: 'OK'
+                    }).then(() => {
+                        location.reload();
+                    });
             },
             error: function(xhr) {
-
-                // Handle validation errors
                 console.log(xhr.responseJSON)
                 var errors = xhr.responseJSON.errors;
 
                 $.each(errors, function(field, errorMessage) {
                     var errorElement = $('#' + field + '-error');
-                    errorElement.text(
-                        errorMessage); // Show only the first error message
+                    errorElement.text(errorMessage); // Show only the first error message
                     errorElement.show(); // Show error message
                 });
+            },
+            complete: function() {
+                $('#pfuSubmitButton span').html('Submit');
+                $('#pfuSubmitButton').removeAttr('disabled');
+                $('#pfuSubmitButton').siblings('.discard').removeAttr('disabled');
+                $('.btn-close').removeAttr('disabled');
             }
+
+
         });
     });
 
@@ -430,6 +444,12 @@ $(document).ready(function() {
         $('#editPfuName').val(pfu);
         $('#edit_domain').val(domain);
         $('#edit_client_code').val(client_code);
+        if (pfu_status == 1) {
+            $('.pfu_status').prop('checked', true);
+        }else{
+            $('.pfu_status').prop('checked', false);
+        }
+
 
 
 
@@ -466,7 +486,7 @@ $(document).ready(function() {
                 var errors = xhr.responseJSON.errors;
 
                 $.each(errors, function(field, errorMessage) {
-                    var errorElement = $('#' + field + '-error');
+                    var errorElement = $('#' + field + '-editError');
                     errorElement.text(
                         errorMessage); // Show only the first error message
                     errorElement.show(); // Show error message

@@ -3,7 +3,7 @@
 
 <head>
     @include('layout.components.header')
-    
+
 </head>
 
 <body>
@@ -20,7 +20,7 @@
         <section class="section contentContainer">
             @yield('content')
         </section>
- 
+
         <!-- footer -->
         @include('layout.components.footer')
 
@@ -29,6 +29,7 @@
 
     <!-- loader -->
     <div id="loading"></div>
+
     <!-- Vendor JS Files -->
 
     <!-- Template Main JS File -->

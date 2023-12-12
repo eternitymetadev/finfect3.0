@@ -6,6 +6,7 @@ body {
   --secondaryColorAlpha: #186e9330;
   --secondaryText: #fff;
   --text: #333333;
+  --textError: #f31260;
   --textPrimary: #333333;
   --textSecondary: #555555;
   --textDisabled: #cacaca;
@@ -26,7 +27,7 @@ body.darkMode div.modal {
   --bs-modal-bg: #333 !important;
 }
 body.darkMode .tableContainer table {
-  --bs-table-color: #f7f7f7 !important;
+  --bs-table-color: #cfcfcf !important;
   --bs-table-bg: #0d0d0d !important;
 }
 
@@ -325,6 +326,10 @@ input.form-check-input {
 input.form-check-input:checked {
   background-color: #17c964 !important;
   border-color: #17c964 !important;
+}
+
+.invalid-feedback {
+  color: var(--textError);
 }
 
 .btn {

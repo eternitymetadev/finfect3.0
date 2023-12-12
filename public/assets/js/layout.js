@@ -1,5 +1,5 @@
 let drawerState = localStorage.getItem("drawerState");
-let activeRoute = window.location.pathname;
+let activeRoute = window.location;
 
 $(document).ready(function () {
     // to change theme onload
@@ -90,7 +90,6 @@ $(document).ready(function () {
         }
     });
 
-
     // indian currency formatter
     function formatIndianCurrency(amount) {
         var number = parseFloat(amount);
@@ -104,4 +103,33 @@ $(document).ready(function () {
         }
         return amount;
     }
+
+    // remove error on input change
+    $(document).on("keyup", "input", (event) => {
+        $(event.target).siblings(".invalid-feedback").hide();
+    });
+
+    // Example starter JavaScript for disabling form submissions if there are invalid fields
+    // (() => {
+    //     "use strict";
+
+    //     // Fetch all the forms we want to apply custom Bootstrap validation styles to
+    //     const forms = document.querySelectorAll(".needs-validation");
+
+    //     // Loop over them and prevent submission
+    //     Array.from(forms).forEach((form) => {
+    //         form.addEventListener(
+    //             "submit",
+    //             (event) => {
+    //                 if (!form.checkValidity()) {
+    //                     event.preventDefault();
+    //                     event.stopPropagation();
+    //                 }
+
+    //                 form.classList.add("was-validated");
+    //             },
+    //             false
+    //         );
+    //     });
+    // })();
 });

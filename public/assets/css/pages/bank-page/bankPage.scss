@@ -25,14 +25,15 @@
             background: #83838330;
             padding: 1rem;
             & .detailItem {
-                flex-wrap: wrap;
+                // flex-wrap: wrap;
                 font-size: 14px;
                 color: var(--textPrimary);
                 & .key {
-                    min-width: 100px;
+                    min-width: 90px;
                 }
                 & .value {
                     flex: 1;
+                    white-space: nowrap;
                 }
             }
         }
@@ -111,6 +112,21 @@ body.darkMode {
                     background-color: var(--secondaryColorAlpha);
                 }
             }
+        }
+    }
+}
+
+.bankModal {
+    & .bankLogo {
+        max-width: 200px;
+        max-height: 70px;
+        object-fit: contain;
+        margin-bottom: 2rem;
+    }
+    .innerSection {
+        column-gap: 1rem;
+        & .form-group {
+            flex: 1 1 260px;
         }
     }
 }

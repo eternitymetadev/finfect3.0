@@ -11,6 +11,9 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\View\View;
 use Spatie\Permission\Models\Role;
+use Auth;
+use App\Exports\UsersExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class UserController extends Controller
 {
@@ -31,9 +34,10 @@ class UserController extends Controller
      */
     public function index(): View
     {
+        $role = Auth::user()->roles->first()->name;
         return view('admin.users.users', [
             'users' => User::latest('id')->get(),
-            'roles' => Role::pluck('name')->all(),
+            'roles' => Role::where('name', '!=', $role)->pluck('name')->all(),
             'pfus' => Pfu::select('id', 'pfu')->where('status', 1)->get(),
         ]);
     }
@@ -182,4 +186,10 @@ class UserController extends Controller
         return redirect()->route('users.index')
             ->withSuccess('User is deleted successfully.');
     }
+
+    public function exportUsers() 
+    {
+        return Excel::download(new UsersExport, 'users.xlsx');
+    }
+
 }
