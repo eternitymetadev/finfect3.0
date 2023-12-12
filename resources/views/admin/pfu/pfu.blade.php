@@ -4,16 +4,10 @@
 @section('slug') > PFU List @endsection
 @section('content')
 
-<link href="{{asset('assets/css/pages/pfu-page/pfu-page.css')}}" rel="stylesheet" />
 <link href="{{asset('assets/css/pages/common/common.css')}}" rel="stylesheet" />
 
-<!-- css for dataTable -->
-<link href="{{asset('assets/css/dataTable/bootstrapDatatable.min.css')}}" rel="stylesheet" />
-<!-- js for dataTable -->
-<script src="{{asset('assets/js/dataTable/jqueryDatatable.min.js')}}"></script>
-<script src="{{asset('assets/js/dataTable/bootStrapDatatable.min.js')}}"></script>
-<script src="{{asset('assets/js/dataTable/fixedHeaderDatatable.min.js')}}"></script>
-
+<!-- for dataTable -->
+@include('cdns.dataTable')
 
 <!-- topbar -->
 <div class="topbar sticky d-flex align-items-center justify-content-between animate__animated animate__fadeInDown">

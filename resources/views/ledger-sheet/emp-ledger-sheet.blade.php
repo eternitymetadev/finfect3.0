@@ -8,15 +8,8 @@
 <link href="{{asset('assets/css/pages/common/common.css')}}" rel="stylesheet" />
 
 <!-- for dataTable -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet" />
-<link href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css" rel="stylesheet" />
+@include('cdns.dataTable')
 
-<script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
-
-<!-- <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/2.0.1/css/buttons.dataTables.min.css"/>
-<script type="text/javascript" src="https://cdn.datatables.net/buttons/2.0.1/js/dataTables.buttons.min.js"></script>
-<script type="text/javascript" src="https://cdn.datatables.net/buttons/2.0.1/js/buttons.html5.min.js"></script> -->
 
 <!-- topbar -->
 <div class="topbar sticky d-flex align-items-center justify-content-between animate__animated animate__fadeInDown">
@@ -29,7 +22,7 @@
     <div class="actionButtonsBlock flex-grow-1 d-flex align-items-center justify-content-end">
         <button class="btn btn-sm btn-primary animate__animated animate__fadeIn" data-bs-toggle="modal" data-bs-target="#myLedgerSheetUploadDialog">
             Import
-            <svg xmlns="http://www.w3.org/2000/svg" class="icon right" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-upload-cloud"><polyline points="16 16 12 12 8 16"></polyline><line x1="12" y1="12" x2="12" y2="21"></line><path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3"></path><polyline points="16 16 12 12 8 16"></polyline></svg>        
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon right" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-upload-cloud"><polyline points="16 16 12 12 8 16"></polyline><line x1="12" y1="12" x2="12" y2="21"></line><path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3"></path><polyline points="16 16 12 12 8 16"></polyline></svg>
         </button>
 
          <button id="exportEmpLedger" class="btn btn-sm btn-primary animate__animated animate__fadeIn">
@@ -51,7 +44,7 @@
                 <a class="actionLink" data-bs-toggle="modal" data-bs-target="#myLedgerSheetUploadDialog">Import</a>
             </div>
         @elseif(true)
-        
+
         <div class="tableContainer">
             <div class="table-responsive">
                 <table id="qwerty" class="table table-sm">
@@ -110,19 +103,19 @@
                             <td class="text-right"><span class="currency">{{3234 * $i}}</span></td>
                             <!-- <td class="actionCol text-center">
                                 <a class="iconButton mx-auto">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-download"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>                                
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-download"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
                                 </a>
                             </td> -->
                         </tr>
                     @endfor
                     </tbody>
-                </table>     
+                </table>
             </div>
         </div>
 
         @endif
     </div>
-    
+
 </div>
 
 <!-- Modal to upload my ledger sheet -->
@@ -171,7 +164,7 @@ $(document).ready(function() {
     });
     table.draw();
 
-    
+
     // Add a click event listener to the button
     $('#exportEmpLedger').on('click', function() {
         var data = table.buttons.exportData({

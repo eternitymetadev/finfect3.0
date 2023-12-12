@@ -278,6 +278,7 @@ table.dataTable {
     max-width: none !important;
     border-collapse: separate !important;
     border-spacing: 0;
+    min-height: 300px;
 }
 table.dataTable td,
 table.dataTable th {

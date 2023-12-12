@@ -393,7 +393,7 @@ body {
             margin-top: 88px;
             padding-inline: 1rem;
             flex: 1;
-            max-height: calc(100vh - 88px);
+            // max-height: calc(100vh - 88px);
             & .topbar {
                 flex-wrap: wrap;
                 row-gap: 0.8rem;

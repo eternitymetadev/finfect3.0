@@ -3,11 +3,9 @@
 @section('page-heading')Create Vendor @endsection
 @section('slug') > Create Vendor @endsection
 @section('content')
-<!-- selectize css -->
-<link href="{{asset('assets/css/select2/selectize.css')}}" rel="stylesheet" />
 
-<!-- selectize js -->
-<script src="{{asset('assets/js/select2/selectize.min.js')}}"></script>
+<!-- for selectize -->
+@include('cdns.selectize')
 
 
 <div class="contentSection pt-3 mt-3">

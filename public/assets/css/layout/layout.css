@@ -517,6 +517,7 @@ main {
   position: absolute;
   top: 1rem;
   right: 1rem;
+  z-index: 9;
 }
 .modal .modal-content .modal-body {
   margin: auto;
@@ -1211,7 +1212,6 @@ body main .contentContainer {
   margin-top: 88px;
   padding-inline: 1rem;
   flex: 1;
-  max-height: calc(100vh - 88px);
 }
 body main .contentContainer .topbar {
   flex-wrap: wrap;

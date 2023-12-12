@@ -72,6 +72,10 @@ Route::middleware(['auth.check'])->group(function () {
         return view('authentication.login');
     });
 
+    Route::get('/vendor-dashboard', function () {
+        return view('vendor.vendor-dashboard');
+    });
+
     Route::resources([
         'roles' => RoleController::class,
         'users' => UserController::class,

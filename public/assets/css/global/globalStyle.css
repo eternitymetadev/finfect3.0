@@ -517,6 +517,7 @@ main {
   position: absolute;
   top: 1rem;
   right: 1rem;
+  z-index: 9;
 }
 .modal .modal-content .modal-body {
   margin: auto;
