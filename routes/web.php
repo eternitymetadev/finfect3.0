@@ -66,6 +66,13 @@ Route::middleware(['auth.check'])->group(function () {
     Route::get('/vendors', function () {
         return view('admin.vendor.vendors');
     });
+    Route::get('/vendors/create', function () {
+        return view('admin.vendor.add-vendor');
+    });
+
+    Route::get('/authentication', function () {
+        return view('authentication.login');
+    });
 
     Route::resources([
         'roles' => RoleController::class,

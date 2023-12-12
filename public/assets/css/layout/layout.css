@@ -272,23 +272,30 @@ input[type=file].form-control::file-selector-button {
   opacity: 1;
 }
 .form-group:has(.form-control:focus) .form-label {
-  font-weight: 500;
+  color: var(--secondaryColor);
 }
 .form-group svg.inputIcon {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
   left: 12px;
+  right: auto;
   height: 14px;
   width: 14px;
   color: var(--secondaryColor);
   opacity: 0.7;
 }
+.form-group svg.inputIcon.right {
+  left: auto;
+  right: 12px;
+  cursor: pointer;
+}
 
+label,
 .form-label,
 .invalid-feedback,
 .valid-feedback {
-  color: var(--secondaryColor);
+  color: #838383;
   font-size: 12px !important;
   line-height: 12px !important;
   margin: 0 !important;
@@ -318,6 +325,33 @@ input[type=file].form-control::file-selector-button {
   border-color: var(--bg) !important;
   box-shadow: 0 0 0 2px var(--secondaryColorAlpha) !important;
   color: var(--secondaryColor) !important;
+}
+
+form .form-group:has(.form-control.errorLabel) label.form-label {
+  color: var(--textError) !important;
+}
+form .form-group:has(.form-control.errorLabel) .invalid-feedback {
+  display: inline;
+}
+form .form-group label.errorLabel {
+  color: var(--textError) !important;
+}
+form .form-group:has(.form-control:required) label.form-label {
+  position: relative;
+}
+form .form-group:has(.form-control:required) label.form-label:after {
+  position: absolute;
+  content: "*";
+  color: #ff6b6b;
+  margin-left: 6px;
+}
+form .form-control.errorLabel {
+  border-color: rgba(243, 18, 96, 0.4392156863) !important;
+  box-shadow: 0 0 0 2px rgba(243, 18, 96, 0.1882352941) !important;
+  color: var(--textError) !important;
+}
+form label.errorLabel {
+  color: var(--textError) !important;
 }
 
 input.form-check-input {
@@ -659,6 +693,143 @@ main {
   text-align: right;
 }
 
+.formRow {
+  display: flex;
+  align-items: center;
+  -moz-column-gap: 1.5rem;
+  column-gap: 1.5rem;
+  flex-wrap: wrap;
+  padding: 1.5rem 0 0.5rem;
+  margin-bottom: 2.5rem;
+}
+.formRow:has(.groupHead) {
+  padding: 1.5rem 1rem 0.5rem;
+  box-shadow: inset 0 0 6px -4px #186e93;
+  border-radius: 12px;
+  position: relative;
+}
+.formRow .groupHead {
+  font-size: 14px;
+  font-weight: 500;
+  font-family: "Montserrat";
+  background: var(--bg);
+  padding: 2px 5px;
+  color: var(--secondaryColor);
+  position: absolute;
+  top: -11px;
+}
+
+.fileInputGroup {
+  position: relative;
+  margin-bottom: 1.5rem;
+}
+.fileInputGroup .form-label {
+  margin-bottom: 1rem;
+}
+.fileInputGroup .clearFileInput {
+  position: absolute;
+  left: 4px;
+  top: 14px;
+  height: 2rem;
+  width: 2rem;
+  padding: 8px;
+  cursor: pointer;
+  z-index: 3;
+  display: none;
+}
+.fileInputGroup:has(input.dragAndDrop:valid) .clearFileInput {
+  display: block;
+}
+.fileInputGroup:has(input.dragAndDrop:valid) .uploadButton {
+  display: block;
+}
+.fileInputGroup label.dropArea:has(.dragAndDrop) {
+  min-height: 140px;
+  min-width: 150px;
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+.fileInputGroup label.dropArea:has(.dragAndDrop) .dragAndDrop {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 2;
+  cursor: pointer;
+}
+.fileInputGroup label.dropArea:has(.dragAndDrop) .dragAndDrop:hover ~ img.rendoredImage {
+  outline-offset: 5px;
+}
+.fileInputGroup label.dropArea:has(.dragAndDrop) .dragAndDrop ~ img.rendoredImage {
+  height: 130px;
+  width: 130px;
+  -o-object-fit: contain;
+     object-fit: contain;
+  border-radius: 12px;
+  border-radius: 12px;
+  outline: 1px dashed;
+  outline-offset: 2px;
+}
+.fileInputGroup label.dropArea:has(.dragAndDrop) .dragAndDrop ~ .fileName {
+  width: 130px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-wrap: nowrap;
+  background: rgba(255, 255, 255, 0.431372549);
+  margin: auto;
+  padding: 0 6px;
+  position: absolute;
+  bottom: 4px;
+  font-size: 10px;
+  -webkit-backdrop-filter: blur(1px);
+          backdrop-filter: blur(1px);
+  font-weight: 500;
+  text-align: center;
+}
+.fileInputGroup .process {
+  position: absolute;
+  inset: 0;
+  height: 100%;
+  width: 100%;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 9;
+  background: radial-gradient(#c7c7c7 0%, transparent 69%);
+  cursor: progress;
+}
+.fileInputGroup .process.processing {
+  display: flex;
+}
+.fileInputGroup .process .spinner {
+  animation: rotate 2200ms infinite linear;
+  color: var(--secondaryColor);
+}
+.fileInputGroup .uploadButton {
+  font-size: 9px;
+  position: absolute;
+  top: 21px;
+  right: 12px;
+  padding: 2px 8px;
+  display: none;
+  z-index: 3;
+}
+.fileInputGroup .uploadButton.disabled {
+  pointer-events: none;
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
 :root {
   scroll-behavior: smooth;
 }
@@ -1076,6 +1247,24 @@ body main footer .copyright {
   font-size: 10px;
   color: #838383;
 }
+body #loading {
+  height: 100%;
+  width: 100vw;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.2509803922);
+  display: none;
+  align-items: center;
+  justify-content: center;
+}
+body #loading .spinner {
+  animation: rotate 2200ms infinite linear;
+  color: var(--secondaryColor);
+}
+body #loading.working {
+  display: flex;
+}
 
 @media (max-width: 600px) {
   body {
@@ -1111,5 +1300,13 @@ body main footer .copyright {
   }
   body main .contentContainer .topbar .actionButtonsBlock {
     flex: 1;
+  }
+}
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
   }
 }/*# sourceMappingURL=layout.css.map */
