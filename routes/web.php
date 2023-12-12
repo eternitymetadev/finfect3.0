@@ -6,6 +6,7 @@ use App\Http\Controllers\PfuController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\BankBalanceController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -39,9 +40,9 @@ Route::middleware(['auth.check'])->group(function () {
     Route::get('pfu-list', [PfuController::class, 'pfuList']);
     Route::get('/export-users',[UserController::class,'exportUsers']);
 
-    Route::get('/my-bank-balance', function () {
-        return view('my-bank-balance.my-bank-balance');
-    });
+    Route::get('/my-bank-balance',[BankBalanceController::class,'myBankBalance']); 
+    Route::post('/add-bank', [BankBalanceController::class, 'storeBank']);
+
 
     Route::get('/my-ledger-sheet', function () {
         return view('ledger-sheet.my-ledger-sheet');
@@ -65,6 +66,13 @@ Route::middleware(['auth.check'])->group(function () {
     });
     Route::get('/vendors', function () {
         return view('admin.vendor.vendors');
+    });
+    Route::get('/vendors/create', function () {
+        return view('admin.vendor.add-vendor');
+    });
+
+    Route::get('/authentication', function () {
+        return view('authentication.login');
     });
 
     Route::resources([

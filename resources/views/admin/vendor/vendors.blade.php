@@ -4,7 +4,7 @@
 @section('slug') > Vendors @endsection
 @section('content')
 
-<link href="{{asset('assets/css/pages/bank-page/bankPage.css')}}" rel="stylesheet" />
+<link href="{{asset('assets/css/pages/vendor/add-vendor.css')}}" rel="stylesheet" />
 <link href="{{asset('assets/css/pages/common/common.css')}}" rel="stylesheet" />
 
 <!-- for dataTable -->
@@ -24,7 +24,11 @@
         </div>
     </div>
     <div class="actionButtonsBlock flex-grow-1 d-flex align-items-center justify-content-end">
-         <button id="exportVendors" class="btn btn-sm btn-primary animate__animated animate__fadeIn">
+         <a href="/vendors/create" class="btn btn-sm btn-primary animate__animated animate__fadeIn">
+            Create
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon right" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+        </a>
+        <button id="exportVendors" class="btn btn-sm btn-primary animate__animated animate__fadeIn">
             Export
             <svg xmlns="http://www.w3.org/2000/svg" class="icon right" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-download-cloud"><polyline points="8 17 12 21 16 17"></polyline><line x1="12" y1="12" x2="12" y2="21"></line><path d="M20.88 18.09A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.29"></path></svg>
         </button>
@@ -43,7 +47,7 @@
                 <a class="actionLink">Add New</a>
             </div>
         @elseif(true)
-        
+
         <div class="tableContainer">
             <div class="table-responsive">
                 <table id="paymentTable" class="table table-sm">
@@ -104,13 +108,13 @@
                         </tr>
                     @endfor
                     </tbody>
-                </table>     
+                </table>
             </div>
         </div>
 
         @endif
     </div>
-    
+
 </div>
 
 
@@ -135,7 +139,7 @@ $(document).ready(function() {
     });
     table.draw();
 
-    
+
     // Add a click event listener to the button
     $('#exportVendors').on('click', function() {
         var data = table.buttons.exportData({

@@ -6,17 +6,20 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Pfu extends Model
+class BankDetail extends Model
 {
     use HasFactory;
-
     use SoftDeletes;
+
     protected $fillable = [
-        'pfu',
-        'domain',
-        'client_code',
+        'bank_acc_no',
+        'acc_holder_name',
+        'ifsc_code',
+        'branch_name',
+        'bank_name',
+        'pfu_id',
+        'bank_logo',
         'status',
-        'created_at',
-        'updated_at'
     ];
+    
 }
