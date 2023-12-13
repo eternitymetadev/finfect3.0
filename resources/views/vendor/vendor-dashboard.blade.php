@@ -7,6 +7,7 @@
 
 
 <link href="{{asset('assets/css/pages/common/common.css')}}" rel="stylesheet" />
+<link href="{{asset('assets/css/pages/vendor/vendor-dashboard.css')}}" rel="stylesheet" />
 
 <!-- for dataTable -->
 @include('cdns.dataTable')
@@ -14,27 +15,81 @@
 <!-- for selectize -->
 @include('cdns.selectize')
 
+<!-- top widgets -->
+<div class="widgetsBlock">
+    <div class="widget listing">
+        <h3>Top 5 Categories</h3>
 
+        @for ($i = 0; $i < 5; $i++)
+        <div class="listItem">
+            <div class="basic">
+                <span>Information Technology</span>
+                <span>Total vendors: 232</span>
+            </div>
+            <div class="spend">
+                <span>YTD Spend</span>
+                <span>₹ 9.20 Cr.</span>
+            </div>
+        </div>
+        @endfor
+    </div>
+    <div class="widget listing">
+        <h3>Last 5 Sensitive Payments</h3>
 
+        @for ($i = 0; $i < 5; $i++)
+        <div class="listItem">
+            <div class="basic">
+                <span>Shashi Enterprises</span>
+                <span>Category: Information technology</span>
+            </div>
+            <div class="spend">
+                <span>Value</span>
+                <span>₹ 9.20 Cr.</span>
+            </div>
+        </div>
+        @endfor
+    </div>
+    <div class="widget actions">
+        <div class="action small">
+            <span class="heading">Total</span>
+            <div>
+                <span>1996</span>
+                <button class="btn btn-sm animate__animated animate__fadeIn">
+                    Export
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon left" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 16 12 12 8 16"></polyline><line x1="12" y1="12" x2="12" y2="21"></line><path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3"></path><polyline points="16 16 12 12 8 16"></polyline></svg>
+                </button>
+            </div>
+        </div>
+        <div class="action small">
+            <span class="heading">Active</span>
+            <div>
+                <span>1996</span>
+                <button class="btn btn-sm animate__animated animate__fadeIn">
+                    Export
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon left" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 16 12 12 8 16"></polyline><line x1="12" y1="12" x2="12" y2="21"></line><path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3"></path><polyline points="16 16 12 12 8 16"></polyline></svg>
+                </button>
+            </div>
+        </div>
 
-
-<!-- topbar -->
-<div class="topbar sticky d-flex align-items-center justify-content-between animate__animated animate__fadeInDown">
-    <div class="flex-grow-1 d-flex align-items-center justify-content-start">
-        <div class="searchInputBlock form-group animate__animated animate__fadeIn">
-            <svg xmlns="http://www.w3.org/2000/svg" class="inputIcon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#83838380" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-            <input type="search" class="keywordSearch form-control form-control-sm withIcon" placeholder="search..."/>
+        <div class="action large">
+            <span class="heading">New Vendor</span>
+            <div>
+                <button class="btn btn-primary animate__animated animate__fadeIn">
+                    <img src="{{asset('assets/images/create.svg')}}" alt="create vendor" />
+                    Create
+                </button>
+                <button class="btn btn-primary animate__animated animate__fadeIn">
+                    <img src="{{asset('assets/images/invite.svg')}}" alt="invite vendor" />
+                    Invite
+                </button>
+            </div>
         </div>
     </div>
-    <div class="actionButtonsBlock flex-grow-1 d-flex align-items-center justify-content-end">
-        <button class="btn btn-sm btn-primary animate__animated animate__fadeIn" data-bs-toggle="modal" data-bs-target="#vendorsUploadDialog">
-            Import
-            <svg xmlns="http://www.w3.org/2000/svg" class="icon right" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-upload-cloud"><polyline points="16 16 12 12 8 16"></polyline><line x1="12" y1="12" x2="12" y2="21"></line><path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3"></path><polyline points="16 16 12 12 8 16"></polyline></svg>
-        </button>
-    </div>
 </div>
-<!-- topbar end -->
+<!-- top widgets end -->
 
+
+<h2 class="blockTitle">Vendor List</h2>
 
 <div class="contentSection pt-3 mt-3">
     <div class="animate__animated animate__fadeIn">
@@ -47,6 +102,25 @@
         @elseif(true)
 
         <div class="tableContainer">
+
+            <!-- topbar -->
+            <div class="topbar d-flex align-items-center justify-content-between animate__animated animate__fadeInDown mb-4">
+                <div class="flex-grow-1 d-flex align-items-center justify-content-start">
+                    <div class="searchInputBlock form-group animate__animated animate__fadeIn">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="inputIcon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#83838380" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                        <input type="search" class="keywordSearch form-control form-control-sm withIcon" placeholder="search..."/>
+                    </div>
+                </div>
+                <div class="actionButtonsBlock flex-grow-1 d-flex align-items-center justify-content-end">
+                    <button class="btn btn-sm btn-primary animate__animated animate__fadeIn" data-bs-toggle="modal" data-bs-target="#vendorsUploadDialog">
+                        Import
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon right" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-upload-cloud"><polyline points="16 16 12 12 8 16"></polyline><line x1="12" y1="12" x2="12" y2="21"></line><path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3"></path><polyline points="16 16 12 12 8 16"></polyline></svg>
+                    </button>
+                </div>
+            </div>
+            <!-- topbar end -->
+
+
             <div class="table-responsive">
                 <table id="qwerty" class="table table-sm">
                     <thead>
@@ -65,10 +139,10 @@
                     @for ($i = 0; $i < 15; $i++)
                         <tr>
                             <td>{{$i + 1}}</td>
-                            <td>Some text</td>
-                            <td>reewrewr</td>
-                            <td>reewrewr</td>
-                            <td>reewrewr</td>
+                            <td>Name goes Here</td>
+                            <td>Q09822</td>
+                            <td>FIN12340</td>
+                            <td>+91-8529698369</td>
                             <td class="text-center">
                                 @php
                                     switch($i == 0) {
