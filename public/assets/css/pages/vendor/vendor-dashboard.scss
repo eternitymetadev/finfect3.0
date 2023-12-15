@@ -140,7 +140,7 @@
                         & .btn {
                             flex: 1;
                             position: relative;
-                            padding: 0 0 12px 22px !important;
+                            padding: 0 0 12px 24px !important;
                             font-size: 18px;
                             min-height: 62px;
                             & img {
@@ -168,4 +168,235 @@
     font-size: 20px;
     font-weight: 500;
     line-height: 14px;
+}
+
+.details {
+    padding: 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    row-gap: 2rem;
+    column-gap: 1.5rem;
+    align-items: flex-start;
+
+    & .top {
+        min-width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        border-radius: 1rem;
+        padding: 1rem;
+        box-shadow: 0 0 12px -3px #83838360 inset;
+        & .identity {
+            min-width: 100%;
+            flex-wrap: wrap;
+            row-gap: 1rem;
+            & div {
+                column-gap: 1.5rem;
+                row-gap: 1rem;
+                & img {
+                    background-color: var(--secondaryColor);
+                    height: 72px;
+                    width: 72px;
+                    border-radius: 30px;
+                    object-fit: fill;
+                }
+                & p {
+                    margin-bottom: 0;
+                    &.vendorName {
+                        color: var(--textPrimary);
+                        font-family: Montserrat;
+                        font-size: clamp(1rem, 1.5vw, 1.2rem);
+                        font-weight: 600;
+                    }
+                    &.vendorCode {
+                        color: var(--textSecondary);
+                        font-size: 12px;
+                    }
+                }
+                &.status {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    gap: 0;
+                    font-size: 12px;
+                    & .chip {
+                        border-radius: 50vh;
+                        padding: 2px 12px;
+                        cursor: pointer;
+                        text-decoration: none;
+                    }
+                }
+            }
+        }
+        & .detailBlock {
+            flex: 1 1 300px;
+            & .blockHeading {
+                color: var(--textSecondary);
+                font-size: 14px;
+                margin-bottom: 0;
+            }
+            & hr {
+                border-width: 1px;
+                color: var(--textSecondary);
+                margin: 0;
+            }
+            & .detailDesBlock {
+                padding: 0.5rem 0.7rem;
+                font-size: 12px;
+                & .detailDes {
+                    display: flex;
+                    flex-wrap: wrap;
+                    gap: 0.2rem;
+                    & span {
+                        &:first-of-type {
+                            min-width: 80px;
+                            color: var(--textSecondary);
+                            font-size: 11px;
+                        }
+                        &:last-of-type {
+                            flex: 1;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    & > div {
+        flex: 1 1 300px;
+        & .blockHeading {
+            color: var(--textSecondary);
+            font-size: 14px;
+            margin-bottom: 0;
+        }
+
+        & .bankCard {
+            border-radius: 15px;
+            padding: 1rem;
+            display: flex;
+            flex-flow: column;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 0.8rem;
+            & .bankLogo {
+                max-width: 260px;
+                max-height: 60px;
+                object-fit: contain;
+                margin: 1rem auto 0;
+            }
+            & .bankDetail {
+                width: 100%;
+                border-radius: 15px;
+                background: #83838330;
+                padding: 1rem;
+                & .detailItem {
+                    font-size: 14px;
+                    color: var(--textPrimary);
+                    & .key {
+                        min-width: 90px;
+                    }
+                    & .value {
+                        flex: 1;
+                        white-space: nowrap;
+                    }
+                }
+            }
+        }
+
+        & .docBlock {
+            padding: 1rem;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            // justify-content: center;
+            gap: 0.8rem;
+            & .imageContainer {
+                text-decoration: none;
+                text-align: center;
+                background: var(--secondaryColorAlpha);
+                border-radius: 12px;
+                transition: all 300ms ease-in-out;
+                & img {
+                    height: 90px;
+                    object-fit: contain;
+                    aspect-ratio: 1/1;
+                    padding: 0.7rem;
+                }
+                & span {
+                    font-size: 10px;
+                    line-height: 18px;
+                    margin-bottom: -17px;
+                    background: var(--textPrimary);
+                    width: 100%;
+                    text-align: center;
+                    color: var(--bg);
+                    border-radius: 12px 12px 0 0;
+                    display: none;
+                }
+                &:hover {
+                    transform: translateY(-3px);
+                    & span {
+                        display: block;
+                    }
+                }
+            }
+        }
+
+        & .statesBlock {
+            padding: 1rem;
+            display: flex;
+            flex-wrap: wrap;
+            column-gap: 0.5rem;
+            row-gap: 1rem;
+            & .chip {
+                --chipColor: var(--bs-cyan);
+                border-radius: 50vh;
+                border: 1.5px solid currentColor;
+                background: transparent !important;
+                color: var(--chipColor);
+                font-size: 12px;
+                padding: 2px 1rem;
+                line-height: 16px;
+            }
+        }
+    }
+}
+
+.actionButton {
+    color: #fff;
+    min-width: 120px;
+    margin-inline: 1rem;
+    &.accept {
+        background: #17c964;
+    }
+    &.reject {
+        background: #f31260;
+    }
+}
+
+.btnGroup {
+    font-size: 14px;
+    color: var(--secondaryColor);
+    font-weight: 400;
+    border: 1.5px solid;
+    border-radius: 14px;
+    min-height: 36px;
+    flex: 1;
+    align-items: stretch !important;
+    & span {
+        user-select: none;
+        cursor: pointer;
+        flex: 1 1 300px;
+        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        &:nth-child(2) {
+            box-shadow: 0px 0px 0 1px;
+        }
+        &:hover {
+            background: var(--secondaryColorAlpha);
+        }
+    }
 }
