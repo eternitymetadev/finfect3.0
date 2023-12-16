@@ -27,11 +27,14 @@ use Illuminate\Support\Facades\Route;
 Auth::routes();
 
 Route::get('/', function () {
-    return view('auth.login');
-});
+        return view('authentication.login');
+    });
 
 Route::get('/dashboard', [HomeController::class, 'index'])->name('dashboard');
-Route::post('/login', [LoginController::class, 'login']);
+// Route::post('/login', [LoginController::class, 'login']);
+Route::post('/login-step-1', [LoginController::class, 'processStep1'])->name('login.step1');
+Route::post('/login-step-2', [LoginController::class, 'processStep2'])->name('login.step2');
+Route::post('/login-step-3', [LoginController::class, 'processStep3'])->name('login.step3');
 
 Route::middleware(['auth.check'])->group(function () {
 
@@ -71,9 +74,9 @@ Route::middleware(['auth.check'])->group(function () {
         return view('admin.vendor.add-vendor');
     });
 
-    Route::get('/authentication', function () {
-        return view('authentication.login');
-    });
+    // Route::get('/authentication', function () {
+    //     return view('authentication.login');
+    // });
 
     Route::resources([
         'roles' => RoleController::class,

@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
     <title>Finfect - Finance Perfect</title>
 
     <!-- Layout CSS File -->
@@ -63,6 +64,7 @@
                 class="col-12 d-flex flex-grow-sm-1 flex-column align-items-stretch justify-content-end needs-validation"
                 novalidate
               >
+              @csrf
                 <div id="formFields">
                   <div class="form-group">
                     <label for="email" class="form-label">
@@ -94,7 +96,7 @@
               </form>
 
               <span id="helpLineBottom" class="helpLineBottom">
-                Need help? <a href="#">Support</a>
+                Need help? <a href="#">Support</a> 
               </span>
             </div>
 
