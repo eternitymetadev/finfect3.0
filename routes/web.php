@@ -24,7 +24,7 @@ use Illuminate\Support\Facades\Route;
 //     return view('dashboard.dashboard');
 // });
 
-Auth::routes();
+Auth::routes(['login' => false,'register' => false]);
 
 Route::get('/', function () {
         return view('authentication.login');
