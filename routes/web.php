@@ -1,12 +1,12 @@
 <?php
 
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\BankBalanceController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PfuController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\BankBalanceController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -27,25 +27,24 @@ use Illuminate\Support\Facades\Route;
 Auth::routes();
 
 Route::get('/', function () {
-        return view('authentication.login');
-    });
+    return view('authentication.login');
+});
 
 Route::get('/dashboard', [HomeController::class, 'index'])->name('dashboard');
 // Route::post('/login', [LoginController::class, 'login']);
-Route::post('/login-step-1', [LoginController::class, 'processStep1'])->name('login.step1');
-Route::post('/login-step-2', [LoginController::class, 'processStep2'])->name('login.step2');
-Route::post('/login-step-3', [LoginController::class, 'processStep3'])->name('login.step3');
+Route::post('/validate-email', [LoginController::class, 'validateEmail'])->name('validate.email');
+Route::post('/validate-password', [LoginController::class, 'validatePassword'])->name('validate.password');
+Route::post('/login-pfu', [LoginController::class, 'loginPfu'])->name('login.pfu');
 
 Route::middleware(['auth.check'])->group(function () {
 
     Route::post('/save-pfu', [PfuController::class, 'storePfu']);
     Route::post('/update-pfu', [PfuController::class, 'updatePfu']);
     Route::get('pfu-list', [PfuController::class, 'pfuList']);
-    Route::get('/export-users',[UserController::class,'exportUsers']);
+    Route::get('/export-users', [UserController::class, 'exportUsers']);
 
-    Route::get('/my-bank-balance',[BankBalanceController::class,'myBankBalance']); 
+    Route::get('/my-bank-balance', [BankBalanceController::class, 'myBankBalance']);
     Route::post('/add-bank', [BankBalanceController::class, 'storeBank']);
-
 
     Route::get('/my-ledger-sheet', function () {
         return view('ledger-sheet.my-ledger-sheet');

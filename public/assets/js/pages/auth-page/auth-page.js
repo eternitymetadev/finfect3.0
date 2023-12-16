@@ -118,7 +118,7 @@ function processEmail() {
     // AJAX request 
     $.ajax({
         type: 'POST',
-        url: '/login-step-1', // Replace with your Laravel route for step 1
+        url: '/validate-email', // Replace with your Laravel route for step 1
         data: {
             email: email,
             _token: CSRF_TOKEN // Ensure CSRF token is sent
@@ -163,7 +163,7 @@ function validatePassword() {
         // AJAX request
         $.ajax({
             type: 'POST',
-            url: '/login-step-2', 
+            url: '/validate-password', 
             data: {
                 password: password,
                 _token: $('meta[name="csrf-token"]').attr('content') 
@@ -185,6 +185,7 @@ function validatePassword() {
                                 id="vendorSelection"
                                 class="form-control"
                                 value=""
+                                name="pfu"
                                 required
                             >
                             <option value="" selected disabled>--select vendor--</option>
@@ -224,13 +225,13 @@ function selectedVendorLogin() {
     submitButton.setAttribute("disabled", true);
     submitButton.classList.add("loading");
     loader.classList.add("loading");
-
+    var pfu = $('#vendorSelection').val();
     // AJAX request for login-step-3
     $.ajax({
         type: 'POST',
-        url: '/login-step-3', // Replace with your Laravel route for step 3
+        url: '/login-pfu', // Replace with your Laravel route for step 3
         data: {
-            password: password,
+            pfu: pfu,
             _token: $('meta[name="csrf-token"]').attr('content') 
         },
         success: function(response) {

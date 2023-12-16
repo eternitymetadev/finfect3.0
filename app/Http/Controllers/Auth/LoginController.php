@@ -10,6 +10,7 @@ use Hash;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Auth;
 
 class LoginController extends Controller
 {
@@ -43,7 +44,7 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
-    public function processStep1(Request $request)
+    public function validateEmail(Request $request)
     {
         $response = [
             'success' => false,
@@ -59,7 +60,7 @@ class LoginController extends Controller
 
         if ($user) {
 
-            $request->session()->put('step1_data', $validatedData);
+            $request->session()->put('email', $validatedData);
             $response['success'] = true;
             $response['message'] = 'Email found in the database.'; // Optional success message
         }
@@ -67,10 +68,10 @@ class LoginController extends Controller
         return $response;
     }
 
-    public function processStep2(Request $request)
+    public function validatePassword(Request $request)
     {
         // Retrieve step 1 data from session
-        $step1Data = $request->session()->get('step1_data');
+        $validateEmail = $request->session()->get('email');
 
         // Validate step 2 form data
         $validatedData = $request->validate([
@@ -78,7 +79,7 @@ class LoginController extends Controller
         ]);
 
         // Simulate retrieving user data (Replace this with your actual logic)
-        $user = User::where('email', $step1Data['email'])->first();
+        $user = User::where('email', $validateEmail['email'])->first();
 
         if (!$user) {
             // User not found, return JSON response with error
@@ -97,13 +98,17 @@ class LoginController extends Controller
         }
     }
 
-    public function processStep3(Request $request)
+    public function loginPfu(Request $request)
     {
-        echo'<pre>'; print_r($request->all()); die;
    
-         $step1Data = $request->session()->get('step1_data');
+         $step1Data = $request->session()->get('email');
 
-         $request->session()->forget(['step1_data', 'user_data']);
+         $user = User::where('email', $step1Data['email'])->first();
+
+         $request->session()->forget(['email']);
+         $request->session()->put('pfu', $request->pfu);
+
+         Auth::login($user);
 
          return response()->json(['success' => true, 'message' => 'User logged in successfully']);
     }
