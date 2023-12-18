@@ -307,7 +307,6 @@
                 $('.btn-close').removeAttr('disabled');
                 resetForm();
                 $("#loading").removeClass("working");
-
             }, 1500);
         }
     });

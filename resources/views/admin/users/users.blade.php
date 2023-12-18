@@ -51,7 +51,7 @@
 
         <div class="tableContainer">
             <div class="table-responsive">
-                <table id="qwerty" class="table table-sm">
+                <table id="usersTable" class="table table-sm">
                     <thead>
                         <tr>
                             <th>Sr No.</th>
@@ -191,10 +191,9 @@
                 <div class="form-row">
                     <div class="form-group col-md-6">
                         <label for="mobileNumber" class="form-label">Role</label>
-                        <select class="form-control form-select @error('roles') is-invalid @enderror" aria-label="Roles" id="roles" name="roles[]">
+                        <select class="form-control form-select @error('roles') is-invalid @enderror" aria-label="Roles" id="roles" name="roles[]" required>
                             <option value="">--select role--</option>
                                 @forelse ($roles as $role)
-
                                     @if ($role!='Super Admin')
                                         <option value="{{ $role }}" {{ in_array($role, old('roles') ?? []) ? 'selected' : '' }}>
                                         {{ $role }}
@@ -214,12 +213,9 @@
                     </div>
 
                     <div class="form-group col-md-6">
-                        <label for="mobileNumber" class="form-label">PFU</label>
-                        <select name="pfu[]" class="pfu form-control" required >
+                        <label for="pfu" class="form-label">PFU</label>
+                        <select name="pfu[]" id="pfu" class="form-control" required placeholder="select ...">
                             <option value="">--select pfu--</option>
-                            <option value="sd1">SD1</option>
-                            <option value="sd2">SD2</option>
-                            <option value="sd3">SD3</option>
                         </select>
                         <div class="invalid-feedback">Enter a valid pfu name </div>
                     </div>
@@ -227,79 +223,25 @@
 
                 <div class="form-row">
                     <div class="form-group">
-                        <label for="mobileNumber" class="form-label">Name</label>
-                        <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" value="{{ old('name') }}">
+                        <label for="name" class="form-label">Name</label>
+                        <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" value="{{ old('name') }}" required>
                     </div>
                     <div class="form-group">
                         <label for="mobileNumber" class="form-label">Mobile</label>
-                        <input name="mobile" class="form-control number" placeholder="XXXX XXX XXX" pattern="^[6789][0-9]{9}$" maxlength="10" required />
+                        <input name="mobile" class="form-control number" placeholder="XXXX XXX XXX" pattern="^[9876][0-9]{9}$" maxlength="10" required />
                         <span class="error" id="mobileError"></span>
                     </div>
                     <div class="form-group">
-                        <label for="mobileNumber" class="form-label">Email</label>
-                        <input type="email" class="form-control @error('email') is-invalid @enderror" id="email" name="email" value="{{ old('email') }}">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="email" class="form-control @error('email') is-invalid @enderror" pattern="^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$" id="email" name="email" value="{{ old('email') }}" required>
                         <span class="error" id="emailError"></span>
                     </div>
                     <div class="form-group">
-                        <label for="mobileNumber" class="form-label">Password</label>
-                        <input type="text" class="form-control @error('password') is-invalid @enderror" id="password" name="password">
+                        <label for="password" class="form-label">Password</label>
+                        <input type="text" class="form-control @error('password') is-invalid @enderror" id="password" name="password" required>
                         <span class="error" id="passwordError"></span>
                     </div>
                 </div>
-
-                <!-- <div class="form-row dropDownSelection">
-                    <label class="label col-12">Access</label>
-
-                    <ul class="main animate__animated animate__fadeIn">
-                        <?php
-$columnsAvailable = array(
-    array("label" => "label 1"),
-    array("label" => "label 2", "child" => array(array("label" => "L2 child 1"), array("label" => "L2 child 2"))),
-    array("label" => "label 3"),
-    array("label" => "label 4", "child" => array(array("label" => "L4 child 1"), array("label" => "L4 child 2"))),
-    array("label" => "label 5"),
-    array("label" => "label 6", "child" => array(array("label" => "L6 child 1"), array("label" => "L6 child 2"))),
-    array("label" => "label 7"),
-    array("label" => "label 8", "child" => array(array("label" => "L8 child 1"), array("label" => "L8 child 2"))),
-    array("label" => "label 9"),
-    array("label" => "label 10", "child" => array(array("label" => "L10 child 1"), array("label" => "L10 child 2"))),
-    array("label" => "label 11"),
-    array("label" => "label 12", "child" => array(array("label" => "L12 child 1"), array("label" => "L12 child 2"))),
-);
-?>
-
-                        @foreach($columnsAvailable as $columnsItem)
-                            <li class="animate__animated animate__fadeIn">
-                                <input type="checkbox" name="{{$columnsItem['label']}}"
-                                        id="{{$columnsItem['label']}}"/>
-                                <label for="{{$columnsItem['label']}}">
-                                    {{$columnsItem['label']}}
-                                </label>
-                                @if(array_key_exists('child', $columnsItem))
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                            viewBox="0 0 24 24"
-                                            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                            class="feather feather-chevron-down toggleChildCols">
-                                        <polyline points="6 9 12 15 18 9"></polyline>
-                                    </svg>
-                                    <ul style="display: none" class="subMain animate__animated animate__fadeIn">
-                                        @foreach($columnsItem['child'] as $childColumnsItem)
-                                            <li>
-                                                <input type="checkbox"
-                                                        name="{{$childColumnsItem['label']}}"
-                                                        id="{{$childColumnsItem['label']}}"/>
-                                                <label for="{{$childColumnsItem['label']}}">
-                                                    {{$childColumnsItem['label']}}
-                                                </label>
-                                            </li>
-                                        @endforeach
-                                    </ul>
-                                @endif
-                            </li>
-                        @endforeach
-                    </ul>
-                </div> -->
             </div>
         </div>
 
@@ -324,9 +266,10 @@ $(document).ready(function() {
 
     var pfus = pfu;
     const simplifiedData = JSON.parse(pfus);
+    console.log('asd', simplifiedData)
 
     // initializatoin of dataTable
-    const table = $('#qwerty').DataTable({
+    const table = $('#usersTable').DataTable({
         dom: '<"dt-row"<rtb>><"footer-row"lp><"clear">',
         "language": {
             "lengthMenu": "Rows _MENU_"
@@ -349,98 +292,135 @@ $(document).ready(function() {
         table.search(this.value).draw();
     });
 
+    $('#pfu').selectize({
+            maxItems: simplifiedData.length,
+            plugins: ["clear_button"],
+            options: simplifiedData,
+            valueField: 'id',
+            labelField: 'pfu',
+            searchField: 'pfu',
+            create: false
+        })
+
+    $('select[name="roles[]"]').on('change', function(){
+        if($(this).val() != ''){
+            $('#pfu').selectize()[0].selectize.destroy();
+            $('a.clear').click();
+            if($(this).val() == 'Maker') {
+                alert('ssss')
+                $('#pfu').selectize({
+                    maxItems: 1,
+                    plugins: ["clear_button"],
+                    options: simplifiedData,
+                    valueField: 'id',
+                    labelField: 'pfu',
+                    searchField: 'pfu',
+                    create: false
+                })
+            } else {
+                alert('ddd')
+                $('#pfu').selectize({
+                    maxItems: simplifiedData.length,
+                    plugins: ["clear_button"],
+                    options: simplifiedData,
+                    valueField: 'id',
+                    labelField: 'pfu',
+                    searchField: 'pfu',
+                    create: false
+                })
+            }
+        } else{
+            $('a.clear').click();
+            $('#pfu').attr('disabled', true);
+        }
+
+    });
 
     $(".btn-close, .discard").on('click', function(){
         resetFrom()
     });
 
 
-    function resetFrom(){
+    function resetForm(){
+        $('a.clear').click();
         $('#addUserForm').trigger("reset");
     }
 
 
-    $('#addUserForm').on('submit', function(e){
-    e.preventDefault();
-
-    // $('#userSubmitButton span').html('...');
-    // $('#userSubmitButton').attr('disabled', true);
-    // $('#userSubmitButton').siblings('.discard').attr('disabled', true);
-    // $('.btn-close').attr('disabled', true);
-
-
-    var formData = $(this).serialize();
-
-    $.ajax({
-        url: `{{ route('users.store') }}`,
-        type: 'POST',
-        data: formData,
-        success: function(response) {
-            // Clear previous error messages
-            $('.error').text('');
-
-                if (response.success === false && response.formErrors === true) {
-                    if (response.errors.hasOwnProperty('email')) {
-                        $('#emailError').text(response.errors.email[0]);
-                    }
-                    if (response.errors.hasOwnProperty('mobile')) {
-                        $('#mobileError').text(response.errors.mobile[0]);
-                    }
-                    if (response.errors.hasOwnProperty('password')) {
-                        $('#passwordError').text(response.errors.password[0]);
-                    }
-                    // Handle other error fields similarly if needed
-                } else if (response.validation === false) {
-                    // Handle other types of errors or validations
-                } else if (response.success === true) {
-
-                    // If success is true, reload the page
-                    // $('#userSubmitButton span').html('Submit');
-                    // $('#userSubmitButton').removeAttr('disabled');
-                    // $('#userSubmitButton').siblings('.discard').removeAttr('disabled');
-                    // $('.btn-close').removeAttr('disabled');
-                     Swal.fire({
-                        title: 'Success!',
-                        text: 'User created successfully',
-                        icon: 'success',
-                        confirmButtonText: 'OK'
-                    }).then(() => {
-                        location.reload();
-                    });
-                }
-
+    $("#addUserForm").validate({
+        rules: {
+            roles:  {required: true},
+            pfu:  {required: true},
+            name:  {required: true},
+            mobile:  {required: true},
+            email:  {required: true},
+            password:  {required: true, minlength: 8}
         },
-        error: function(xhr, status, error) {
-            // Handle error response
-            console.error(error);
-            // Display a generic error message if needed
+        messages: {
+            roles:  {required: 'Required'},
+            pfu:  {required: 'Required'},
+            name:  {required: 'Required'},
+            mobile:  {required: 'Required'},
+            email:  {required: 'Required'},
+            password:  {required: 'Required', minlength: 'Minimum 8 characters required'}
+        },
+        submitHandler: function(form) {
+            var formData = $(form).serialize();
+            console.log('formData', formData);
+
+            $.ajax({
+                url: `{{ route('users.store') }}`,
+                type: 'POST',
+                data: formData,
+                beforeSend: function () {
+                    $('#vendorSubmitButton span').html('...');
+                    $('#vendorSubmitButton').attr('disabled', true);
+                    $('#vendorSubmitButton').siblings('.discard').attr('disabled', true);
+                    $('.btn-close').attr('disabled', true);
+                    $("#loading").addClass("working");
+                },
+                success: function(response) {
+                    // Clear previous error messages
+                    $('.invalid-feedback').text('');
+                    if (response.success === false && response.formErrors === true) {
+                        if (response.errors.hasOwnProperty('email')) {
+                            $('#emailError').text(response.errors.email[0]);
+                        }
+                        if (response.errors.hasOwnProperty('mobile')) {
+                            $('#mobileError').text(response.errors.mobile[0]);
+                        }
+                        if (response.errors.hasOwnProperty('password')) {
+                            $('#passwordError').text(response.errors.password[0]);
+                        }
+                        // Handle other error fields similarly if needed
+                    } else if (response.validation === false) {
+                        // Handle other types of errors or validations
+                    } else if (response.success === true) {
+                            Swal.fire({
+                            title: 'Success!',
+                            text: 'User created successfully',
+                            icon: 'success',
+                            confirmButtonText: 'OK'
+                        }).then(() => {
+                            location.reload();
+                            resetForm();
+                        });
+                    }
+                },
+                error: function(xhr, status, error) {
+                    // Handle error response
+                    console.error(error);
+                    // Display a generic error message if needed
+                },
+                complete: function () {
+                    $('#vendorSubmitButton span').html('Submit');
+                    $('#vendorSubmitButton').removeAttr('disabled');
+                    $('#vendorSubmitButton').siblings('.discard').removeAttr('disabled');
+                    $('.btn-close').removeAttr('disabled');
+                    $("#loading").removeClass("working");
+                }
+            });
         }
-    });
-});
-
-    let selectOptions = simplifiedData;
-
-    function initiatePfuSelect(forInput, maxItems, options) {
-        $(`${forInput}`).selectize({
-            valueField: 'id',
-            labelField: 'pfu',
-            searchField: 'pfu',
-            maxItems: maxItems,
-            options: options,
-            create: false
-        });
-    }
-    initiatePfuSelect('.pfu', selectOptions.length, selectOptions);
-
-
-    $('select[name="role"]').on('change', function(){
-        const role = $('select[name="role"]').val();
-
-        if(role == 'maker' || role == 'approver') {
-            initiatePfuSelect('.pfu', selectOptions.length, selectOptions);
-        } else {
-            initiatePfuSelect('.pfu', 1, selectOptions);
-          }
     });
 
 });

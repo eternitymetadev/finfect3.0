@@ -1,0 +1,80 @@
+.rowItem {
+  border-radius: 18px;
+  border: 1px solid #94e5b4;
+  border-left: 8px solid #94e5b4;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  padding: 0.4rem 1rem;
+  font-size: 12px;
+  margin-bottom: 1rem;
+}
+.rowItem.checkBox {
+  width: 40px;
+  display: grid;
+  place-items: center;
+  padding: 0.5rem;
+  flex: 0;
+}
+.rowItem .items {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  row-gap: 1rem;
+}
+.rowItem .items .item {
+  padding-inline: 0.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  flex: 1 1 250px;
+  font-size: 11px;
+  color: var(--textSecondary);
+}
+.rowItem .items .item .heading {
+  font-size: 12px;
+  width: 100%;
+  color: var(--secondaryColor);
+  font-family: Montserrat;
+  font-size: 10px;
+  font-weight: 500;
+  line-height: 14px;
+}
+.rowItem .items .item .bold {
+  font-weight: 500;
+  font-size: 12px;
+}
+.rowItem .items .item .sm {
+  max-width: 30%;
+}
+.rowItem .items .item .md {
+  max-width: 70%;
+}
+.rowItem .items .item .lg {
+  min-width: 100%;
+}
+.rowItem .items .item:has(.amountBox) {
+  -moz-column-gap: 0.5rem;
+       column-gap: 0.5rem;
+}
+.rowItem .items .item:has(.amountBox) .heading {
+  text-align: center;
+}
+.rowItem .items .item:has(.amountBox) .amountBox {
+  flex: 1;
+  background: var(--secondaryColor);
+  border-radius: 12px;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+}
+.rowItem .items .item:has(.amountBox) .amountBox .head {
+  font-size: 12px;
+}
+.rowItem .items .item:has(.amountBox) .amountBox .amount {
+  background: var(--bg);
+  border-radius: inherit;
+  font-size: clamp(1em, 3vw, 1.3em);
+}/*# sourceMappingURL=non-vendor-dues.css.map */

@@ -14,8 +14,16 @@ body {
   --bg: #fbfbfb;
   --bs-table-color: var(--textPrimary) !important;
   --bs-table-bg: var(--bg) !important;
+  --warningColor: #f5a524 !important;
+  --errorColor: #f31260 !important;
+  --successColor: #17c964 !important;
+  --infoColor: #338ef7 !important;
 }
 body.darkMode {
+  --primaryColor: #186e93;
+  --primaryColorAlpha: #186e9330;
+  --secondaryColor: #13c7a8;
+  --secondaryColorAlpha: #13c7a830;
   --textPrimary: #f7f7f7 !important;
   --textSecondary: #cfcfcf !important;
   --textDisabled: #777777 !important;
@@ -32,22 +40,22 @@ body.darkMode .tableContainer table {
 }
 
 .warning {
-  color: #f5a524 !important;
+  color: var(--warningColor) !important;
   background: rgba(245, 165, 36, 0.1254901961) !important;
 }
 
 .error {
-  color: #f31260 !important;
+  color: var(--errorColor) !important;
   background: rgba(243, 18, 96, 0.1254901961) !important;
 }
 
 .success {
-  color: #17c964 !important;
+  color: var(--successColor) !important;
   background: rgba(23, 201, 100, 0.1254901961) !important;
 }
 
 .info {
-  color: #338ef7 !important;
+  color: var(--infoColor) !important;
   background: rgba(51, 142, 247, 0.1254901961) !important;
 }
 
@@ -62,11 +70,11 @@ body.darkMode .tableContainer table {
 }
 
 .positive {
-  color: #17c964;
+  color: var(--successColor);
 }
 
 .negative {
-  color: #f31260;
+  color: var(--errorColor);
 }
 
 * {
@@ -201,6 +209,13 @@ body.darkMode .tableContainer table {
   animation: l44 1s infinite linear alternate;
 }
 
+input {
+  accent-color: var(--secondaryColor);
+}
+input[type=checkbox], input[type=radio] {
+  cursor: pointer;
+}
+
 input[type=number] {
   -webkit-appearance: textfield;
           appearance: textfield;
@@ -250,6 +265,12 @@ input[type=file].form-control::file-selector-button {
 .form-control.selectize-control.multi .item {
   font-size: 12px !important;
   line-height: 12px !important;
+}
+.form-control + .error {
+  font-size: 12px !important;
+  line-height: 12px !important;
+  margin: 0 !important;
+  padding-left: 8px !important;
 }
 
 .form-group {
@@ -432,11 +453,13 @@ input.form-check-input:checked {
   flex-shrink: 0;
   background: var(--bg);
   box-shadow: 0px 0px 13px 0px rgba(131, 131, 131, 0.5) inset;
-  outline: none;
+  outline: 0 solid var(--secondaryColor) !important;
+  outline-offset: 0px;
   border: none;
+  color: var(--secondaryColor);
 }
 .neoButton:active {
-  outline: 2px solid var(--secondaryColor);
+  outline: 2px solid var(--secondaryColor) !important;
   outline-offset: 2px;
 }
 .neoButton.rounded {
@@ -543,6 +566,7 @@ main {
 
 .tableContainer {
   max-width: 100%;
+  padding-bottom: 2rem;
 }
 .tableContainer .dt-row > div {
   overflow: auto;
@@ -573,10 +597,28 @@ main {
   padding: 4px;
   font-size: 14px;
   border-bottom: 1px solid rgba(131, 131, 131, 0.1254901961) !important;
+  color: var(--textSecondary);
 }
 .tableContainer table td:has(.currency) {
   text-align: right;
   padding-right: 26px;
+}
+.tableContainer table td .detail {
+  font-size: 12px;
+  line-height: 20px;
+  margin-bottom: 0;
+}
+.tableContainer table td .detail .bold {
+  font-weight: 500;
+}
+.tableContainer table td .detail .date {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+.tableContainer table td .detail .date svg {
+  height: 12px;
+  width: 12px;
 }
 .tableContainer table tr:nth-child(1) td {
   padding-top: 1rem;
@@ -641,6 +683,16 @@ main {
   gap: 0.5rem;
   flex-wrap: wrap;
 }
+.tableContainer table th:has(input[type=checkbox]), .tableContainer table td:has(input[type=checkbox]) {
+  width: 40px;
+}
+.tableContainer table th:has(input[type=checkbox]) input[type=checkbox], .tableContainer table td:has(input[type=checkbox]) input[type=checkbox] {
+  margin: 14px auto 0;
+  height: 12px;
+  width: 12px;
+  cursor: pointer;
+  accent-color: var(--secondaryColor);
+}
 .tableContainer ul.pagination li.page-item a.page-link {
   height: 24px;
   width: 24px;
@@ -688,6 +740,30 @@ main {
   content: "\f078" !important;
   font-family: "FontAwesome";
   font-size: 8px;
+}
+.tableContainer .selectedRowsActionBar {
+  position: fixed;
+  bottom: 1rem;
+  box-shadow: 0 0 17px -5px rgba(131, 131, 131, 0.5019607843);
+  border-radius: 18px;
+  width: 90%;
+  max-width: calc(100vw - 300px);
+  right: 1rem;
+  background: var(--bg);
+  z-index: 9999999;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  font-family: "Montserrat";
+}
+.tableContainer .selectedRowsActionBar .subTitle {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--textSecondary);
+}
+.tableContainer .selectedRowsActionBar .title {
+  font-size: 16px;
 }
 
 .currency {
@@ -830,4 +906,15 @@ main {
   100% {
     transform: rotate(360deg);
   }
+}
+.statusIndicator {
+  --color: var(--successColor);
+  display: flex;
+  align-items: center;
+}
+.statusIndicator span.colorBox {
+  height: 16px;
+  width: 16px;
+  border-radius: 4px;
+  background: var(--color);
 }/*# sourceMappingURL=globalStyle.css.map */

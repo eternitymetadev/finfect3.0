@@ -41,14 +41,14 @@ Route::middleware(['auth.check'])->group(function () {
         return view('my-bank-balance.my-bank-balance');
     });
 
-    Route::get('/my-ledger-sheet', function () {
-        return view('ledger-sheet.my-ledger-sheet');
+    Route::get('/vendor-ledger-sheet', function () {
+        return view('ledger-sheet.vendor-ledger-sheet');
     });
 
     Route::get('/emp-ledger-sheet', function () {
         return view('ledger-sheet.emp-ledger-sheet');
     });
-    Route::get('/invoice-dues', function () {
+    Route::get('/daily-invoice-dues', function () {
         return view('invoice-dues.invoice-dues');
     });
     Route::get('/transaction-sheet', function () {
@@ -74,6 +74,16 @@ Route::middleware(['auth.check'])->group(function () {
 
     Route::get('/vendor-dashboard', function () {
         return view('vendor.vendor-dashboard');
+    });
+
+    Route::get('/vendor-invoice-dues', function () {
+        return view('transaction-sheet.invoice-dues');
+    });
+    Route::get('/add-pay-ledger-wise', function () {
+        return view('transaction-sheet.add-pay-ledger-wise');
+    });
+    Route::get('/non-vendor-dues', function () {
+        return view('transaction-sheet.non-vendor-dues');
     });
 
     Route::resources([

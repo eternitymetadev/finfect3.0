@@ -4,7 +4,6 @@
 @section('slug') > EMP Ledger Sheet @endsection
 @section('content')
 
-<link href="{{asset('assets/css/pages/bank-page/bankPage.css')}}" rel="stylesheet" />
 <link href="{{asset('assets/css/pages/common/common.css')}}" rel="stylesheet" />
 
 <!-- for dataTable -->

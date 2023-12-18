@@ -196,6 +196,7 @@ body {
                 background: var(--secondaryColor);
                 padding-top: 1rem;
                 box-shadow: 1px -14px 12px -18px #c2c2c2;
+                transition: all 400ms cubic-bezier(0.65, 0.05, 0.36, 1);
                 & .profileLink {
                     margin: 0 0.5rem;
                     background: #ffffff30;
@@ -246,7 +247,7 @@ body {
                             margin-bottom: 0;
                             & span {
                                 border-radius: 8px;
-                                background: var(--primary, #186e93);
+                                background: var(--secondaryColor);
                                 color: #fff;
                                 text-align: center;
                                 font-family: "Montserrat", sans-serif;
@@ -446,8 +447,12 @@ body {
         }
         &.working {
             display: flex;
+            z-index: 99999999;
         }
     }
+}
+.text-left {
+    text-align: left !important;
 }
 
 @media (max-width: 600px) {
