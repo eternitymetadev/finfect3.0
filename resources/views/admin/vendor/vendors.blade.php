@@ -8,11 +8,7 @@
 <link href="{{asset('assets/css/pages/common/common.css')}}" rel="stylesheet" />
 
 <!-- for dataTable -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet" />
-<link href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css" rel="stylesheet" />
-
-<script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
+@include('cdns.dataTable')
 
 
 <!-- topbar -->

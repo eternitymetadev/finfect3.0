@@ -70,3 +70,43 @@
   <svg xmlns="http://www.w3.org/2000/svg" class="inputIcon right" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
   <div class="invalid-feedback">Invalid Password</div>
 </div>
+
+
+<!-- file links -->
+    <!-- for dataTable -->
+        <!-- css -->
+        <link href="{{asset('assets/css/dataTable/bootstrapDatatable.min.css')}}" rel="stylesheet" />
+        <!-- js -->
+        <script src="{{asset('assets/js/dataTable/bootStrapDatatable.min.js')}}"></script>
+        <script src="{{asset('assets/js/dataTable/fixedHeaderDatatable.min.js')}}"></script>
+        <script src="{{asset('assets/js/dataTable/jqueryDatatable.min.js')}}"></script>
+
+    <!-- for selectize -->
+        <!-- css -->
+        <link href="{{asset('assets/css/selectize/selectize.css')}}" rel="stylesheet" />
+        <!-- js -->
+        <script src="{{asset('assets/js/selectize/selectize.min.js')}}"></script>
+
+    <!-- jquery-3.7.1 -->
+        <script src="{{asset('assets/js/jquery/jquery-3-7-1.min.js')}}"></script>
+        <script src="{{asset('assets/js/jquery/jquery-validate-1-19-5.min.js')}}"></script>
+        <script src="{{asset('assets/js/jquery/additional-validate-jq.min.js')}}"></script>
+
+    <!-- swal js -->
+        <script src="{{asset('assets/js/swal/swal.min.js')}}"></script>
+
+    <!-- animation.style CSS File -->
+        <link href="{{asset('assets/css/animation/animateStyle.css')}}" rel="stylesheet" />
+
+    <!-- fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link href="{{asset('assets/css/font/font.css')}}" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet" />
+
+    <!-- bootstrap -->
+        <link href="{{asset('assets/css/bootstrap/bootstrap.min.css')}}" rel="stylesheet" />
+        <link href="{{asset('assets/css/bootstrap/bootstrap-icons.css')}}" rel="stylesheet" />
+        <script src="{{asset('assets/js/bootstrap.bundle.min.js')}}"></script>
+
+<!-- file links end -->

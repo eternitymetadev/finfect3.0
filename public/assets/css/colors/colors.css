@@ -14,8 +14,16 @@ body {
   --bg: #fbfbfb;
   --bs-table-color: var(--textPrimary) !important;
   --bs-table-bg: var(--bg) !important;
+  --warningColor: #f5a524 !important;
+  --errorColor: #f31260 !important;
+  --successColor: #17c964 !important;
+  --infoColor: #338ef7 !important;
 }
 body.darkMode {
+  --primaryColor: #186e93;
+  --primaryColorAlpha: #186e9330;
+  --secondaryColor: #13c7a8;
+  --secondaryColorAlpha: #13c7a830;
   --textPrimary: #f7f7f7 !important;
   --textSecondary: #cfcfcf !important;
   --textDisabled: #777777 !important;
@@ -32,22 +40,22 @@ body.darkMode .tableContainer table {
 }
 
 .warning {
-  color: #f5a524 !important;
+  color: var(--warningColor) !important;
   background: rgba(245, 165, 36, 0.1254901961) !important;
 }
 
 .error {
-  color: #f31260 !important;
+  color: var(--errorColor) !important;
   background: rgba(243, 18, 96, 0.1254901961) !important;
 }
 
 .success {
-  color: #17c964 !important;
+  color: var(--successColor) !important;
   background: rgba(23, 201, 100, 0.1254901961) !important;
 }
 
 .info {
-  color: #338ef7 !important;
+  color: var(--infoColor) !important;
   background: rgba(51, 142, 247, 0.1254901961) !important;
 }
 
@@ -62,9 +70,9 @@ body.darkMode .tableContainer table {
 }
 
 .positive {
-  color: #17c964;
+  color: var(--successColor);
 }
 
 .negative {
-  color: #f31260;
+  color: var(--errorColor);
 }/*# sourceMappingURL=colors.css.map */

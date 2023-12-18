@@ -15,7 +15,17 @@ body {
     --bg: #fbfbfb;
     --bs-table-color: var(--textPrimary) !important;
     --bs-table-bg: var(--bg) !important;
+    --warningColor: #f5a524 !important;
+    --errorColor: #f31260 !important;
+    --successColor: #17c964 !important;
+    --infoColor: #338ef7 !important;
+
     &.darkMode {
+        --primaryColor: #186e93;
+        --primaryColorAlpha: #186e9330;
+        --secondaryColor: #13c7a8;
+        --secondaryColorAlpha: #13c7a830;
+
         --textPrimary: #f7f7f7 !important;
         --textSecondary: #cfcfcf !important;
         --textDisabled: #777777 !important;
@@ -35,19 +45,19 @@ body {
 }
 
 .warning {
-    color: #f5a524 !important;
+    color: var(--warningColor) !important;
     background: #f5a52420 !important;
 }
 .error {
-    color: #f31260 !important;
+    color: var(--errorColor) !important;
     background: #f3126020 !important;
 }
 .success {
-    color: #17c964 !important;
+    color: var(--successColor) !important;
     background: #17c96420 !important;
 }
 .info {
-    color: #338ef7 !important;
+    color: var(--infoColor) !important;
     background: #338ef720 !important;
 }
 .primary {
@@ -59,8 +69,8 @@ body {
     background: var(--secondaryColorAlpha) !important;
 }
 .positive {
-    color: #17c964;
+    color: var(--successColor);
 }
 .negative {
-    color: #f31260;
+    color: var(--errorColor);
 }

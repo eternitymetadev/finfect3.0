@@ -271,6 +271,16 @@ table.dataTable tbody td.dt-body-nowrap {
  * ©2020 SpryMedia Ltd, all rights reserved.
  * License: MIT datatables.net/license/mit
  */
+
+.dataTables_wrapper {
+    min-height: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+}
+.dataTables_wrapper > .dt-row {
+    flex: 1;
+}
 table.dataTable {
     clear: both;
     margin-top: 6px !important;

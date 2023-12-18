@@ -122,6 +122,13 @@
 }
 
 // form elements
+input {
+    accent-color: var(--secondaryColor);
+    &[type="checkbox"],
+    &[type="radio"] {
+        cursor: pointer;
+    }
+}
 
 input[type="number"] {
     appearance: textfield;
@@ -175,6 +182,12 @@ input[type="file"].form-control {
                 line-height: 12px !important;
             }
         }
+    }
+    & + .error {
+        font-size: 12px !important;
+        line-height: 12px !important;
+        margin: 0 !important;
+        padding-left: 8px !important;
     }
 }
 
@@ -380,10 +393,12 @@ input.form-check-input {
     flex-shrink: 0;
     background: var(--bg);
     box-shadow: 0px 0px 13px 0px rgba(131, 131, 131, 0.5) inset;
-    outline: none;
+    outline: 0 solid var(--secondaryColor) !important;
+    outline-offset: 0px;
     border: none;
+    color: var(--secondaryColor);
     &:active {
-        outline: 2px solid var(--secondaryColor);
+        outline: 2px solid var(--secondaryColor) !important;
         outline-offset: 2px;
     }
     &.rounded {
@@ -465,6 +480,7 @@ main {
             position: absolute;
             top: 1rem;
             right: 1rem;
+            z-index: 9;
         }
         & .modal-body {
             margin: auto;
@@ -492,6 +508,7 @@ main {
 
 .tableContainer {
     max-width: 100%;
+    padding-bottom: 2rem;
     & .dt-row {
         & > div {
             overflow: auto;
@@ -522,9 +539,27 @@ main {
             padding: 4px;
             font-size: 14px;
             border-bottom: 1px solid #83838320 !important;
+            color: var(--textSecondary);
             &:has(.currency) {
                 text-align: right;
                 padding-right: 26px;
+            }
+            & .detail {
+                font-size: 12px;
+                line-height: 20px;
+                margin-bottom: 0;
+                & .bold {
+                    font-weight: 500;
+                }
+                & .date {
+                    display: flex;
+                    align-items: center;
+                    gap: 3px;
+                    & svg {
+                        height: 12px;
+                        width: 12px;
+                    }
+                }
             }
         }
         & tr:nth-child(1) {
@@ -597,6 +632,17 @@ main {
                 flex-wrap: wrap;
             }
         }
+        & th:has(input[type="checkbox"]),
+        & td:has(input[type="checkbox"]) {
+            width: 40px;
+            & input[type="checkbox"] {
+                margin: 14px auto 0;
+                height: 12px;
+                width: 12px;
+                cursor: pointer;
+                accent-color: var(--secondaryColor);
+            }
+        }
         // & th.actionCol {
         // background: #fff;
         // color: var(--secondaryColor) !important;
@@ -660,6 +706,31 @@ main {
         content: "\f078" !important;
         font-family: "FontAwesome";
         font-size: 8px;
+    }
+
+    & .selectedRowsActionBar {
+        position: fixed;
+        bottom: 1rem;
+        box-shadow: 0 0 17px -5px #83838380;
+        border-radius: 18px;
+        width: 90%;
+        max-width: calc(100vw - 300px);
+        right: 1rem;
+        background: var(--bg);
+        z-index: 9999999;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        padding: 1rem;
+        font-family: "Montserrat";
+        & .subTitle {
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--textSecondary);
+        }
+        & .title {
+            font-size: 16px;
+        }
     }
 }
 
@@ -807,5 +878,19 @@ main {
     }
     100% {
         transform: rotate(360deg);
+    }
+}
+
+.statusIndicator {
+    --color: var(--successColor);
+    display: flex;
+    align-items: center;
+    & span {
+        &.colorBox {
+            height: 16px;
+            width: 16px;
+            border-radius: 4px;
+            background: var(--color);
+        }
     }
 }

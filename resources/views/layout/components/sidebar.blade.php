@@ -124,14 +124,14 @@
                         </a>
                     </li>
                     <li class="menu animate__animated animate__fadeIn">
-                        <a class="nav-link" href="{{url('/my-ledger-sheet')}}">
+                        <a class="nav-link" href="{{url('/vendor-ledger-sheet')}}">
                             <svg xmlns="http://www.w3.org/2000/svg" class="menuIcon" width="24px" height="24px" viewBox="0 0 24 24"  stroke-linecap="round" stroke-linejoin="round" id="home">
                                 <path d="M8.98,20.77v-3.06c0-0.78,0.67-1.41,1.5-1.41h3.03c0.4,0,0.78,0.15,1.06,0.41c0.28,0.27,0.44,0.62,0.44,1v3.06
                                     c0,0.32,0.13,0.64,0.37,0.87S15.95,22,16.3,22h2.06c0.96,0,1.89-0.36,2.57-1c0.68-0.64,1.07-1.51,1.07-2.42V9.87
                                     c0-0.73-0.35-1.43-0.94-1.9l-7.02-5.29c-1.22-0.93-2.97-0.9-4.16,0.07L3.02,7.96c-0.63,0.46-1,1.16-1.02,1.9v8.7
                                     C2,20.46,3.63,22,5.64,22h2.02c0.1,0,0.54-0.02,0.92-0.36C8.95,21.3,8.98,20.86,8.98,20.77z"/>
                             </svg>
-                            <span>My Ledger Sheet</span>
+                            <span>Vendor Ledger</span>
                         </a>
                     </li>
                     <li class="menu animate__animated animate__fadeIn">
@@ -142,11 +142,11 @@
                                     c0-0.73-0.35-1.43-0.94-1.9l-7.02-5.29c-1.22-0.93-2.97-0.9-4.16,0.07L3.02,7.96c-0.63,0.46-1,1.16-1.02,1.9v8.7
                                     C2,20.46,3.63,22,5.64,22h2.02c0.1,0,0.54-0.02,0.92-0.36C8.95,21.3,8.98,20.86,8.98,20.77z"/>
                                 </svg>
-                            <span>EMP Ledger Sheet</span>
+                            <span>EMP Ledger</span>
                         </a>
                     </li>
                     <li class="menu animate__animated animate__fadeIn">
-                        <a class="nav-link" href="{{url('/invoice-dues')}}">
+                        <a class="nav-link" href="{{url('/daily-invoice-dues')}}">
                             <svg xmlns="http://www.w3.org/2000/svg" class="menuIcon" width="24px" height="24px" viewBox="0 0 24 24"  stroke-linecap="round" stroke-linejoin="round" id="home">
                                 <path d="M8.98,20.77v-3.06c0-0.78,0.67-1.41,1.5-1.41h3.03c0.4,0,0.78,0.15,1.06,0.41c0.28,0.27,0.44,0.62,0.44,1v3.06
                                     c0,0.32,0.13,0.64,0.37,0.87S15.95,22,16.3,22h2.06c0.96,0,1.89-0.36,2.57-1c0.68-0.64,1.07-1.51,1.07-2.42V9.87
@@ -202,7 +202,64 @@
                             <span>Transaction Sheet</span>
                         </a>
                     </li>
+                    <li class="menu animate__animated animate__fadeIn">
+                        <a class="nav-link" href="{{url('/vendor-invoice-dues')}}">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="menuIcon" width="24px" height="24px" viewBox="0 0 24 24"  stroke-linecap="round" stroke-linejoin="round" id="home">
+                                <g>
+                                    <line x1="8.52" y1="10.2" x2="11.07" y2="10.2"/>
+                                    <path d="M6.83,13.44c1.98,0.02,3.96,0.04,5.94,0.05"/>
+                                    <path d="M7.28,16.55c1.68,0.02,3.36,0.04,5.04,0.05"/>
+                                </g>
+                                <path d="M17.05,13.22h3.39c0.4,0,0.73,0.32,0.73,0.72v5.27c0,1.16-0.94,2.09-2.1,2.09h0c-0.96,0-1.74-0.77-1.74-1.73
+                                    V2.97l-3.58,2.31c-1.21-0.71-2.41-1.42-3.62-2.14C8.92,3.84,7.71,4.55,6.5,5.25L2.82,2.71v15.33c0,1.8,1.47,3.26,3.27,3.26
+                                    c4.32,0,8.65,0,12.97,0"/>
+                            </svg>
+                            <span>Vendor Invoice Dues</span>
+                        </a>
+                    </li>
+                    <li class="menu animate__animated animate__fadeIn">
+                        <a class="nav-link" href="{{url('/add-pay-ledger-wise')}}">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="menuIcon" width="24px" height="24px" viewBox="0 0 24 24"  stroke-linecap="round" stroke-linejoin="round" id="home">
+                                <g>
+                                    <line x1="8.52" y1="10.2" x2="11.07" y2="10.2"/>
+                                    <path d="M6.83,13.44c1.98,0.02,3.96,0.04,5.94,0.05"/>
+                                    <path d="M7.28,16.55c1.68,0.02,3.36,0.04,5.04,0.05"/>
+                                </g>
+                                <path d="M17.05,13.22h3.39c0.4,0,0.73,0.32,0.73,0.72v5.27c0,1.16-0.94,2.09-2.1,2.09h0c-0.96,0-1.74-0.77-1.74-1.73
+                                    V2.97l-3.58,2.31c-1.21-0.71-2.41-1.42-3.62-2.14C8.92,3.84,7.71,4.55,6.5,5.25L2.82,2.71v15.33c0,1.8,1.47,3.26,3.27,3.26
+                                    c4.32,0,8.65,0,12.97,0"/>
+                            </svg>
+                            <span>Add Pay Ledger</span>
+                        </a>
+                    </li>
+                    <li class="menu animate__animated animate__fadeIn">
+                        <a class="nav-link" href="{{url('/non-vendor-dues')}}">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="menuIcon" width="24px" height="24px" viewBox="0 0 24 24"  stroke-linecap="round" stroke-linejoin="round" id="home">
+                                <g>
+                                    <line x1="8.52" y1="10.2" x2="11.07" y2="10.2"/>
+                                    <path d="M6.83,13.44c1.98,0.02,3.96,0.04,5.94,0.05"/>
+                                    <path d="M7.28,16.55c1.68,0.02,3.36,0.04,5.04,0.05"/>
+                                </g>
+                                <path d="M17.05,13.22h3.39c0.4,0,0.73,0.32,0.73,0.72v5.27c0,1.16-0.94,2.09-2.1,2.09h0c-0.96,0-1.74-0.77-1.74-1.73
+                                    V2.97l-3.58,2.31c-1.21-0.71-2.41-1.42-3.62-2.14C8.92,3.84,7.71,4.55,6.5,5.25L2.82,2.71v15.33c0,1.8,1.47,3.26,3.27,3.26
+                                    c4.32,0,8.65,0,12.97,0"/>
+                            </svg>
+                            <span>Non Vendor Dues</span>
+                        </a>
+                    </li>
                 </ul>
+            </li>
+
+             <li class="menu animate__animated animate__fadeIn">
+                <a class="nav-link" href="{{url('/vendor-dashboard')}}">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="menuIcon" width="24px" height="24px" viewBox="0 0 24 24"  stroke-linecap="round" stroke-linejoin="round" id="home">
+                        <path d="M8.98,20.77v-3.06c0-0.78,0.67-1.41,1.5-1.41h3.03c0.4,0,0.78,0.15,1.06,0.41c0.28,0.27,0.44,0.62,0.44,1v3.06
+                            c0,0.32,0.13,0.64,0.37,0.87S15.95,22,16.3,22h2.06c0.96,0,1.89-0.36,2.57-1c0.68-0.64,1.07-1.51,1.07-2.42V9.87
+                            c0-0.73-0.35-1.43-0.94-1.9l-7.02-5.29c-1.22-0.93-2.97-0.9-4.16,0.07L3.02,7.96c-0.63,0.46-1,1.16-1.02,1.9v8.7
+                            C2,20.46,3.63,22,5.64,22h2.02c0.1,0,0.54-0.02,0.92-0.36C8.95,21.3,8.98,20.86,8.98,20.77z"/>
+                    </svg>
+                    <span>Vendors</span>
+                </a>
             </li>
         </ul>
 

@@ -199,4 +199,36 @@ $(document).ready(function () {
     function stopWorking() {
         $("#loading").removeClass("working");
     }
+
+    // for checkbox selection in datatable
+    $(document).on("change", ".tableContainer .selectAll", function () {
+        if (this.checked) {
+            $(".submitSelected").prop("disabled", false);
+            $(".selectRow").each(function () {
+                this.checked = true;
+            });
+            $(".selectedRowsActionBar").show();
+        } else {
+            $(".selectRow").each(function () {
+                this.checked = false;
+            });
+            $(".submitSelected").prop("disabled", true);
+            $(".selectedRowsActionBar").hide();
+        }
+    });
+
+    $(document).on("change", ".selectRow", function () {
+        if ($(".selectRow:checked").length == $(".selectRow").length) {
+            $(".selectAll").prop("checked", true);
+        } else {
+            if ($(".selectRow:checked").length < 1) {
+                $(".submitSelected").prop("disabled", true);
+                $(".selectedRowsActionBar").hide();
+            } else {
+                $(".submitSelected").prop("disabled", false);
+                $(".selectedRowsActionBar").show();
+            }
+            $(".selectAll").prop("checked", false);
+        }
+    });
 });

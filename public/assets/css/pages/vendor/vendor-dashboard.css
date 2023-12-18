@@ -1,0 +1,403 @@
+.widgetsBlock {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  align-items: stretch;
+  justify-content: space-around;
+  margin-bottom: 2rem;
+}
+.widgetsBlock .widget {
+  padding: 1rem;
+  flex: 1 1 240px;
+}
+.widgetsBlock .widget.listing {
+  flex: 1 1 300px;
+  border-radius: 18px;
+  box-shadow: 0px 2px 12px -3px rgba(131, 131, 131, 0.44);
+}
+.widgetsBlock .widget.listing h3 {
+  font-size: clamp(0.85rem, 4vw, 1rem);
+  line-height: clamp(0.85rem, 4vw, 1rem);
+  color: var(--secondaryColor);
+  font-family: "Montserrat";
+  font-weight: 500;
+  border-bottom: 1.5px solid currentColor;
+  padding: 0 0.5rem 0.3rem;
+}
+.widgetsBlock .widget.listing .listItem {
+  font-size: 13px;
+  line-height: 13px;
+  border-bottom: 1px solid rgba(131, 131, 131, 0.3764705882);
+  padding: 0.5rem 0.8rem;
+  display: flex;
+  gap: 0.3rem;
+}
+.widgetsBlock .widget.listing .listItem:last-of-type {
+  border-bottom: none;
+}
+.widgetsBlock .widget.listing .listItem .basic {
+  flex: 1 1 130px;
+  display: flex;
+  flex-flow: column;
+  gap: 0.3rem;
+  justify-content: space-evenly;
+}
+.widgetsBlock .widget.listing .listItem .basic span:first-of-type {
+  font-weight: 500;
+}
+.widgetsBlock .widget.listing .listItem .spend {
+  flex: 0 1 90px;
+  display: flex;
+  flex-flow: column;
+  background: var(--secondaryColorAlpha);
+  padding: 2px 4px 4px;
+  border-radius: 8px;
+  text-align: center;
+}
+.widgetsBlock .widget.listing .listItem .spend span:first-of-type {
+  font-size: 9px;
+  font-weight: 500;
+}
+.widgetsBlock .widget.listing .listItem .spend span:last-of-type {
+  font-size: 16px;
+  font-weight: 500;
+  padding: 7px 4px;
+  background: var(--bg);
+  border-radius: inherit;
+}
+.widgetsBlock .widget.actions {
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  gap: 1rem;
+}
+.widgetsBlock .widget.actions .action {
+  flex: 1;
+  border-radius: 12px;
+  border: 2px solid var(--secondaryColor);
+  text-align: center;
+  font-family: "Montserrat";
+  min-height: 90px;
+  display: flex;
+  flex-flow: column;
+}
+.widgetsBlock .widget.actions .action * {
+  font-family: "Montserrat";
+}
+.widgetsBlock .widget.actions .action.small {
+  background: var(--secondaryColor);
+  color: var(--secondaryText);
+}
+.widgetsBlock .widget.actions .action.small .heading {
+  font-size: 14px;
+}
+.widgetsBlock .widget.actions .action.small div {
+  flex: 1;
+  background: var(--bg);
+  border-radius: 10px;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 2px 8px;
+}
+.widgetsBlock .widget.actions .action.small div span {
+  flex: 1;
+  font-size: 22px;
+  color: var(--textPrimary);
+  font-weight: 600;
+  flex: 1;
+  display: grid;
+  place-items: center;
+}
+.widgetsBlock .widget.actions .action.small div .btn {
+  font-size: 11px !important;
+  padding: 1px 4px 1px 15px;
+  min-width: 80px;
+  background: rgba(132, 132, 132, 0.168627451);
+  color: var(--secondaryColor);
+  font-weight: 500;
+  width: min(80%, 150px);
+}
+.widgetsBlock .widget.actions .action.small div .btn svg {
+  height: 12px;
+  width: 12px;
+  left: 8px;
+  stroke: var(--secondaryColor);
+}
+.widgetsBlock .widget.actions .action.large {
+  min-width: 100%;
+}
+.widgetsBlock .widget.actions .action.large .heading {
+  font-size: 16px;
+  line-height: 32px;
+  color: var(--secondaryColor);
+  font-weight: 500;
+}
+.widgetsBlock .widget.actions .action.large div {
+  display: flex;
+  align-items: stretch;
+  flex-wrap: wrap;
+  gap: 1rem;
+  flex: 1;
+  padding: 0.3rem 1rem;
+}
+.widgetsBlock .widget.actions .action.large div .btn {
+  flex: 1;
+  position: relative;
+  padding: 0 0 12px 24px !important;
+  font-size: 18px;
+  min-height: 62px;
+}
+.widgetsBlock .widget.actions .action.large div .btn img {
+  position: absolute;
+  height: 48px;
+  width: 48px;
+  -o-object-fit: contain;
+     object-fit: contain;
+  aspect-ratio: 1/1;
+  left: 0px;
+  bottom: 0px;
+}
+
+.blockTitle {
+  margin-top: 3rem;
+  padding-left: 1rem;
+  color: var(--secondaryColor);
+  font-family: "Montserrat", sans-serif;
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 14px;
+}
+
+.details {
+  padding: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  row-gap: 2rem;
+  -moz-column-gap: 1.5rem;
+       column-gap: 1.5rem;
+  align-items: flex-start;
+}
+.details .top {
+  min-width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  border-radius: 1rem;
+  padding: 1rem;
+  box-shadow: 0 0 12px -3px rgba(131, 131, 131, 0.3764705882) inset;
+}
+.details .top .identity {
+  min-width: 100%;
+  flex-wrap: wrap;
+  row-gap: 1rem;
+}
+.details .top .identity div {
+  -moz-column-gap: 1.5rem;
+       column-gap: 1.5rem;
+  row-gap: 1rem;
+}
+.details .top .identity div img {
+  background-color: var(--secondaryColor);
+  height: 72px;
+  width: 72px;
+  border-radius: 30px;
+  -o-object-fit: fill;
+     object-fit: fill;
+}
+.details .top .identity div p {
+  margin-bottom: 0;
+}
+.details .top .identity div p.vendorName {
+  color: var(--textPrimary);
+  font-family: Montserrat;
+  font-size: clamp(1rem, 1.5vw, 1.2rem);
+  font-weight: 600;
+}
+.details .top .identity div p.vendorCode {
+  color: var(--textSecondary);
+  font-size: 12px;
+}
+.details .top .identity div.status {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  font-size: 12px;
+}
+.details .top .identity div.status .chip {
+  border-radius: 50vh;
+  padding: 2px 12px;
+  cursor: pointer;
+  text-decoration: none;
+}
+.details .top .detailBlock {
+  flex: 1 1 300px;
+}
+.details .top .detailBlock .blockHeading {
+  color: var(--textSecondary);
+  font-size: 14px;
+  margin-bottom: 0;
+}
+.details .top .detailBlock hr {
+  border-width: 1px;
+  color: var(--textSecondary);
+  margin: 0;
+}
+.details .top .detailBlock .detailDesBlock {
+  padding: 0.5rem 0.7rem;
+  font-size: 12px;
+}
+.details .top .detailBlock .detailDesBlock .detailDes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.2rem;
+}
+.details .top .detailBlock .detailDesBlock .detailDes span:first-of-type {
+  min-width: 80px;
+  color: var(--textSecondary);
+  font-size: 11px;
+}
+.details .top .detailBlock .detailDesBlock .detailDes span:last-of-type {
+  flex: 1;
+}
+.details > div {
+  flex: 1 1 300px;
+}
+.details > div .blockHeading {
+  color: var(--textSecondary);
+  font-size: 14px;
+  margin-bottom: 0;
+}
+.details > div .bankCard {
+  border-radius: 15px;
+  padding: 1rem;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.8rem;
+}
+.details > div .bankCard .bankLogo {
+  max-width: 260px;
+  max-height: 60px;
+  -o-object-fit: contain;
+     object-fit: contain;
+  margin: 1rem auto 0;
+}
+.details > div .bankCard .bankDetail {
+  width: 100%;
+  border-radius: 15px;
+  background: rgba(131, 131, 131, 0.1882352941);
+  padding: 1rem;
+}
+.details > div .bankCard .bankDetail .detailItem {
+  font-size: 14px;
+  color: var(--textPrimary);
+}
+.details > div .bankCard .bankDetail .detailItem .key {
+  min-width: 90px;
+}
+.details > div .bankCard .bankDetail .detailItem .value {
+  flex: 1;
+  white-space: nowrap;
+}
+.details > div .docBlock {
+  padding: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.8rem;
+}
+.details > div .docBlock .imageContainer {
+  text-decoration: none;
+  text-align: center;
+  background: var(--secondaryColorAlpha);
+  border-radius: 12px;
+  transition: all 300ms ease-in-out;
+}
+.details > div .docBlock .imageContainer img {
+  height: 90px;
+  -o-object-fit: contain;
+     object-fit: contain;
+  aspect-ratio: 1/1;
+  padding: 0.7rem;
+}
+.details > div .docBlock .imageContainer span {
+  font-size: 10px;
+  line-height: 18px;
+  margin-bottom: -17px;
+  background: var(--textPrimary);
+  width: 100%;
+  text-align: center;
+  color: var(--bg);
+  border-radius: 12px 12px 0 0;
+  display: none;
+}
+.details > div .docBlock .imageContainer:hover {
+  transform: translateY(-3px);
+}
+.details > div .docBlock .imageContainer:hover span {
+  display: block;
+}
+.details > div .statesBlock {
+  padding: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  -moz-column-gap: 0.5rem;
+       column-gap: 0.5rem;
+  row-gap: 1rem;
+}
+.details > div .statesBlock .chip {
+  --chipColor: var(--bs-cyan);
+  border-radius: 50vh;
+  border: 1.5px solid currentColor;
+  background: transparent !important;
+  color: var(--chipColor);
+  font-size: 12px;
+  padding: 2px 1rem;
+  line-height: 16px;
+}
+
+.actionButton {
+  color: #fff;
+  min-width: 120px;
+  margin-inline: 1rem;
+}
+.actionButton.accept {
+  background: #17c964;
+}
+.actionButton.reject {
+  background: #f31260;
+}
+
+.btnGroup {
+  font-size: 14px;
+  color: var(--secondaryColor);
+  font-weight: 400;
+  border: 1.5px solid;
+  border-radius: 14px;
+  min-height: 36px;
+  flex: 1;
+  align-items: stretch !important;
+}
+.btnGroup span {
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+  cursor: pointer;
+  flex: 1 1 300px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.btnGroup span:nth-child(2) {
+  box-shadow: 0px 0px 0 1px;
+}
+.btnGroup span:hover {
+  background: var(--secondaryColorAlpha);
+}/*# sourceMappingURL=vendor-dashboard.css.map */

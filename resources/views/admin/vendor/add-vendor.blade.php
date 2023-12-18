@@ -3,6 +3,11 @@
 @section('page-heading')Create Vendor @endsection
 @section('slug') > Create Vendor @endsection
 @section('content')
+
+<!-- for selectize -->
+@include('cdns.selectize')
+
+
 <div class="contentSection pt-3 mt-3">
     <div class="animate__animated animate__fadeIn">
         <form id="addVendorForm">
@@ -78,13 +83,44 @@
                     <label for="branch" class="form-label">Branch Name</label>
                     <input name="branch" type="text" id="branch" class="form-control" placeholder="Branch Name" required />
                 </div>
-                  <div class="form-group" style="flex: 1 1 260px">
+                <div class="form-group" style="flex: 1 1 45%">
                     <label for="bankName" class="form-label">Bank Name</label>
                     <input name="bankName" type="text" id="bankName" class="form-control" placeholder="Bank Name here" required autofocus />
                 </div>
-                   <div class="form-group" style="flex: 1 1 260px">
+                <div class="form-group" style="flex: 1 1 45%">
                     <label for="holderName" class="form-label">A/c Holder Name</label>
                     <input name="holderName" type="text" id="holderName" class="form-control" placeholder="Holder Name here" required />
+                </div>
+
+                <div class="form-group" style="flex: 1 1 260px">
+                    <label for="cashFlow" class="form-label">Cash Flow</label>
+                    <select name="cashFlow" id="cashFlow" class="form-control select" required placeholder="select ...">
+                        <option value="">--select--</option>
+                        <option value="assesse1">Assesse 1</option>
+                        <option value="assesse2">Assesse 2</option>
+                        <option value="assesse3">Assesse 3</option>
+                        <option value="assesse4">Assesse 4</option>
+                    </select>
+                </div>
+                <div class="form-group" style="flex: 1 1 260px">
+                    <label for="vendorGroup" class="form-label">Vendor Group</label>
+                    <select name="vendorGroup" id="vendorGroup" class="form-control select" required placeholder="select ...">
+                        <option value="">--select--</option>
+                        <option value="assesse1">Assesse 1</option>
+                        <option value="assesse2">Assesse 2</option>
+                        <option value="assesse3">Assesse 3</option>
+                        <option value="assesse4">Assesse 4</option>
+                    </select>
+                </div>
+                <div class="form-group" style="flex: 1 1 260px">
+                    <label for="paymentTerms" class="form-label">Terms of Payment</label>
+                    <select name="paymentTerms" id="paymentTerms" class="form-control select" required placeholder="select ...">
+                        <option value="">--select--</option>
+                        <option value="assesse1">Assesse 1</option>
+                        <option value="assesse2">Assesse 2</option>
+                        <option value="assesse3">Assesse 3</option>
+                        <option value="assesse4">Assesse 4</option>
+                    </select>
                 </div>
 
             </div>
@@ -203,30 +239,14 @@
 
 
 <script>
+    $('.select').selectize({
+        plugins: ["clear_button"],
+    });
+
     function resetForm(){
+        $('a.clear').click();
         $('#addVendorForm').trigger("reset");
     }
-
-    // $('#addVendorForm').on('submit', function(e){
-    // $('#vendorSubmitButton').on('click', function(e){
-    //     e.preventDefault();
-    //     $('#addVendorForm').addClass('validated');
-    //     console.log('formData');
-    //     $('#vendorSubmitButton span').html('...');
-    //     $('#vendorSubmitButton').attr('disabled', true);
-    //     $('#vendorSubmitButton').siblings('.discard').attr('disabled', true);
-    //     $('.btn-close').attr('disabled', true);
-    //     $("#loading").addClass("working");
-    //     setTimeout(() => {
-    //         $('#vendorSubmitButton span').html('Submit');
-    //         $('#vendorSubmitButton').removeAttr('disabled');
-    //         $('#vendorSubmitButton').siblings('.discard').removeAttr('disabled');
-    //         $('.btn-close').removeAttr('disabled');
-    //         resetForm();
-    //         $("#loading").removeClass("working");
-
-    //     }, 1500);
-    // })
 
      $("#addVendorForm").validate({
         rules: {
@@ -287,7 +307,6 @@
                 $('.btn-close').removeAttr('disabled');
                 resetForm();
                 $("#loading").removeClass("working");
-
             }, 1500);
         }
     });
