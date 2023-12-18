@@ -6,11 +6,11 @@ use App\Http\Controllers\Controller;
 use App\Models\Pfu;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
+use Auth;
 use Hash;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Auth;
 
 class LoginController extends Controller
 {
@@ -51,7 +51,6 @@ class LoginController extends Controller
             'message' => 'Email not found.', // Default error message
         ];
 
-        // Validate step 1 form data
         $validatedData = $request->validate([
             'email' => 'required|email',
         ]);
@@ -73,26 +72,29 @@ class LoginController extends Controller
         // Retrieve step 1 data from session
         $validateEmail = $request->session()->get('email');
 
-        // Validate step 2 form data
         $validatedData = $request->validate([
             'password' => 'required',
         ]);
 
-        // Simulate retrieving user data (Replace this with your actual logic)
         $user = User::where('email', $validateEmail['email'])->first();
 
         if (!$user) {
-            // User not found, return JSON response with error
             return new JsonResponse(['success' => false, 'message' => 'User not found']);
         }
 
-        // Check if the provided password matches the user's hashed password
         if (Hash::check($validatedData['password'], $user->password)) {
-            // Password is correct
-            $userPfu = explode(',', $user->pfu);
-            $getPfu = Pfu::select('id', 'pfu')->whereIn('id', $userPfu)->where('status', 1)->get();
+            $user_role = $user->getRoleNames()->first();
+            if($user_role == 'Super Admin' || $user_role == 'Admin'){
+                
+                Auth::login($user);
+                return new JsonResponse(['success' => true, 'message' => 'Password validated', 'admin_role' => true ]);
+            }else{
+                $userPfu = explode(',', $user->pfu);
+                $getPfu = Pfu::select('id', 'pfu')->whereIn('id', $userPfu)->where('status', 1)->get();
 
-            return new JsonResponse(['success' => true, 'message' => 'Password validated', 'user_pfu' => $getPfu]);
+                return new JsonResponse(['success' => true, 'message' => 'Password validated', 'user_pfu' => $getPfu]);
+            }
+
         } else {
             return new JsonResponse(['success' => false, 'message' => 'Incorrect password']);
         }
@@ -100,17 +102,17 @@ class LoginController extends Controller
 
     public function loginPfu(Request $request)
     {
-   
-         $step1Data = $request->session()->get('email');
 
-         $user = User::where('email', $step1Data['email'])->first();
+        $step1Data = $request->session()->get('email');
 
-         $request->session()->forget(['email']);
-         $request->session()->put('pfu', $request->pfu);
+        $user = User::where('email', $step1Data['email'])->first();
 
-         Auth::login($user);
+        $request->session()->forget(['email']);
+        $request->session()->put('pfu', $request->pfu);
 
-         return response()->json(['success' => true, 'message' => 'User logged in successfully']);
+        Auth::login($user);
+
+        return response()->json(['success' => true, 'message' => 'User logged in successfully']);
     }
 
     // public function login(Request $request)

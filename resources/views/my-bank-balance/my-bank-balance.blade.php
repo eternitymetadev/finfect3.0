@@ -214,8 +214,9 @@ $(document).ready(function() {
     }
     $('#addBankForm').submit(function(event) {
         event.preventDefault();
+        var pfu = localStorage.getItem('pfuValue');;
         var formData = new FormData(this);
-
+        formData.append('pfu', pfu);
         $.ajax({
             url: '/add-bank',
             type: 'POST',

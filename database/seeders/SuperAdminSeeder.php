@@ -31,11 +31,11 @@ class SuperAdminSeeder extends Seeder
         $admin->assignRole('Admin');
 
         // Creating Maker User
-        $productManager = User::create([
-            'name' => 'Vikas', 
-            'email' => 'vikas@finfect.biz',
-            'password' => Hash::make('finfect')
-        ]);
-        $productManager->assignRole('Maker'); 
+        // $productManager = User::create([
+        //     'name' => 'Vikas', 
+        //     'email' => 'vikas@finfect.biz',
+        //     'password' => Hash::make('finfect')
+        // ]);
+        // $productManager->assignRole('Maker'); 
     }
 }

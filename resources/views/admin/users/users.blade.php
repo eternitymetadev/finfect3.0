@@ -252,7 +252,7 @@
                             <!-- <option value="">--select pfu--</option>
 
                             </select> -->
-                            <div class="invalid-feedback">Enter a valid pfu name </div>
+                            <span class="error" id="pfuError"></span>
                         </div>
                     </div>
 
@@ -436,30 +436,14 @@ $(document).ready(function() {
 
 
     $(".btn-close, .discard").on('click', function() {
+        $('a.clear').click();
         resetFrom()
     });
 
 
     function resetFrom() {
         $('#addUserForm').trigger("reset");
-        $('.pfu').selectize({
-            valueField: 'id',
-            labelField: 'pfu',
-            searchField: 'pfu',
-            maxItems: selectOptions.length,
-            options: selectOptions,
-            create: false
-        })[0].selectize.clear();
-
-        // var editPfu = $('#edit_pfu').selectize({
-        //                     valueField: 'id',
-        //                     labelField: 'pfu',
-        //                     searchField: 'pfu',
-        //                     maxItems: selectOptions.length,
-        //                     options: selectOptions,
-        //                     create: false
-        //                 });
-        // editPfu[0].selectize.clear();
+        $('a.clear').click();
     }
 
 
@@ -491,6 +475,9 @@ $(document).ready(function() {
                     }
                     if (response.errors.hasOwnProperty('password')) {
                         $('#passwordError').text(response.errors.password[0]);
+                    }
+                    if (response.errors.hasOwnProperty('pfu')) {
+                        $('#pfuError').text(response.errors.pfu[0]);
                     }
                     // Handle other error fields similarly if needed
                 } else if (response.validation === false) {
@@ -532,16 +519,37 @@ $(document).ready(function() {
             create: false
         });
     }
-    initiatePfuSelect('.pfu', selectOptions.length, selectOptions);
+
+    // $('.pfu').selectize({
+    //     maxItems: selectOptions.length,
+    //     plugin: ["clear_button"],
+    //     options: selectOptions,
+    //     valueField: 'id',
+    //     labelField: 'pfu',
+    //     searchField: 'pfu',
+    // });
 
 
-    $('select[name="role"]').on('change', function() {
-        const role = $('select[name="role"]').val();
-
-        if (role == 'maker' || role == 'approver') {
-            initiatePfuSelect('.pfu', selectOptions.length, selectOptions);
+    $('select[name="roles[]"]').on('change', function() {
+        const role = $(this).val();
+        if (role == 'Approver' || role == 'Admin') {
+            $('.pfu').selectize({
+                maxItems: selectOptions.length,
+                plugin: ["clear_button"],
+                options: selectOptions,
+                valueField: 'id',
+                labelField: 'pfu',
+                searchField: 'pfu',
+            });
         } else {
-            initiatePfuSelect('.pfu', 1, selectOptions);
+            $('.pfu').selectize({
+                maxItems: 1,
+                plugin: ["clear_button"],
+                options: selectOptions,
+                valueField: 'id',
+                labelField: 'pfu',
+                searchField: 'pfu',
+            });
         }
     });
 

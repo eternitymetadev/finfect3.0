@@ -57,7 +57,7 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-
+      
         $rules = array(
             'name' => 'required|string|max:250',
             'email' => 'required|string|email:rfc,dns|max:250|unique:users,email',

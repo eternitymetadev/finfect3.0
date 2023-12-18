@@ -15,7 +15,7 @@ class BankBalanceController extends Controller
 
     public function storeBank(Request $request)
     {
-
+       
         $validator = \Validator::make($request->all(), [
             'accountNumber' => 'required',
             'holderName' => 'required',
@@ -34,7 +34,7 @@ class BankBalanceController extends Controller
             return response()->json(['errors' => $formattedErrors], 422);
         }
 
-        $pfu = '2';
+        $pfu = $request->pfu;
         // Check if the account number or PFU ID already exists in the database
         $existingBank = BankDetail::where('bank_acc_no', $request->accountNumber)
             ->Where('pfu_id', $pfu)
@@ -59,7 +59,7 @@ class BankBalanceController extends Controller
             $addBank['status'] = 0;
         }
 
-        $add = BankDetail::create($addBank);
+        $add = BankDetail::create($addBank); 
 
         if ($add) {
             $response['success'] = true;

@@ -170,7 +170,10 @@ function validatePassword() {
             },
             success: function(response) {
                 if (response.success) {
-                    console.log(response.user_pfu);
+                    if(response.admin_role){
+
+                        window.location.replace("/dashboard");
+                    }else{
                     // Password validation successful
                     $("#submitButton").removeAttr("disabled");
                     $("#submitButton").removeClass("loading");
@@ -199,6 +202,7 @@ function validatePassword() {
                             </svg>
                         </div>`;
                     showStepThree(); // You need to define this function to show step three
+                            }
                 } else {
                    
                     $("#password").siblings(".invalid-feedback").show();
@@ -221,7 +225,7 @@ function validatePassword() {
 }
 
 function selectedVendorLogin() {
-    console.log("logging in");
+    
     submitButton.setAttribute("disabled", true);
     submitButton.classList.add("loading");
     loader.classList.add("loading");
@@ -238,6 +242,7 @@ function selectedVendorLogin() {
             if (response.success) {
                 // User logged in successfully, redirect to dashboard
                 window.location.replace("/dashboard");
+                localStorage.setItem('pfuValue', pfu);
             } else {
                 // Handle login failure if needed
                 console.error('Login failed');
