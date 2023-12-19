@@ -231,4 +231,10 @@ $(document).ready(function () {
             $(".selectAll").prop("checked", false);
         }
     });
+
+    localStorage.setItem("currentSelectedUnit", "");
+
+    $(document).on("change", "#changeCurrentUnit", function () {
+        localStorage.setItem("currentSelectedUnit", $(this).val());
+    });
 });

@@ -215,6 +215,9 @@ input {
 input[type=checkbox], input[type=radio] {
   cursor: pointer;
 }
+input + label {
+  cursor: pointer;
+}
 
 input[type=number] {
   -webkit-appearance: textfield;
@@ -917,4 +920,74 @@ main {
   width: 16px;
   border-radius: 4px;
   background: var(--color);
+}
+
+body:has(aside.close) .tableContainer .selectedRowsActionBar {
+  max-width: calc(100vw - 118px);
+  transition: width 400ms ease-in-out;
+}
+
+.tabs {
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  flex: 1;
+  height: 32px;
+  border-radius: 12px;
+  padding: 2px;
+  box-shadow: 0 0 7px -4px var(--secondaryColor) inset;
+}
+.tabs * {
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+}
+.tabs.sm {
+  height: 18px;
+  outline: 1px solid var(--secondaryColor);
+  outline-offset: 1px;
+}
+.tabs.sm .tab label {
+  font-size: 0.7rem !important;
+}
+.tabs.lg {
+  height: 42px;
+}
+.tabs .tab {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: inherit;
+  transition: all 300ms ease-in-out;
+}
+.tabs .tab input {
+  display: none;
+}
+.tabs .tab label {
+  flex: 1;
+  color: var(--secondaryColor);
+  align-self: stretch;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem !important;
+  font-weight: 500;
+  font-family: "Montserrat";
+}
+.tabs .tab:has(input:checked) {
+  background: var(--secondaryColor);
+}
+.tabs .tab:has(input:checked) label {
+  color: var(--secondaryText);
+}
+.tabs .tab:hover {
+  background: var(--secondaryColorAlpha);
+}
+
+@media (max-width: 600px) {
+  .tableContainer .selectedRowsActionBar {
+    max-width: calc(100vw - 2rem) !important;
+  }
 }/*# sourceMappingURL=globalStyle.css.map */

@@ -303,7 +303,14 @@
                     @php
                     $role = optional(Auth::user()->roles->first())->name;
                     @endphp
-                    <p class="designation" style="white-space: nowrap"><span>MA4</span>{{$role}}</p>
+                    <p class="designation" style="white-space: nowrap">
+                      <select name="changeCurrentUnit" id="changeCurrentUnit">
+                        <option value="MA1" selected>MA1</option>
+                        <option value="MA2">MA2</option>
+                        <option value="MA3">MA3</option>
+                        <option value="MA4">MA4</option>
+                    </select>
+                    {{$role}}</p>
                 </div>
             </div>
 
