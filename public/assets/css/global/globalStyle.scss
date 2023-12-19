@@ -128,6 +128,9 @@ input {
     &[type="radio"] {
         cursor: pointer;
     }
+    & + label {
+        cursor: pointer;
+    }
 }
 
 input[type="number"] {
@@ -891,6 +894,85 @@ main {
             width: 16px;
             border-radius: 4px;
             background: var(--color);
+        }
+    }
+}
+
+body:has(aside.close) {
+    & .tableContainer {
+        & .selectedRowsActionBar {
+            max-width: calc(100vw - 118px);
+            transition: width 400ms ease-in-out;
+        }
+    }
+}
+
+.tabs {
+    display: flex;
+    align-items: stretch;
+    justify-content: center;
+    // outline: 1px solid var(--secondaryColor);
+    // outline-offset: 2px;
+    flex: 1;
+    height: 32px;
+    border-radius: 12px;
+    padding: 2px;
+    box-shadow: 0 0 7px -4px var(--secondaryColor) inset;
+    & * {
+        user-select: none;
+    }
+    &.sm {
+        height: 18px;
+        outline: 1px solid var(--secondaryColor);
+        outline-offset: 1px;
+        & .tab {
+            & label {
+                font-size: 0.7rem !important;
+            }
+        }
+    }
+    &.lg {
+        height: 42px;
+    }
+
+    & .tab {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: inherit;
+        transition: all 300ms ease-in-out;
+        & input {
+            display: none;
+        }
+        & label {
+            flex: 1;
+            color: var(--secondaryColor);
+            align-self: stretch;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem !important;
+            font-weight: 500;
+            font-family: "Montserrat";
+        }
+        &:has(input:checked) {
+            background: var(--secondaryColor);
+            & label {
+                color: var(--secondaryText);
+            }
+        }
+        &:hover {
+            background: var(--secondaryColorAlpha);
+        }
+    }
+}
+
+@media (max-width: 600px) {
+    .tableContainer {
+        & .selectedRowsActionBar {
+            max-width: calc(100vw - 2rem) !important;
         }
     }
 }

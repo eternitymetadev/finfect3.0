@@ -13,8 +13,22 @@
 
 <!-- topbar -->
 <div class="topbar sticky d-flex align-items-center justify-content-between animate__animated animate__fadeInDown">
-    <div class="flex-grow-1 d-flex align-items-center justify-content-start">
+    <div class="flex-grow-1 d-flex align-items-center justify-content-end">
+        <div class="tabs" style="flex: 0 1 450px">
+            <div class="tab">
+                <label for="regular">Regular</label>
+                <input type="radio" name="dueType" id="regular" value="regular" checked />
+            </div>
+            <div class="tab">
+                <label for="fullAndFinal">Full & Final</label>
+                <input type="radio" name="dueType" id="fullAndFinal" value="fullAndFinal" />
+            </div>
+            <div class="tab">
+                <label for="rejected">Rejected</label>
+                <input type="radio" name="dueType" id="rejected" value="rejected" />
+            </div>
 
+        </div>
     </div>
 </div>
 <!-- topbar end -->
@@ -31,7 +45,7 @@
         @elseif(true)
 
         <div class="tableContainer">
-            <div class="d-flex">
+            <div class="d-flex align-items-center px-3" style="">
                 <div class="form-group-row flex-grow-1 d-flex align-items-center animate__animated animate__fadeIn">
                     <input type="checkbox" class="form-control-checkbox selectAll" id="selectAllRows" />
                     <label for="selectAllRows">Select All</label>
@@ -44,12 +58,12 @@
 
             <div class="d-flex flex-column pt-4">
                 @for ($i = 0; $i < 15; $i++)
-                    <div class="rowItem">
+                    <div class="rowItem" style="@if($i % 2 == 0) --statusColor: var(--successColor) @else --statusColor: var(--warningColor) @endif">
                         <div class="checkBox">
                             <input type="checkbox" name="other_dues[]" class="selectRow" value="{{$i}}" />
                         </div>
                         <div class="items">
-                            <div class="item">
+                            <div class="item vendorInfo">
                                 <span class="heading">Vendor info</span>
                                 <span class="md line-clamp clamp-1 bold">R K Eneterprises and Industries Private Limited </span>
                                 <span class="sm line-clamp clamp-1">Code: <span class="bold">05177</span></span>
@@ -57,28 +71,35 @@
                                 <span class="sm line-clamp clamp-1">UNID: <span class="bold">10467</span></span>
                                 <span class="lg line-clamp clamp-1">AX Voucher: <span class="bold">FPTERFMA23-04589</span></span>
                             </div>
-                            <div class="item">
+                            <div class="item bankInfo">
                                 <span class="heading">Bank info</span>
                                 <span class="lg line-clamp clamp-1 bold">Punjab National Bank, Bohapur</span>
                                 <span class="lg line-clamp clamp-1">A/C No: <span class="bold">1263001500371061</span></span>
                                 <span class="lg line-clamp clamp-1">IFSC: <span class="bold">PUNB012630</span></span>
                             </div>
-                            <div class="item">
+                            <div class="item paymentInfo">
                                 <span class="heading">Payment info</span>
                                 <span class="lg line-clamp clamp-1">Req Type: <span class="bold">TER</span></span>
                                 <span class="lg line-clamp clamp-1">Type: <span class="bold">Regular Payment</span></span>
                                 <span class="lg line-clamp clamp-1">Date: <span class="bold">25-11-2023 06:00 PM</span></span>
                             </div>
-                            <div class="item">
-                                <span class="heading">Balance</span>
-                                <span class="amountBox">
-                                    <span class="head">Closing</span>
-                                    <span class="amount">0.00</span>
-                                </span>
-                                <span class="amountBox">
-                                    <span class="head">Due</span>
-                                    <span class="amount">20,368.00</span>
-                                </span>
+                            <div class="item balanceInfo">
+                                <div style="display: flex;
+                                            flex-wrap: wrap;
+                                            max-width: 300px;
+                                            flex: 1;
+                                            gap: 6px"
+                                >
+                                    <span class="heading">Balance</span>
+                                    <span class="amountBox closing">
+                                        <span class="head">Closing</span>
+                                        <span class="amount currency">0.00</span>
+                                    </span>
+                                    <span class="amountBox">
+                                        <span class="head due">Due</span>
+                                        <span class="amount currency">20368231</span>
+                                    </span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -209,10 +230,19 @@ $(document).ready(function() {
 
 
     // custom serach input for datatable
-    $('.keywordSearch').on( 'keyup', function () {
-        // const searchKeyword = this.value.replace(/[^a-zA-Z0-9 ]/g, ''); // written to remove special characters
-        table.search(this.value).draw();
+    $('input[name="dueType"]').on( 'change', function () {
+        $('#loading').addClass('working');
+        setTimeout(() => {
+            table.draw();
+            $('#createTransaction').removeAttr('disabled');
+            $('input[type="checkbox"]').css("pointer-events", "all");
+            $('#loading').removeClass('working');
+            $('input[type="checkbox"]').prop("checked", false);
+            $(".selectedRowsActionBar").hide();
+        }, 1500);
     });
+
+
 
 
     // create Transaction
