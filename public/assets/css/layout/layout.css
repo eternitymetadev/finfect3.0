@@ -1008,6 +1008,19 @@ body:has(aside.close) .tableContainer .selectedRowsActionBar {
   border-radius: 50vh;
 }
 
+#changeCurrentUnit {
+  border-radius: 8px;
+  background: var(--secondaryColor);
+  color: #fff;
+  text-align: center;
+  font-family: "Montserrat", sans-serif;
+  font-size: 12px;
+  line-height: 10px;
+  padding: 2px 2px 2px 2px;
+  margin-right: 8px;
+  border: none;
+}
+
 body {
   scroll-behavior: smooth;
   position: relative;
