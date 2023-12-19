@@ -37,25 +37,25 @@
 
     <div class="bankPage animate__animated animate__fadeIn">
 
-        @for ($i = 0; $i < 5; $i++) <div class="bankCard animate__animated animate__fadeIn">
+        @foreach ($bankdetails as $bankdetail) <div class="bankCard animate__animated animate__fadeIn">
             <img src="{{asset('assets/images/logo.svg')}}" alt="bank logo"
                 class="bankLogo animate__animated animate__fadeIn" />
             <div class="bankDetail animate__animated animate__fadeIn">
                 <div class="detailItem d-flex align-items-center">
                     <span class="key">A/c Holder</span>
-                    <span class="value flex-grow-1">: Anil Wires & Cables</span>
+                    <span class="value flex-grow-1">: {{$bankdetail->acc_holder_name}}</span>
                 </div>
                 <div class="detailItem d-flex align-items-center">
                     <span class="key">A/c Number</span>
-                    <span class="value flex-grow-1">: 0353104000163361</span>
+                    <span class="value flex-grow-1">: {{$bankdetail->bank_acc_no}}</span>
                 </div>
                 <div class="detailItem d-flex align-items-center">
                     <span class="key">Branch</span>
-                    <span class="value flex-grow-1">: Hisar, Haryana</span>
+                    <span class="value flex-grow-1">: {{$bankdetail->branch_name}}</span>
                 </div>
                 <div class="detailItem d-flex align-items-center">
                     <span class="key">IFSC</span>
-                    <span class="value flex-grow-1">: IBKL0000353</span>
+                    <span class="value flex-grow-1">: {{$bankdetail->ifsc_code}}</span>
                 </div>
             </div>
 
@@ -81,7 +81,7 @@
                 </div>
             </div>
     </div>
-    @endfor
+    @endforeach
 
 </div>
 

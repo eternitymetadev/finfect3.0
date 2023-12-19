@@ -2,9 +2,9 @@
 
 namespace App\Http\Middleware;
 
+use Auth;
 use Closure;
 use Illuminate\Http\Request;
-use Auth;
 
 class CheckAuthMiddleware
 {
@@ -17,13 +17,13 @@ class CheckAuthMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-        if (Auth::check()) {    
+        if (Auth::check()) {
 
-            return $next($request);   
-                 
-           }         // Redirect or handle unauthorized access as needed       
-            return redirect()->route('login');
-             // Redirect to the login route   
-            }
-            
+            return $next($request);
+
+        } // Redirect or handle unauthorized access as needed
+        return redirect()->route('/');
+        // Redirect to the login route
+    }
+
 }

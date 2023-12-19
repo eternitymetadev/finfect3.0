@@ -35,8 +35,10 @@ class UserController extends Controller
     public function index(): View
     {
         $role = Auth::user()->roles->first()->name;
+        $authuser = Auth::user();
+        $users = User::where('id', '!=', $authuser->id)->latest('id')->get();
         return view('admin.users.users', [
-            'users' => User::latest('id')->get(),
+            'users' => $users,
             'roles' => Role::where('name', '!=', $role)->pluck('name')->all(),
             'pfus' => Pfu::select('id', 'pfu')->where('status', 1)->get(),
         ]);

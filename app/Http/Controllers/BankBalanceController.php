@@ -10,7 +10,8 @@ class BankBalanceController extends Controller
 
     public function myBankBalance()
     {
-        return view('my-bank-balance.my-bank-balance');
+        $bankdetails = BankDetail::where('status',1)->get();
+        return view('my-bank-balance.my-bank-balance',['bankdetails' => $bankdetails]);
     }
 
     public function storeBank(Request $request)
