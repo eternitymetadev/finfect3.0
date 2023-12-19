@@ -372,7 +372,7 @@ $(document).ready(function() {
     //         $('.btn-close').removeAttr('disabled');
     //         resetFrom()
     //     }, 1500);
-    // })
+    // }) 
     $('#addPfuForm').submit(function(event) {
         event.preventDefault();
         var formData = $(this).serialize();

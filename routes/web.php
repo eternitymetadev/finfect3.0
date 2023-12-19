@@ -45,6 +45,7 @@ Route::middleware(['auth.check'])->group(function () {
 
     Route::get('/my-bank-balance', [BankBalanceController::class, 'myBankBalance']);
     Route::post('/add-bank', [BankBalanceController::class, 'storeBank']);
+    Route::post('/update-balance', [BankBalanceController::class, 'updateBankBalance']);
 
     Route::get('/vendor-ledger-sheet', function () {
         return view('ledger-sheet.vendor-ledger-sheet');

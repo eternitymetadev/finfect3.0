@@ -3,10 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Models\BankDetail;
+use App\Models\BankBalance;
 use Illuminate\Http\Request;
 
 class BankBalanceController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware('permission:BankBalance', ['only' => ['myBankBalance']]);
+    }
 
     public function myBankBalance()
     {
@@ -70,4 +77,22 @@ class BankBalanceController extends Controller
 
         return response()->json($response);
     }
+
+     public function updateBankBalance(Request $request)
+     {
+        
+        $addBankBalance['bank_detail_id'] = $request->bank_id;
+        $addBankBalance['bank_balance'] = $request->amount;
+        $addBankBalance['date'] = date('Y-m-d');
+
+        $addBalance = BankBalance::create($addBankBalance); 
+
+        if ($addBalance) {
+            $response['success'] = true;
+        } else {
+            $response['success'] = false;
+        }
+
+        return response()->json($response);
+     }
 }
