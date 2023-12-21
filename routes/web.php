@@ -38,6 +38,8 @@ Route::post('/login-pfu', [LoginController::class, 'loginPfu'])->name('login.pfu
 
 Route::middleware(['auth.check'])->group(function () {
 
+    Route::post('/change-login-pfu', [HomeController::class, 'changeLoginPfu']);
+
     Route::post('/save-pfu', [PfuController::class, 'storePfu']);
     Route::post('/update-pfu', [PfuController::class, 'updatePfu']);
     Route::get('pfu-list', [PfuController::class, 'pfuList']);

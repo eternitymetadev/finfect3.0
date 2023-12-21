@@ -25,4 +25,11 @@ class HomeController extends Controller
     {
         return view('dashboard.dashboard');
     }
+
+    public function changeLoginPfu(Request $request)
+    {
+        $request->session()->put('pfu', $request->pfu);
+
+        return response()->json(['success' => true, 'message' => 'User Pfu Changed']);
+    }
 }

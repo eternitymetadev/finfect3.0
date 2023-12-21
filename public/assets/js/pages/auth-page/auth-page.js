@@ -181,7 +181,7 @@ function validatePassword() {
                     $(".invalid-feedback").hide();
                     vendorSelection = `<div class="form-group">
                             <label for="vendorSelection" class="form-label">
-                                Vendor Code
+                                PFU
                             </label>
                             <select
                                 autofocus
@@ -191,7 +191,7 @@ function validatePassword() {
                                 name="pfu"
                                 required
                             >
-                            <option value="" selected disabled>--select vendor--</option>
+                            <option value="" selected disabled>--select pfu--</option>
                             ${response.user_pfu.map((unit, index)=>(
                                 `<option value="${unit.id}">${unit.pfu}</option>`
                             ))}

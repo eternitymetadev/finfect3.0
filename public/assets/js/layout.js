@@ -232,9 +232,29 @@ $(document).ready(function () {
         }
     });
 
-    localStorage.setItem("currentSelectedUnit", "");
 
     $(document).on("change", "#changeCurrentUnit", function () {
-        localStorage.setItem("currentSelectedUnit", $(this).val());
+        var pfu = $(this).val();
+
+        $.ajax({
+            type: "POST",
+            url: "/change-login-pfu",
+            data: {
+                pfu: pfu
+            },
+            dataType: 'json',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function (response) {
+                localStorage.setItem("pfuValue", pfu);
+                location.reload();
+            },
+            error: function (xhr, status, error) {
+
+                console.error("AJAX request failed:", status, error);
+            }
+        });
+
     });
 });

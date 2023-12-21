@@ -302,15 +302,27 @@
                     <p class="name">{{ Auth::user()->name }}</p>
                     @php
                     $role = optional(Auth::user()->roles->first())->name;
+                    if($role == 'Super Admin' || $role == 'Admin'){
                     @endphp
                     <p class="designation" style="white-space: nowrap">
-                      <select name="changeCurrentUnit" id="changeCurrentUnit">
-                        <option value="MA1" selected>MA1</option>
-                        <option value="MA2">MA2</option>
-                        <option value="MA3">MA3</option>
-                        <option value="MA4">MA4</option>
-                    </select>
-                    {{$role}}</p>
+                        {{$role}}</p>
+                    @php }else{
+                    $auth_pfu = Auth::user()->pfu;
+                    $pfu = explode(',', $auth_pfu);
+                    $assign_pfu = App\Models\Pfu::whereIn('id',$pfu)->where('status',1)->get();
+                    $login_pfu = session('pfu');
+
+                    @endphp
+                    <p class="designation" style="white-space: nowrap">
+                        <select name="changeCurrentUnit" id="changeCurrentUnit">
+                            @foreach($assign_pfu as $assign)
+                            <option value="{{$assign->id}}" {{ $login_pfu == $assign->id ? 'selected' : '' }}>{{$assign->pfu}}</option>
+                            @endforeach
+                        </select>
+                        {{$role}}
+                    </p>
+                    @php } @endphp
+
                 </div>
             </div>
 

@@ -186,7 +186,7 @@ $(document).ready(function() {
 
         var button = $(this);
         var bank_id = $(this).val();
-        var amount = $('.amount').val();
+        var amount = $(this).siblings('.form-group').children('.amount').val();
 
         button.html('...');
         button.attr('disabled', true);
@@ -210,6 +210,11 @@ $(document).ready(function() {
                 button.removeAttr('disabled');
                 button.parent().siblings('.discard').removeAttr('disabled');
                 button.parent().siblings('.discard').click();
+                button.parent('.balanceUpdate').siblings('.balanceAmount').children('.updatedAmount').html(amount); 
+                button.parent('.balanceUpdate').siblings('.actionLabel').attr('disabled', true);
+                $('.updatedAmount').each(function() {
+                    $(this).text(formatIndianCurrency($(this).text()));
+                });
             },
             error: function(xhr, status, error) {
                 // Handle error

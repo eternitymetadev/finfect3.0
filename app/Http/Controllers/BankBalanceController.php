@@ -15,9 +15,10 @@ class BankBalanceController extends Controller
         $this->middleware('permission:BankBalance', ['only' => ['myBankBalance']]);
     }
 
-    public function myBankBalance()
+    public function myBankBalance(Request $request)
     {
-        $bankdetails = BankDetail::where('status',1)->get();
+        $loginPfu = $request->session()->get('pfu');
+        $bankdetails = BankDetail::where('status',1)->where('pfu_id', $loginPfu)->get();
         return view('my-bank-balance.my-bank-balance',['bankdetails' => $bankdetails]);
     }
 
@@ -25,7 +26,7 @@ class BankBalanceController extends Controller
     {
        
         $validator = \Validator::make($request->all(), [
-            'accountNumber' => 'required',
+            'accountNumber' => 'required|unique:bank_details,bank_acc_no',
             'holderName' => 'required',
             'ifsc' => 'required',
             'branch' => 'required',
@@ -44,16 +45,16 @@ class BankBalanceController extends Controller
 
         $pfu = $request->pfu;
         // Check if the account number or PFU ID already exists in the database
-        $existingBank = BankDetail::where('bank_acc_no', $request->accountNumber)
-            ->Where('pfu_id', $pfu)
-            ->first();
+        // $existingBank = BankDetail::where('bank_acc_no', $request->accountNumber)
+        //     ->Where('pfu_id', $pfu)
+        //     ->first();
 
-        if ($existingBank) {
+        // if ($existingBank) {
 
-            $response['errors'] = true;
-            $response['message'] = 'Account number or Pfu already exists.';
-            return response()->json($response);
-        }
+        //     $response['errors'] = true;
+        //     $response['message'] = 'Account number or Pfu already exists.';
+        //     return response()->json($response);
+        // }
 
         $addBank['bank_acc_no'] = $request->accountNumber;
         $addBank['acc_holder_name'] = $request->holderName;
