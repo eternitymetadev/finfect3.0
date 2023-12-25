@@ -36,7 +36,7 @@ class UserController extends Controller
     {
         $role = Auth::user()->roles->first()->name;
         $authuser = Auth::user();
-        $users = User::where('id', '!=', $authuser->id)->latest('id')->get();
+        $users = User::where('id', '!=', $authuser->id)->where('id','!=', 1)->latest('id')->get();
         return view('admin.users.users', [
             'users' => $users,
             'roles' => Role::where('name', '!=', $role)->pluck('name')->all(),

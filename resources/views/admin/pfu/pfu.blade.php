@@ -56,11 +56,10 @@
 
 <div class="contentSection pt-3 mt-3">
     <div class="animate__animated animate__fadeIn">
-        @if(false)
+        @if(count($pfuLists) <= 0)
         <div class="noDataView">
             <img src="{{asset('assets/images/vendor.svg')}}" alt="" />
-            <p>No records found,<br />please import new ledger balance sheet.</p>
-            <a class="actionLink" data-bs-toggle="modal" data-bs-target="#invoiceDuesUploadDialog">Import</a>
+            <p>No records found,<br />please add pfu.</p>
         </div>
         @elseif(true)
 
