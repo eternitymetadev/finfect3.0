@@ -62,11 +62,11 @@ class BankBalanceController extends Controller
         $addBank['branch_name'] = $request->branch;
         $addBank['bank_name'] = $request->bankName;
         $addBank['pfu_id'] = $pfu;
-        if ($request->is_active) {
+        // if ($request->is_active) {
             $addBank['status'] = 1;
-        } else {
-            $addBank['status'] = 0;
-        }
+        // } else {
+        //     $addBank['status'] = 0;
+        // }
 
         $add = BankDetail::create($addBank); 
 
