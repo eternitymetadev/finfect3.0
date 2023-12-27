@@ -151,7 +151,7 @@
 
             <div class="modal-footer">
                 <button type="button" class="btn btn-sm btn-secondary animate__animated animate__fadeInUp discard"
-                    data-bs-dismiss="modal">Discard & Close</button>
+                    data-bs-dismiss="modal">Discard Changes</button>
                 <button type="submit" class="btn btn-sm btn-primary animate__animated animate__fadeInUp"
                     id="bankSubmitButton">
                     <span>Submit</span>
