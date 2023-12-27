@@ -40,7 +40,8 @@
             </svg>
         </button>
 
-        <button id="exportMyLedger" class="btn btn-sm btn-primary animate__animated animate__fadeIn">
+        <a id="exportMyLedger" href="{{ url('/export-users') }}"
+            class="btn btn-sm btn-primary animate__animated animate__fadeIn">
             Export
             <svg xmlns="http://www.w3.org/2000/svg" class="icon right" width="24" height="24" viewBox="0 0 24 24"
                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
@@ -49,7 +50,7 @@
                 <line x1="12" y1="12" x2="12" y2="21"></line>
                 <path d="M20.88 18.09A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.29"></path>
             </svg>
-        </button>
+        </a>
 
     </div>
 </div>
@@ -58,105 +59,103 @@
 
 <div class="contentSection pt-3 mt-3">
     <div class="animate__animated animate__fadeIn">
-        @if(count($users) <= 0)
-        <div class="noDataView">
+        @if(count($users) <= 0) <div class="noDataView">
             <img src="{{asset('assets/images/vendor.svg')}}" alt="" />
             <p>No records found,<br />please add users.</p>
             <!-- <a class="actionLink" data-bs-toggle="modal" data-bs-target="#invoiceDuesUploadDialog">Import</a> -->
-        </div>
-        @elseif(true)
-
-        <div class="tableContainer">
-            <div class="table-responsive">
-                <table id="usersTable" class="table table-sm">
-                    <thead>
-                        <tr>
-                            <th>Sr No.</th>
-                            <th>PFU</th>
-                            <th>Name</th>
-                            <th>Mobile</th>
-                            <th>Email</th>
-                            <th>Role</th>
-                            <th class="text-center">Status</th>
-                            <th class="actionCol text-center">Action</th>
-                        </tr>
-                    </thead>
-
-                    <tbody>
-                        @php
-                        $i = 1;
-                        @endphp
-                        @foreach ($users as $user)
-                        @php
-                        if (!empty($user->pfu)){
-                        $assign_pfu = explode(',',$user->pfu);
-                        $pfu = App\Models\Pfu::select('id','pfu')->whereIn('id',$assign_pfu)->get();
-                        $pfuValues = $pfu->pluck('pfu')->toArray();
-                        $result = implode(',', $pfuValues);
-                        }else{
-                        $result = '-';
-                        }
-
-                        @endphp
-                        <tr>
-                            <td>{{$i}}</td>
-                            <td>{{$result}}</td>
-                            <td>{{$user->name}}</td>
-                            <td>{{$user->mobile ?? '-'}}</td>
-                            <td>{{$user->email}}</td>
-
-                            <td>{{$user->getRoleNames()->first();}}</td>
-                            <td class="text-center">
-                                @php
-                                switch($user->status) {
-                                case 1:
-                                $status = 'success';
-                                $statusText = 'Active';
-                                break;
-                                case 2:
-                                $status = 'warning';
-                                $statusText = 'Pending';
-                                break;
-                                case 3:
-                                $status = 'error';
-                                $statusText = 'Inactive';
-                                break;
-                                default:
-                                $status = 'success';
-                                $statusText = 'Active';
-
-                                }
-                                @endphp
-
-                                <span class="chip mx-auto {{$status}}">
-                                    {{$statusText}}
-                                </span>
-                            </td>
-                            <td class="actionCol text-center">
-                                <div class="iconButtonsContainer d-flex align-items-center justify-content-center"
-                                    style="gap: 0.5rem">
-                                    <a class="iconButton edit_user" data-id="{{$user->id}}">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                            stroke-linecap="round" stroke-linejoin="round"
-                                            class="feather feather-edit-2">
-                                            <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path>
-                                        </svg>
-                                    </a>
-                                </div>
-                            </td>
-                        </tr>
-                        @php
-                        $i++;
-                        @endphp
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
-        @endif
     </div>
+    @elseif(true)
+
+    <div class="tableContainer">
+        <div class="table-responsive">
+            <table id="usersTable" class="table table-sm">
+                <thead>
+                    <tr>
+                        <th>Sr No.</th>
+                        <th>PFU</th>
+                        <th>Name</th>
+                        <th>Mobile</th>
+                        <th>Email</th>
+                        <th>Role</th>
+                        <th class="text-center">Status</th>
+                        <th class="actionCol text-center">Action</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @php
+                    $i = 1;
+                    @endphp
+                    @foreach ($users as $user)
+                    @php
+                    if (!empty($user->pfu)){
+                    $assign_pfu = explode(',',$user->pfu);
+                    $pfu = App\Models\Pfu::select('id','pfu')->whereIn('id',$assign_pfu)->get();
+                    $pfuValues = $pfu->pluck('pfu')->toArray();
+                    $result = implode(',', $pfuValues);
+                    }else{
+                    $result = '-';
+                    }
+
+                    @endphp
+                    <tr>
+                        <td>{{$i}}</td>
+                        <td>{{$result}}</td>
+                        <td>{{$user->name}}</td>
+                        <td>{{$user->mobile ?? '-'}}</td>
+                        <td>{{$user->email}}</td>
+
+                        <td>{{$user->getRoleNames()->first();}}</td>
+                        <td class="text-center">
+                            @php
+                            switch($user->status) {
+                            case 1:
+                            $status = 'success';
+                            $statusText = 'Active';
+                            break;
+                            case 2:
+                            $status = 'warning';
+                            $statusText = 'Pending';
+                            break;
+                            case 3:
+                            $status = 'error';
+                            $statusText = 'Inactive';
+                            break;
+                            default:
+                            $status = 'success';
+                            $statusText = 'Active';
+
+                            }
+                            @endphp
+
+                            <span class="chip mx-auto {{$status}}">
+                                {{$statusText}}
+                            </span>
+                        </td>
+                        <td class="actionCol text-center">
+                            <div class="iconButtonsContainer d-flex align-items-center justify-content-center"
+                                style="gap: 0.5rem">
+                                <a class="iconButton edit_user" data-id="{{$user->id}}">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" class="feather feather-edit-2">
+                                        <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path>
+                                    </svg>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                    @php
+                    $i++;
+                    @endphp
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    @endif
+</div>
 
 </div>
 
@@ -435,14 +434,14 @@ $(document).ready(function() {
     // }
 
     $('#pfu').selectize({
-            maxItems: simplifiedData.length,
-            plugins: ["clear_button"],
-            options: simplifiedData,
-            valueField: 'id',
-            labelField: 'pfu',
-            searchField: 'pfu',
-            create: false
-        })
+        maxItems: simplifiedData.length,
+        plugins: ["clear_button"],
+        options: simplifiedData,
+        valueField: 'id',
+        labelField: 'pfu',
+        searchField: 'pfu',
+        create: false
+    })
 
     $('select[name="roles[]"]').on('change', function() {
         if ($(this).val() != '') {
@@ -542,7 +541,7 @@ $(document).ready(function() {
                     $('#vendorSubmitButton span').html('...');
                     $('#vendorSubmitButton').attr('disabled', true);
                     $('#vendorSubmitButton').siblings('.discard').attr('disabled',
-                    true);
+                        true);
                     $('.btn-close').attr('disabled', true);
                     $("#loading").addClass("working");
                 },
@@ -560,8 +559,8 @@ $(document).ready(function() {
                             $('#passwordError').text(response.errors.password[0]);
                         }
                         if (response.errors.hasOwnProperty('pfu')) {
-                        $('#pfuError').text(response.errors.pfu[0]);
-                    }
+                            $('#pfuError').text(response.errors.pfu[0]);
+                        }
                         // Handle other error fields similarly if needed
                     } else if (response.validation === false) {
                         // Handle other types of errors or validations
@@ -586,7 +585,7 @@ $(document).ready(function() {
                     $('#vendorSubmitButton span').html('Submit');
                     $('#vendorSubmitButton').removeAttr('disabled');
                     $('#vendorSubmitButton').siblings('.discard').removeAttr(
-                    'disabled');
+                        'disabled');
                     $('.btn-close').removeAttr('disabled');
                     $("#loading").removeClass("working");
                 }

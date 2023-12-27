@@ -5,6 +5,7 @@
 @section('content')
 
 <link href="{{asset('assets/css/pages/common/common.css')}}" rel="stylesheet" />
+<link href="{{asset('assets/css/pages/pfu-page/pfu-page.css')}}" rel="stylesheet" />
 
 <!-- for dataTable -->
 @include('cdns.dataTable')
