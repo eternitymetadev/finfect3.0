@@ -7,6 +7,7 @@ use App\Http\Controllers\PfuController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\VendorController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -38,6 +39,8 @@ Route::post('/login-pfu', [LoginController::class, 'loginPfu'])->name('login.pfu
 
 Route::middleware(['auth.check'])->group(function () {
 
+    Route::post('/change-login-pfu', [HomeController::class, 'changeLoginPfu']);
+
     Route::post('/save-pfu', [PfuController::class, 'storePfu']);
     Route::post('/update-pfu', [PfuController::class, 'updatePfu']);
     Route::get('pfu-list', [PfuController::class, 'pfuList']);
@@ -45,6 +48,12 @@ Route::middleware(['auth.check'])->group(function () {
 
     Route::get('/my-bank-balance', [BankBalanceController::class, 'myBankBalance']);
     Route::post('/add-bank', [BankBalanceController::class, 'storeBank']);
+    Route::post('/update-balance', [BankBalanceController::class, 'updateBankBalance']);
+
+    Route::get('/vendor-dashboard', [VendorController::class, 'vendorDashboard']);
+    Route::get('/vendors/create', [VendorController::class, 'vendorCreate']);
+    Route::post('/add-vendor', [VendorController::class, 'addVendor']);
+
 
     Route::get('/vendor-ledger-sheet', function () {
         return view('ledger-sheet.vendor-ledger-sheet');
@@ -68,17 +77,6 @@ Route::middleware(['auth.check'])->group(function () {
     });
     Route::get('/vendors', function () {
         return view('admin.vendor.vendors');
-    });
-    Route::get('/vendors/create', function () {
-        return view('admin.vendor.add-vendor');
-    });
-
-    // Route::get('/authentication', function () {
-    //     return view('authentication.login');
-    // });
-
-    Route::get('/vendor-dashboard', function () {
-        return view('vendor.vendor-dashboard');
     });
 
     Route::get('/vendor-invoice-dues', function () {

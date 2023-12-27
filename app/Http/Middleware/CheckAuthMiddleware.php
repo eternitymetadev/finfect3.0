@@ -22,7 +22,7 @@ class CheckAuthMiddleware
             return $next($request);
 
         } // Redirect or handle unauthorized access as needed
-        return redirect()->route('/');
+        return redirect()->route('login');
         // Redirect to the login route
     }
 

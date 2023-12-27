@@ -1,7 +1,8 @@
 .rowItem {
+    --statusColor: var(--secondaryColor);
     border-radius: 18px;
-    border: 1px solid #94e5b4;
-    border-left: 8px solid #94e5b4;
+    border: 1px solid var(--statusColor);
+    border-left: 8px solid var(--statusColor);
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -19,15 +20,16 @@
     }
     & .items {
         flex: 1;
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        // display: grid;
+        // grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        display: flex;
+        flex-wrap: wrap;
         row-gap: 1rem;
         & .item {
             padding-inline: 0.5rem;
             display: flex;
             flex-wrap: wrap;
             justify-content: space-between;
-            flex: 1 1 250px;
             font-size: 11px;
             color: var(--textSecondary);
             & .heading {
@@ -54,24 +56,75 @@
             }
             &:has(.amountBox) {
                 column-gap: 0.5rem;
+                row-gap: 4px;
                 & .heading {
                     text-align: center;
+                    font-size: 12px;
                 }
                 & .amountBox {
-                    flex: 1;
+                    flex: 1 1 130px;
                     background: var(--secondaryColor);
                     border-radius: 12px;
                     display: flex;
                     flex-flow: column;
                     align-items: center;
+                    padding: 0 4px 4px;
+                    &.closing {
+                        background: #83838380;
+                    }
                     & .head {
-                        font-size: 12px;
+                        font-size: 10px;
+                        color: var(--secondaryText);
+                        font-family: "Montserrat";
                     }
                     & .amount {
                         background: var(--bg);
                         border-radius: inherit;
                         font-size: clamp(1em, 3vw, 1.3em);
+                        width: 100%;
+                        display: grid;
+                        place-items: center;
+                        font-size: 0.85rem;
+                        font-family: "Montserrat";
+                        font-weight: 500;
+                        padding: 8px 2px;
                     }
+                }
+            }
+
+            &.vendorInfo {
+                flex: 1 0 280px;
+            }
+            &.bankInfo {
+                flex: 0 0 250px;
+            }
+            &.paymentInfo {
+                flex: 0 0 200px;
+            }
+            &.balanceInfo {
+                flex: 1 0 250px;
+                justify-content: flex-end;
+            }
+        }
+    }
+}
+
+@media (max-width: 600px) {
+    .rowItem {
+        & .items {
+            & .item {
+                &.vendorInfo {
+                    flex: 1 1 280px;
+                }
+                &.bankInfo {
+                    flex: 1 0 250px;
+                }
+                &.paymentInfo {
+                    flex: 1 0 200px;
+                }
+                &.balanceInfo {
+                    flex: 1 0 250px;
+                    justify-content: center;
                 }
             }
         }

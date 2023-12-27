@@ -5,6 +5,7 @@
 @section('content')
 
 <link href="{{asset('assets/css/pages/common/common.css')}}" rel="stylesheet" />
+<link href="{{asset('assets/css/pages/pfu-page/pfu-page.css')}}" rel="stylesheet" />
 
 <!-- for dataTable -->
 @include('cdns.dataTable')
@@ -56,11 +57,10 @@
 
 <div class="contentSection pt-3 mt-3">
     <div class="animate__animated animate__fadeIn">
-        @if(false)
+        @if(count($pfuLists) <= 0)
         <div class="noDataView">
             <img src="{{asset('assets/images/vendor.svg')}}" alt="" />
-            <p>No records found,<br />please import new ledger balance sheet.</p>
-            <a class="actionLink" data-bs-toggle="modal" data-bs-target="#invoiceDuesUploadDialog">Import</a>
+            <p>No records found,<br />please add pfu.</p>
         </div>
         @elseif(true)
 
@@ -372,7 +372,7 @@ $(document).ready(function() {
     //         $('.btn-close').removeAttr('disabled');
     //         resetFrom()
     //     }, 1500);
-    // })
+    // }) 
     $('#addPfuForm').submit(function(event) {
         event.preventDefault();
         var formData = $(this).serialize();

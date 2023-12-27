@@ -1,7 +1,8 @@
 .rowItem {
+  --statusColor: var(--secondaryColor);
   border-radius: 18px;
-  border: 1px solid #94e5b4;
-  border-left: 8px solid #94e5b4;
+  border: 1px solid var(--statusColor);
+  border-left: 8px solid var(--statusColor);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -20,8 +21,8 @@
 }
 .rowItem .items {
   flex: 1;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  display: flex;
+  flex-wrap: wrap;
   row-gap: 1rem;
 }
 .rowItem .items .item {
@@ -29,7 +30,6 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  flex: 1 1 250px;
   font-size: 11px;
   color: var(--textSecondary);
 }
@@ -58,23 +58,67 @@
 .rowItem .items .item:has(.amountBox) {
   -moz-column-gap: 0.5rem;
        column-gap: 0.5rem;
+  row-gap: 4px;
 }
 .rowItem .items .item:has(.amountBox) .heading {
   text-align: center;
+  font-size: 12px;
 }
 .rowItem .items .item:has(.amountBox) .amountBox {
-  flex: 1;
+  flex: 1 1 130px;
   background: var(--secondaryColor);
   border-radius: 12px;
   display: flex;
   flex-flow: column;
   align-items: center;
+  padding: 0 4px 4px;
+}
+.rowItem .items .item:has(.amountBox) .amountBox.closing {
+  background: rgba(131, 131, 131, 0.5019607843);
 }
 .rowItem .items .item:has(.amountBox) .amountBox .head {
-  font-size: 12px;
+  font-size: 10px;
+  color: var(--secondaryText);
+  font-family: "Montserrat";
 }
 .rowItem .items .item:has(.amountBox) .amountBox .amount {
   background: var(--bg);
   border-radius: inherit;
   font-size: clamp(1em, 3vw, 1.3em);
+  width: 100%;
+  display: grid;
+  place-items: center;
+  font-size: 0.85rem;
+  font-family: "Montserrat";
+  font-weight: 500;
+  padding: 8px 2px;
+}
+.rowItem .items .item.vendorInfo {
+  flex: 1 0 280px;
+}
+.rowItem .items .item.bankInfo {
+  flex: 0 0 250px;
+}
+.rowItem .items .item.paymentInfo {
+  flex: 0 0 200px;
+}
+.rowItem .items .item.balanceInfo {
+  flex: 1 0 250px;
+  justify-content: flex-end;
+}
+
+@media (max-width: 600px) {
+  .rowItem .items .item.vendorInfo {
+    flex: 1 1 280px;
+  }
+  .rowItem .items .item.bankInfo {
+    flex: 1 0 250px;
+  }
+  .rowItem .items .item.paymentInfo {
+    flex: 1 0 200px;
+  }
+  .rowItem .items .item.balanceInfo {
+    flex: 1 0 250px;
+    justify-content: center;
+  }
 }/*# sourceMappingURL=non-vendor-dues.css.map */

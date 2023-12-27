@@ -21,5 +21,10 @@ class BankDetail extends Model
         'bank_logo',
         'status',
     ];
+
+      public function checkCurrentBalance()
+      {
+         return $this->hasOne('App\Models\BankBalance','bank_detail_id', 'id')->whereDate('date', now()->toDateString());
+      }
     
 }
