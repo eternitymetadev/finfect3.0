@@ -166,6 +166,11 @@
                     <input name="gstNumber" max-length="11" type="text" id="gstNumber" maxlength="16"
                         class="form-control" placeholder="XXXXXXXXXX" required />
                 </div>
+                <div class="form-group" style="flex: 1 1 260px; min-width: 40%">
+                    <label for="gstNumber" class="form-label">Pan </label>
+                    <input name="panNumber" type="text" id="panNumber" class="form-control" placeholder="XXXXXXXXXX"
+                        required />
+                </div>
             </div>
 
             <div class="formRow">
@@ -483,29 +488,50 @@ $("#addVendorForm").validate({
         }
     },
     submitHandler: function(form) {
-        var formData = $(form).serialize(); 
-
-        $('#vendorSubmitButton span').html('...');
-        $('#vendorSubmitButton').attr('disabled', true);
-        $('#vendorSubmitButton').siblings('.discard').attr('disabled', true);
-        $('.btn-close').attr('disabled', true);
-        $("#loading").addClass("working");
-
-       
+        const pfu = localStorage.getItem('pfuValue');
+        const formData = new FormData(form);
+        formData.append('pfu', pfu);
         $.ajax({
-            url: '/add-vendor', 
-            type: 'POST', 
+            url: '/add-vendor',
+            type: 'POST',
             data: formData,
-            success: function(response) {
-               
-                console.log('Form submitted successfully!', response);
+            processData: false,
+            contentType: false,
+            beforeSend: function() {
+                $('#vendorSubmitButton span').html('...');
+                $('#vendorSubmitButton').attr('disabled', true);
+                $('#vendorSubmitButton').siblings('.discard').attr('disabled', true);
+                $('.btn-close').attr('disabled', true);
+                $("#loading").addClass("working");
 
-                $('#vendorSubmitButton span').html('Submit');
-                $('#vendorSubmitButton').removeAttr('disabled');
-                $('#vendorSubmitButton').siblings('.discard').removeAttr('disabled');
-                $('.btn-close').removeAttr('disabled');
-                resetForm();
-                $("#loading").removeClass("working");
+            },
+            success: function(response) {
+
+                if (response.errors) {
+                    Swal.fire({
+                        title: 'Error!',
+                        text: 'Vendor already exist in this pfu',
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    });
+                    $('#vendorSubmitButton span').html('Submit');
+                    $('#vendorSubmitButton').removeAttr('disabled');
+                    $('#vendorSubmitButton').siblings('.discard').removeAttr('disabled');
+                    $('.btn-close').removeAttr('disabled');
+                    $("#loading").removeClass("working");
+                } else {
+                    // Handle success scenario
+                    // resetFrom();
+                    $("#loading").removeClass("working");
+                    Swal.fire({
+                        title: 'Success!',
+                        text: 'Vendor added successfully',
+                        icon: 'success',
+                        confirmButtonText: 'OK'
+                    }).then(() => {
+                        location.reload();
+                    });
+                }
             },
             error: function(xhr, status, error) {
                 // Handle error scenarios

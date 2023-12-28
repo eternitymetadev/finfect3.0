@@ -35,11 +35,14 @@ class UserController extends Controller
     public function index(): View
     {
         $role = Auth::user()->roles->first()->name;
+        $role2 = 'Vendor';
+        $rolesToIgnore = [$role, $role2];
+       
         $authuser = Auth::user();
         $users = User::where('id', '!=', $authuser->id)->where('id','!=', 1)->latest('id')->get();
         return view('admin.users.users', [
             'users' => $users,
-            'roles' => Role::where('name', '!=', $role)->pluck('name')->all(),
+            'roles' => Role::whereNotIn('name', $rolesToIgnore)->pluck('name')->all(),
             'pfus' => Pfu::select('id', 'pfu')->where('status', 1)->get(),
         ]);
     }
