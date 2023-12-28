@@ -15,6 +15,8 @@ return new class extends Migration
     {
         Schema::create('vendors', function (Blueprint $table) {
             $table->id();
+            $table->integer('fin_code')->nullable();
+            $table->string('pfu')->nullable();
             $table->string('company_name')->nullable();
             $table->string('nature_of_assesse')->nullable();
             $table->string('erp_code')->nullable();
@@ -38,10 +40,11 @@ return new class extends Migration
             $table->string('nature_of_service')->nullable();
             $table->string('msme_number')->nullable();
             $table->string('gst')->nullable();
+            $table->string('pan')->nullable();
             $table->string('msme_certificate')->nullable();
             $table->string('gst_certificate')->nullable();
             $table->string('cancel_cheque')->nullable();
-            $table->string('other_document')->nullable();
+            $table->string('upload_pan')->nullable();
             $table->integer('is_bank_detail_verified')->nullable()->default(0);
             $table->integer('is_invdue_applicable')->nullable()->default(0);
             $table->integer('status')->nullable()->default(0);

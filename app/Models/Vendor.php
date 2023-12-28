@@ -13,6 +13,8 @@ class Vendor extends Model
     use SoftDeletes;
     
     protected $fillable = [
+        'fin_code',
+        'pfu',
         'company_name',
         'nature_of_assesse',
         'erp_code',
@@ -36,10 +38,11 @@ class Vendor extends Model
         'nature_of_service',
         'msme_number',
         'gst',
+        'pan',
         'msme_certificate',
         'gst_certificate',
         'cancel_cheque',
-        'other_document',
+        'upload_pan',
         'is_bank_detail_verified',
         'is_invdue_applicable',
         'status'

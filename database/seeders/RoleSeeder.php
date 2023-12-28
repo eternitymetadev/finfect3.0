@@ -16,6 +16,8 @@ class RoleSeeder extends Seeder
         Role::create(['name' => 'Super Admin']);
         $admin = Role::create(['name' => 'Admin']);
         $productManager = Role::create(['name' => 'Maker']);
+        $approver = Role::create(['name' => 'Approver']);
+        $vendor = Role::create(['name' => 'Vendor']);
 
         $admin->givePermissionTo([
             'create-user',
