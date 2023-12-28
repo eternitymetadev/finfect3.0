@@ -1,7 +1,7 @@
 @extends('layout.main')
-@section('title')Users List @endsection
-@section('page-heading')Users List @endsection
-@section('slug') > Users List @endsection
+@section('title')Edit Role @endsection
+@section('page-heading')Edit Role @endsection
+@section('slug') > Edit Role @endsection
 @section('content')
 
 <link href="{{asset('assets/css/pages/users-page/usersPage.css')}}" rel="stylesheet" />
@@ -9,18 +9,12 @@
 
 <link href="{{asset('assets/css/select2/selectize.css')}}" rel="stylesheet" />
 
+@include('cdns.dataTable')
+
+<!-- for selectize -->
+@include('cdns.selectize')
 
 
-<!-- for dataTable -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet" />
-<link href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css" rel="stylesheet" />
-
-<script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
-
-
-<!-- selectize js -->
-<script src="{{asset('assets/js/select2/selectize.min.js')}}"></script>
 
 
 <div class="row justify-content-center">
