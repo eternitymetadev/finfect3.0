@@ -126,7 +126,7 @@
                     </svg>
                 </a>
                 <ul id="dailyBasis" class="nav-content collapse" data-bs-parent="#mainMenu">
-                    @canany(['BankBalance'])
+                    @canany(['bank-balance'])
                     <li class="menu animate__animated animate__fadeIn">
                         <a class="nav-link" href="{{url('/my-bank-balance')}}">
                             <svg xmlns="http://www.w3.org/2000/svg" class="menuIcon" width="24px" height="24px"
@@ -279,7 +279,7 @@
                     </li>
                 </ul>
             </li>
-
+            @canany(['vendor-dashboard'])
             <li class="menu animate__animated animate__fadeIn">
                 <a class="nav-link" href="{{url('/vendor-dashboard')}}">
                     <svg xmlns="http://www.w3.org/2000/svg" class="menuIcon" width="24px" height="24px"
@@ -293,6 +293,7 @@
                     <span>Vendors</span>
                 </a>
             </li>
+            @endcanany
         </ul>
 
         <div class="stickyBottom">

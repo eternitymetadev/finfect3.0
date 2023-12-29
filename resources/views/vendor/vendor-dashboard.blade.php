@@ -93,11 +93,11 @@
 
 <div class="contentSection pt-3 mt-3">
     <div class="animate__animated animate__fadeIn">
-        @if(false)
+        @if(count($vendorsList) <= 0)
             <div class="noDataView">
                 <img src="{{asset('assets/images/vendor.svg')}}" alt="" />
-                <p>No records found,<br/>please import new ledger balance sheet.</p>
-                <a class="actionLink" data-bs-toggle="modal" data-bs-target="#vendorsUploadDialog">Import</a>
+                <p>No records found,<br/>please add vendor.</p>
+              
             </div>
         @elseif(true)
 
@@ -136,16 +136,23 @@
                     </thead>
 
                     <tbody>
-                    @for ($i = 0; $i < 15; $i++)
+                    @php
+                        $i = 1;
+                        @endphp
+                    @foreach ($vendorsList as $vendor)
                         <tr>
-                            <td>{{$i + 1}}</td>
-                            <td>Name goes Here</td>
-                            <td>Q09822</td>
-                            <td>FIN12340</td>
-                            <td>+91-8529698369</td>
+                            <td>{{$i}}</td>
+                            <td>{{$vendor->name}}</td>
+                            <td>{{$vendor->erp_code}}</td>
+                            <td>{{$vendor->fin_code}}</td>
+                            <td>{{$vendor->mobile}}</td>
                             <td class="text-center">
                                 @php
-                                    switch($i == 0) {
+                                    switch($vendor->status) {
+                                        case 0:
+                                            $status = 'error';
+                                            $statusText = 'Inactive';
+                                            break;
                                         case 1:
                                             $status = 'success';
                                             $statusText = 'Active';
@@ -154,10 +161,7 @@
                                            $status = 'warning';
                                             $statusText = 'Pending';
                                             break;
-                                        case 3:
-                                           $status = 'error';
-                                            $statusText = 'Inactive';
-                                            break;
+                                      
                                         default:
                                             $status = 'success';
                                             $statusText = 'Active';
@@ -171,13 +175,16 @@
                             </td>
                             <td class="actionCol text-center">
                                 <div class="iconButtonsContainer d-flex align-items-center justify-content-center" style="gap: 0.5rem">
-                                    <a class="iconButton" data-bs-toggle="modal" data-bs-target="#viewvendorDialog">
+                                    <a class="iconButton" id="viewVendorDetails" data-id="{{$vendor->id}}">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-                                    </a>
+                                </a>
                                 </div>
                             </td>
                         </tr>
-                    @endfor
+                        @php
+                        $i++;
+                        @endphp
+                    @endforeach
                     </tbody>
                 </table>
             </div>
@@ -455,7 +462,27 @@ $(document).ready(function() {
         }, 3500);
     });
 
-
+    $('#viewVendorDetails').click(function() {
+    var vendor_id = $(this).attr('data-id');
+    $('#viewvendorDialog').modal('show');
+    $.ajax({
+        url: '/view-vendor-detail', 
+        method: 'GET', 
+        data: { vendor_id: vendor_id }, 
+        success: function(response) {
+            if (response.success) {
+                var vendorDetail = response.vendorDetail;
+                console.log(vendorDetail);
+            } else {
+                console.error(response.message);
+            }
+        },
+        error: function(xhr, status, error) {
+            console.error(error);
+           
+        }
+    });
+});
 
 });
 

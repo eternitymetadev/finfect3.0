@@ -507,7 +507,20 @@ $("#addVendorForm").validate({
             },
             success: function(response) {
 
-                if (response.errors) {
+                if (response.success) {
+                    // Handle success scenario
+                    // resetFrom();
+                    $("#loading").removeClass("working");
+                    Swal.fire({
+                        title: 'Success!',
+                        text: 'Vendor added successfully',
+                        icon: 'success',
+                        confirmButtonText: 'OK'
+                    }).then(() => {
+                        location.reload();
+                    });
+
+                } else if (response.error) {
                     Swal.fire({
                         title: 'Error!',
                         text: 'Vendor already exist in this pfu',
@@ -520,22 +533,30 @@ $("#addVendorForm").validate({
                     $('.btn-close').removeAttr('disabled');
                     $("#loading").removeClass("working");
                 } else {
-                    // Handle success scenario
-                    // resetFrom();
-                    $("#loading").removeClass("working");
                     Swal.fire({
-                        title: 'Success!',
-                        text: 'Vendor added successfully',
-                        icon: 'success',
+                        title: 'Error!',
+                        text: 'something went wrong',
+                        icon: 'error',
                         confirmButtonText: 'OK'
-                    }).then(() => {
-                        location.reload();
                     });
+                    $('#vendorSubmitButton span').html('Submit');
+                    $('#vendorSubmitButton').removeAttr('disabled');
+                    $('#vendorSubmitButton').siblings('.discard').removeAttr('disabled');
+                    $('.btn-close').removeAttr('disabled');
+                    $("#loading").removeClass("working");
                 }
             },
             error: function(xhr, status, error) {
-                // Handle error scenarios
-                console.error('Error submitting the form:', error);
+                var errorMessage = 'An error occurred while processing your request.';
+                if (xhr.responseJSON && xhr.responseJSON.message) {
+                    errorMessage = xhr.responseJSON.message;
+                }
+                Swal.fire({
+                    title: 'Error!',
+                    text: errorMessage,
+                    icon: 'error',
+                    confirmButtonText: 'OK'
+                });
 
                 $('#vendorSubmitButton span').html('Submit');
                 $('#vendorSubmitButton').removeAttr('disabled');

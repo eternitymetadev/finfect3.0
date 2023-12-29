@@ -2,18 +2,25 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Vendor;
 use App\Models\User;
+use App\Models\Vendor;
 use DB;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class VendorController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware('permission:vendor-dashboard', ['only' => ['vendorDashboard']]);
+    }
 
     public function vendorDashboard(Request $request)
     {
-
-        return view('vendor.vendor-dashboard');
+        $loginPfu = $request->session()->get('pfu');
+        $vendorsList = Vendor::where('pfu', $loginPfu)->get();
+        return view('vendor.vendor-dashboard',['vendorsList' => $vendorsList]);
     }
 
     public function vendorCreate(Request $request)
@@ -25,18 +32,17 @@ class VendorController extends Controller
     public function addVendor(Request $request)
     {
         try {
+            DB::beginTransaction();
+            $existingVendor = Vendor::where('pfu', $request->pfu)
+                ->where('pan', $request->panNumber)
+                ->first();
 
-          
-        $existingVendor = Vendor::where('pfu', $request->pfu)
-            ->where('pan', $request->panNumber)
-            ->first();
+            if ($existingVendor) {
 
-        if ($existingVendor) {
-
-            $response['errors'] = true;
-            $response['message'] = 'Vendor already exist in this pfu';
-            return response()->json($response);
-        }
+                $response['errors'] = true;
+                $response['message'] = 'Vendor already exist in this pfu';
+                return response()->json($response);
+            }
 
             $vendor = DB::table('vendors')->select('fin_code')->latest('fin_code')->first();
             $fin_code = json_decode(json_encode($vendor), true);
@@ -73,32 +79,61 @@ class VendorController extends Controller
             $addVendor['gst'] = $request->gstNumber;
             $addVendor['pan'] = $request->panNumber;
 
+            
+
             $vendorAdded = Vendor::create($addVendor);
 
             if ($vendorAdded) {
 
-                $addVendorUser['name'] = $request->contactPersonName;
-                $addVendorUser['mobile'] = $request->contactPersonMobile;
-                $addVendorUser['email'] = $request->contactPersonEmail;
-                $addVendorUser['pfu'] = $request->pfu;
-                $addVendorUser['password'] = Hash::make($request->panNumber);
-                $addVendorUser['status'] = 0;
+                $checkUser = User::where('email', $request->contactPersonEmail)->first();
+                if (empty($checkUser)) {
+                    $addVendorUser['name'] = $request->contactPersonName;
+                    $addVendorUser['mobile'] = $request->contactPersonMobile;
+                    $addVendorUser['email'] = $request->contactPersonEmail;
+                    $addVendorUser['pfu'] = $request->pfu;
+                    $addVendorUser['password'] = Hash::make($request->panNumber);
+                    $addVendorUser['status'] = 0;
+                    $addVendorUser['is_vendor'] = 1;
 
-                $user = User::create($addVendorUser);
-                $user->assignRole('Vendor');
+                    $user = User::create($addVendorUser);
+                    $user->assignRole('Vendor');
+                } else {
+                    $existpfu = $checkUser->pfu.','.$request->pfu;
+                    User::where('id', $checkUser->id)->update(['pfu' => $existpfu]);
+                }
 
                 $response['success'] = true;
             } else {
                 $response['success'] = false;
             }
-
+            DB::commit();
             return response()->json($response);
         } catch (\Exception $e) {
             $response['success'] = false;
             $response['message'] = $e->getMessage();
 
-            return response()->json($response, 500); 
+            return response()->json($response, 500);
         }
+    }
+
+    public function viewVendorDetail(Request $request)
+    {
+        $vendorDetail = Vendor::where('id', $request->vendor_id)->first();
+
+        if ($vendorDetail) {
+            // If vendor details are found, return them as a JSON response
+            return response()->json([
+                'success' => true,
+                'vendorDetail' => $vendorDetail,
+            ]);
+        } else {
+            // If vendor details are not found, return an error message
+            return response()->json([
+                'success' => false,
+                'message' => 'Vendor details not found',
+            ]);
+        }
+
     }
 
 }

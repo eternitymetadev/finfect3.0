@@ -109,6 +109,10 @@
                         <td class="text-center">
                             @php
                             switch($user->status) {
+                            case 0:
+                            $status = 'error';
+                            $statusText = 'Inactive';
+                            break;
                             case 1:
                             $status = 'success';
                             $statusText = 'Active';
