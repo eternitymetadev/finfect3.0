@@ -7,6 +7,7 @@ use App\Models\Vendor;
 use DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Storage;
 
 class VendorController extends Controller
 {
@@ -20,7 +21,7 @@ class VendorController extends Controller
     {
         $loginPfu = $request->session()->get('pfu');
         $vendorsList = Vendor::where('pfu', $loginPfu)->get();
-        return view('vendor.vendor-dashboard',['vendorsList' => $vendorsList]);
+        return view('vendor.vendor-dashboard', ['vendorsList' => $vendorsList]);
     }
 
     public function vendorCreate(Request $request)
@@ -33,13 +34,28 @@ class VendorController extends Controller
     {
         try {
             DB::beginTransaction();
+
+            $validator = \Validator::make($request->all(), [
+                'vendorCode' => 'unique:vendors,erp_code',
+              
+            ]);
+    
+            if ($validator->fails()) {
+                $errors = $validator->errors();
+                $formattedErrors = [];
+                foreach ($errors->keys() as $field) {
+                    $formattedErrors[$field] = $errors->get($field);
+                }
+                return response()->json(['errors' => $formattedErrors], 422);
+            }
+
             $existingVendor = Vendor::where('pfu', $request->pfu)
                 ->where('pan', $request->panNumber)
                 ->first();
 
             if ($existingVendor) {
 
-                $response['errors'] = true;
+                $response['error'] = true;
                 $response['message'] = 'Vendor already exist in this pfu';
                 return response()->json($response);
             }
@@ -50,6 +66,36 @@ class VendorController extends Controller
                 $fin_no = 10101;
             } else {
                 $fin_no = $fin_code['fin_code'] + 1;
+            }
+
+            // ------ Msme Certificate
+            if ($request->msmeCertificate) {
+                $msme = $request->file('msmeCertificate');
+                $path = Storage::disk('s3')->put('vendor', $msme);
+                $msmeCertificate = $path;
+            } else {
+                $msmeCertificate = null;
+            }
+            // ------ gst Certificate
+            if ($request->gstCertificate) {
+                $gstupload = $request->file('gstCertificate');
+                $gstpath = Storage::disk('s3')->put('vendor', $gstupload);
+            } else {
+                $gstpath = null;
+            }
+            // ------ cancelCheque Certificate
+            if ($request->cancelCheque) {
+                $cheque_upload = $request->file('cancelCheque');
+                $cancelChequepath = Storage::disk('s3')->put('vendor', $cheque_upload);
+            } else {
+                $cancelChequepath = null;
+            }
+            // ------ uploadPan
+            if ($request->panUpload) {
+                $pan_upload = $request->file('panUpload');
+                $panPath = Storage::disk('s3')->put('vendor', $pan_upload);
+            } else {
+                $panPath = null;
             }
 
             $addVendor['fin_code'] = $fin_no;
@@ -78,8 +124,10 @@ class VendorController extends Controller
             $addVendor['msme_number'] = $request->msmeNumber;
             $addVendor['gst'] = $request->gstNumber;
             $addVendor['pan'] = $request->panNumber;
-
-            
+            $addVendor['msme_certificate'] = $msmeCertificate;
+            $addVendor['gst_certificate'] = $gstpath;
+            $addVendor['cancel_cheque'] = $cancelChequepath;
+            $addVendor['upload_pan'] = $panPath;
 
             $vendorAdded = Vendor::create($addVendor);
 
@@ -98,7 +146,7 @@ class VendorController extends Controller
                     $user = User::create($addVendorUser);
                     $user->assignRole('Vendor');
                 } else {
-                    $existpfu = $checkUser->pfu.','.$request->pfu;
+                    $existpfu = $checkUser->pfu . ',' . $request->pfu;
                     User::where('id', $checkUser->id)->update(['pfu' => $existpfu]);
                 }
 
@@ -118,13 +166,15 @@ class VendorController extends Controller
 
     public function viewVendorDetail(Request $request)
     {
+        $awsUrl = env('AWS_S3_URL');
         $vendorDetail = Vendor::where('id', $request->vendor_id)->first();
 
         if ($vendorDetail) {
-            // If vendor details are found, return them as a JSON response
+
             return response()->json([
                 'success' => true,
                 'vendorDetail' => $vendorDetail,
+                'awsUrl' => $awsUrl,
             ]);
         } else {
             // If vendor details are not found, return an error message

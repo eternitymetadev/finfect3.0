@@ -10,7 +10,7 @@
 
 <div class="contentSection pt-3 mt-3">
     <div class="animate__animated animate__fadeIn">
-        <form id="addVendorForm">
+        <form id="addVendorForm" enctype="multipart/form-data">
             @csrf
             <div class="formRow pt-0">
                 <div class="form-group" style="flex: 2; min-width: 46%">
@@ -20,22 +20,21 @@
                 </div>
                 <div class="form-group" style="flex: 1; min-width: 40%">
                     <label for="natureOfAssesse" class="form-label">Nature of Assesse</label>
-                    <select name="natureOfAssesse" id="natureOfAssesse" class="form-control" required>
-                        <option selected disabled>--select--</option>
-                        <option value="assesse1">Assesse 1</option>
-                    </select>
+                    <input name="natureOfAssesse" type="text" id="natureOfAssesse" class="form-control" placeholder="select ..." required />
                 </div>
+                @php
+                    $role = optional(Auth::user()->roles->first())->name;
+                    if($role == 'Approver'){
+                    @endphp
                 <div class="form-group" style="flex: 1 1 260px">
                     <label for="vendorCode" class="form-label">Code</label>
                     <input name="vendorCode" type="text" id="vendorCode" class="form-control"
                         placeholder="Holder Name here" required />
                 </div>
+                @php } @endphp
                 <div class="form-group" style="flex: 1 1 260px">
                     <label for="state" class="form-label">State</label>
-                    <select name="state" id="state" class="form-control" required>
-                        <option selected disabled>--select--</option>
-                        <option value="assesse1">Assesse 1</option>
-                    </select>
+                    <input name="state" type="text" id="state" class="form-control" placeholder="--state--" required />
                 </div>
                 <div class="form-group" style="flex: 1 1 260px">
                     <label for="pincode" class="form-label">Pincode</label>
@@ -99,7 +98,7 @@
                 <div class="form-group" style="flex: 1 1 45%">
                     <label for="bankName" class="form-label">Bank Name</label>
                     <input name="bankName" type="text" id="bankName" class="form-control" placeholder="Bank Name here"
-                        required autofocus />
+                        required />
                 </div>
                 <div class="form-group" style="flex: 1 1 45%">
                     <label for="holderName" class="form-label">A/c Holder Name</label>
@@ -109,35 +108,15 @@
 
                 <div class="form-group" style="flex: 1 1 260px">
                     <label for="cashFlow" class="form-label">Cash Flow</label>
-                    <select name="cashFlow" id="cashFlow" class="form-control select" required placeholder="select ...">
-                        <option value="">--select--</option>
-                        <option value="assesse1">Assesse 1</option>
-                        <option value="assesse2">Assesse 2</option>
-                        <option value="assesse3">Assesse 3</option>
-                        <option value="assesse4">Assesse 4</option>
-                    </select>
+                    <input name="cashFlow" type="text" id="cashFlow" class="form-control" placeholder="select ..." required />
                 </div>
                 <div class="form-group" style="flex: 1 1 260px">
                     <label for="vendorGroup" class="form-label">Vendor Group</label>
-                    <select name="vendorGroup" id="vendorGroup" class="form-control select" required
-                        placeholder="select ...">
-                        <option value="">--select--</option>
-                        <option value="assesse1">Assesse 1</option>
-                        <option value="assesse2">Assesse 2</option>
-                        <option value="assesse3">Assesse 3</option>
-                        <option value="assesse4">Assesse 4</option>
-                    </select>
+                    <input name="vendorGroup" type="text" id="vendorGroup" class="form-control" placeholder="select ..." required />
                 </div>
                 <div class="form-group" style="flex: 1 1 260px">
                     <label for="paymentTerms" class="form-label">Terms of Payment</label>
-                    <select name="paymentTerms" id="paymentTerms" class="form-control select" required
-                        placeholder="select ...">
-                        <option value="">--select--</option>
-                        <option value="assesse1">Assesse 1</option>
-                        <option value="assesse2">Assesse 2</option>
-                        <option value="assesse3">Assesse 3</option>
-                        <option value="assesse4">Assesse 4</option>
-                    </select>
+                    <input name="paymentTerms" type="text" id="paymentTerms" class="form-control" placeholder="select ..." required />
                 </div>
 
             </div>
@@ -151,10 +130,8 @@
                 </div>
                 <div class="form-group" style="flex: 1 1 260px; min-width: 40%">
                     <label for="natureOfService" class="form-label">Nature of Service</label>
-                    <select name="natureOfService" id="natureOfService" class="form-control" required>
-                        <option selected disabled>--select--</option>
-                        <option value="assesse1">Assesse 1</option>
-                    </select>
+                    <input name="natureOfService" type="text" id="natureOfService" class="form-control" placeholder="Name here"
+                        required />
                 </div>
                 <div class="form-group" style="flex: 1 1 260px; min-width: 40%">
                     <label for="msmeNumber" class="form-label">MSME Number</label>
@@ -190,7 +167,7 @@
                         <svg xmlns="http://www.w3.org/2000/svg"  width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x-circle"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
                     </a> -->
                     <label for="msmeCertificate" class="dropArea">
-                        <input type="file" id="msmeCertificate" class="dragAndDrop file" />
+                        <input type="file" id="msmeCertificate" name="msmeCertificate" class="dragAndDrop file" />
                         <img class="rendoredImage animate__animated animate__fadeIn"
                             src="{{asset('assets/images/dragAndDrop.png')}}" alt="rendoredImage" />
                         <span class="fileName animate__animated animate__fadeIn"></span>
@@ -226,7 +203,7 @@
                         <svg xmlns="http://www.w3.org/2000/svg"  width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x-circle"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
                     </a> -->
                     <label for="gstCertificate" class="dropArea">
-                        <input type="file" id="gstCertificate" class="dragAndDrop file" />
+                        <input type="file" id="gstCertificate" name="gstCertificate" class="dragAndDrop file" />
                         <img class="rendoredImage animate__animated animate__fadeIn"
                             src="{{asset('assets/images/dragAndDrop.png')}}" alt="rendoredImage" />
                         <span class="fileName animate__animated animate__fadeIn"></span>
@@ -262,7 +239,7 @@
                         <svg xmlns="http://www.w3.org/2000/svg"  width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x-circle"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
                     </a> -->
                     <label for="cancelCheque" class="dropArea">
-                        <input type="file" id="cancelCheque" class="dragAndDrop file" />
+                        <input type="file" id="cancelCheque" name="cancelCheque" class="dragAndDrop file" />
                         <img class="rendoredImage animate__animated animate__fadeIn"
                             src="{{asset('assets/images/dragAndDrop.png')}}" alt="rendoredImage" />
                         <span class="fileName animate__animated animate__fadeIn"></span>
@@ -285,7 +262,7 @@
                 </div>
 
                 <div class="form-group fileInputGroup">
-                    <label class="form-label">Other Document</label>
+                    <label class="form-label">Pan</label>
                     <svg xmlns="http://www.w3.org/2000/svg" class="clearFileInput" width="24" height="24"
                         viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                         stroke-linejoin="round" class="feather feather-x-circle">
@@ -298,7 +275,7 @@
                         <svg xmlns="http://www.w3.org/2000/svg"  width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x-circle"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
                     </a> -->
                     <label for="otherDocument" class="dropArea">
-                        <input type="file" id="otherDocument" class="dragAndDrop file" />
+                        <input type="file" id="otherDocument" name="panUpload" class="dragAndDrop file" />
                         <img class="rendoredImage animate__animated animate__fadeIn"
                             src="{{asset('assets/images/dragAndDrop.png')}}" alt="rendoredImage" />
                         <span class="fileName animate__animated animate__fadeIn"></span>
@@ -341,10 +318,68 @@
 </div>
 
 
+<script src="{{asset('assets/js/static-data/banks.js')}}"></script>
+<script src="{{asset('assets/js/static-data/states-district.js')}}"></script>
+<script src="{{asset('assets/js/static-data/vendor-options.js')}}"></script>
 <script>
-$('.select').selectize({
+
+$('#natureOfAssesse').selectize({
+    maxItems: 1,
     plugins: ["clear_button"],
+    options: vendorOptions.NatureOfAssessee,
+    valueField: 'name',
+    labelField: 'name',
+    searchField: 'name',
+    create: false
 });
+$('#bankName').selectize({
+    maxItems: 1,
+    plugins: ["clear_button"],
+    options: banks,
+    valueField: 'name',
+    labelField: 'name',
+    searchField: 'name',
+    create: false
+});
+$('#state').selectize({
+    maxItems: 1,
+    plugins: ["clear_button"],
+    options: states,
+    valueField: 'state',
+    labelField: 'state',
+    searchField: 'state',
+    create: false
+});
+$('#cashFlow').selectize({
+    maxItems: 1,
+    plugins: ["clear_button"],
+    options: vendorOptions.CashFlow,
+    valueField: 'Code',
+    labelField: 'Code',
+    searchField: 'Code',
+    create: false
+});
+$('#vendorGroup').selectize({
+    maxItems: 1,
+    plugins: ["clear_button"],
+    options: vendorOptions.VendorGroup,
+    valueField: 'vg',
+    labelField: 'vg',
+    searchField: 'vg',
+    create: false
+});
+$('#paymentTerms').selectize({
+    maxItems: 1,
+    plugins: ["clear_button"],
+    options: vendorOptions.TermsofPayment,
+    valueField: 'PaymentTerm',
+    labelField: 'PaymentTerm',
+    searchField: 'PaymentTerm',
+    create: false
+});
+
+
+
 
 function resetForm() {
     $('a.clear').click();
@@ -548,8 +583,11 @@ $("#addVendorForm").validate({
             },
             error: function(xhr, status, error) {
                 var errorMessage = 'An error occurred while processing your request.';
+                console.log(xhr.responseJSON);
                 if (xhr.responseJSON && xhr.responseJSON.message) {
                     errorMessage = xhr.responseJSON.message;
+                }else if(xhr.responseJSON.errors.vendorCode && xhr.responseJSON.errors.vendorCode.length > 0){
+                    errorMessage = xhr.responseJSON.errors.vendorCode[0]; 
                 }
                 Swal.fire({
                     title: 'Error!',
