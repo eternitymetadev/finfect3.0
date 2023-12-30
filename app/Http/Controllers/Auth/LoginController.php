@@ -11,6 +11,7 @@ use Hash;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class LoginController extends Controller
 {
@@ -96,6 +97,8 @@ class LoginController extends Controller
             }
 
         } else {
+            
+            Log::channel('db')->warning('Incorrect password', ['user' => $user->id]);
             return new JsonResponse(['success' => false, 'message' => 'Incorrect password']);
         }
     }
@@ -111,7 +114,8 @@ class LoginController extends Controller
         $request->session()->put('pfu', $request->pfu);
 
         Auth::login($user);
-
+        Log::channel('db')->info('User is accessing Dashboard', ['user' => Auth::user()->id]);
+     
         return response()->json(['success' => true, 'message' => 'User logged in successfully']);
     }
 
