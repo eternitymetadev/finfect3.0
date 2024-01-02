@@ -12,7 +12,7 @@ class BankBalanceController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware('permission:BankBalance', ['only' => ['myBankBalance']]);
+        $this->middleware('permission:bank-balance', ['only' => ['myBankBalance']]);
     }
 
     public function myBankBalance(Request $request)

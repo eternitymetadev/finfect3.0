@@ -53,6 +53,7 @@ Route::middleware(['auth.check'])->group(function () {
     Route::get('/vendor-dashboard', [VendorController::class, 'vendorDashboard']);
     Route::get('/vendors/create', [VendorController::class, 'vendorCreate']);
     Route::post('/add-vendor', [VendorController::class, 'addVendor']);
+    Route::get('/view-vendor-detail', [VendorController::class, 'viewVendorDetail']);
 
 
     Route::get('/vendor-ledger-sheet', function () {

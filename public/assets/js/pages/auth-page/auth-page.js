@@ -133,9 +133,10 @@ function processEmail() {
                 $("#submitButton").removeClass("loading");
                 $("#loaderContainer").removeClass("loading");
                 $(".invalid-feedback").hide();
-                showStepTwo(); // You need to define this function to show step two
+                showStepTwo(); 
             } else {
                 // Email check failed
+                $("#email").siblings(".invalid-feedback.q").html(response.message);
                 $("#email").siblings(".invalid-feedback").show();
                 $("#submitButton").removeAttr("disabled");
                 $("#submitButton").removeClass("loading");

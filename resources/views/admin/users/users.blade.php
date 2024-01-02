@@ -88,29 +88,32 @@
                             <td>{{$user->mobile ?? '-'}}</td>
                             <td>{{$user->email}}</td>
                            
-                            <td>{{$user->getRoleNames()->first();}}</td>
-                            <td class="text-center">
-                                @php
-                                switch($user->status) {
-                                case 1:
-                                $status = 'success';
-                                $statusText = 'Active';
-                                break;
-                                case 2:
-                                $status = 'warning';
-                                $statusText = 'Pending';
-                                break;
-                                case 3:
-                                $status = 'error';
-                                $statusText = 'Inactive';
-                                break;
-                                default:
-                                $status = 'success';
-                                $statusText = 'Active';
-
-                                }
-                                @endphp
-
+ 
+                        <td>{{$user->getRoleNames()->first();}}</td>
+                        <td class="text-center">
+                            @php
+                            switch($user->status) {
+                            case 0:
+                            $status = 'error';
+                            $statusText = 'Inactive';
+                            break;
+                            case 1:
+                            $status = 'success';
+                            $statusText = 'Active';
+                            break;
+                            case 2:
+                            $status = 'warning';
+                            $statusText = 'Pending';
+                            break;
+                            case 3:
+                            $status = 'error';
+                            $statusText = 'Inactive';
+                            break;
+                            default:
+                            $status = 'success';
+                            $statusText = 'Active';
+                            }
+                            @endphp
                                 <span class="chip mx-auto {{$status}}">
                                     {{$statusText}}
                                 </span>

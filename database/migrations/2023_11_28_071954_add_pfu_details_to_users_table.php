@@ -16,7 +16,8 @@ return new class extends Migration
         Schema::table('users', function (Blueprint $table) {
             $table->string('mobile')->after('name')->nullable();
             $table->string('pfu')->after('password')->nullable();
-            $table->integer('status')->after('pfu')->nullable()->default(1);
+            $table->integer('is_vendor')->after('pfu')->default(0);
+            $table->integer('status')->after('is_vendor')->nullable()->default(1);
             $table->softDeletes();
         });
     }

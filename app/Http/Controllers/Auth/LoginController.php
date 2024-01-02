@@ -58,11 +58,13 @@ class LoginController extends Controller
 
         $user = User::where('email', $validatedData['email'])->first();
 
-        if ($user) {
+        if ($user && $user->status === 1) { // Check if the user exists and status is 1 (verified)
 
             $request->session()->put('email', $validatedData);
             $response['success'] = true;
-            $response['message'] = 'Email found in the database.'; // Optional success message
+            $response['message'] = 'Email found in the database and user is verified.';
+        } elseif ($user && $user->status !== 1) {
+            $response['message'] = 'Email found in the database, but user is not verified.';
         }
 
         return $response;
@@ -85,11 +87,11 @@ class LoginController extends Controller
 
         if (Hash::check($validatedData['password'], $user->password)) {
             $user_role = $user->getRoleNames()->first();
-            if($user_role == 'Super Admin' || $user_role == 'Admin'){
-                
+            if ($user_role == 'Super Admin' || $user_role == 'Admin') {
+
                 Auth::login($user);
-                return new JsonResponse(['success' => true, 'message' => 'Password validated', 'admin_role' => true ]);
-            }else{
+                return new JsonResponse(['success' => true, 'message' => 'Password validated', 'admin_role' => true]);
+            } else {
                 $userPfu = explode(',', $user->pfu);
                 $getPfu = Pfu::select('id', 'pfu')->whereIn('id', $userPfu)->where('status', 1)->get();
 
