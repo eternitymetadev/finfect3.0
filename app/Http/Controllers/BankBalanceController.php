@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\BankDetail;
 use App\Models\BankBalance;
+use App\Models\BankDetail;
 use Illuminate\Http\Request;
+use Storage;
 
 class BankBalanceController extends Controller
 {
@@ -18,13 +19,13 @@ class BankBalanceController extends Controller
     public function myBankBalance(Request $request)
     {
         $loginPfu = $request->session()->get('pfu');
-        $bankdetails = BankDetail::where('status',1)->where('pfu_id', $loginPfu)->get();
-        return view('my-bank-balance.my-bank-balance',['bankdetails' => $bankdetails]);
+        $bankdetails = BankDetail::where('status', 1)->where('pfu_id', $loginPfu)->get();
+        return view('my-bank-balance.my-bank-balance', ['bankdetails' => $bankdetails]);
     }
 
     public function storeBank(Request $request)
     {
-       
+
         $validator = \Validator::make($request->all(), [
             'accountNumber' => 'required|unique:bank_details,bank_acc_no',
             'holderName' => 'required',
@@ -56,19 +57,28 @@ class BankBalanceController extends Controller
         //     return response()->json($response);
         // }
 
+        // ------ Bank Logo
+        if ($request->bankLogo) {
+            $bank_logo = $request->file('bankLogo');
+            $bankLogoPath = Storage::disk('s3')->put('bank', $bank_logo);
+        } else {
+            $bankLogoPath = null;
+        }
+
         $addBank['bank_acc_no'] = $request->accountNumber;
         $addBank['acc_holder_name'] = $request->holderName;
         $addBank['ifsc_code'] = $request->ifsc;
         $addBank['branch_name'] = $request->branch;
         $addBank['bank_name'] = $request->bankName;
         $addBank['pfu_id'] = $pfu;
+        $addBank['bank_logo'] = $bankLogoPath;
         // if ($request->is_active) {
-            $addBank['status'] = 1;
+        $addBank['status'] = 1;
         // } else {
         //     $addBank['status'] = 0;
         // }
 
-        $add = BankDetail::create($addBank); 
+        $add = BankDetail::create($addBank);
 
         if ($add) {
             $response['success'] = true;
@@ -79,14 +89,14 @@ class BankBalanceController extends Controller
         return response()->json($response);
     }
 
-     public function updateBankBalance(Request $request)
-     {
-        
+    public function updateBankBalance(Request $request)
+    {
+
         $addBankBalance['bank_detail_id'] = $request->bank_id;
         $addBankBalance['bank_balance'] = $request->amount;
         $addBankBalance['date'] = date('Y-m-d');
 
-        $addBalance = BankBalance::create($addBankBalance); 
+        $addBalance = BankBalance::create($addBankBalance);
 
         if ($addBalance) {
             $response['success'] = true;
@@ -95,5 +105,5 @@ class BankBalanceController extends Controller
         }
 
         return response()->json($response);
-     }
+    }
 }
