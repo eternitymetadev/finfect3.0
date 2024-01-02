@@ -314,7 +314,7 @@
                         <div class="form-group col-md-6">
                             <label for="mobileNumber" class="form-label">Role</label>
                             <select class="form-control form-select @error('roles') is-invalid @enderror"
-                                aria-label="Roles" id="edit_roles" name="roles[]">
+                                aria-label="Roles" id="edit_roles" name="roles[]" disabled>
                                 <option value="">--select role--</option>
                                 @forelse ($roles as $role)
 

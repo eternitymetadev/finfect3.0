@@ -139,7 +139,6 @@ class UserController extends Controller
             'name' => 'required|string|max:250',
             'email' => 'required|string|email:rfc,dns|max:250|unique:users,email,'.$request->user_id,
             'password' => 'nullable|string|min:8',
-            'roles' => 'required',
             'mobile' => 'required|unique:users,mobile,'.$request->user_id, 
             'pfu' => 'required',
 
@@ -166,7 +165,7 @@ class UserController extends Controller
 
         $user->update($input);
         if ($user) {
-            $user->syncRoles($request->roles);
+            // $user->syncRoles($request->roles);
             $response['success'] = true;
         } else {
             $response['success'] = false;
