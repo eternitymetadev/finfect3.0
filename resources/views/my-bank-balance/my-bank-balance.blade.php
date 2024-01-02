@@ -38,8 +38,15 @@
     <div class="bankPage animate__animated animate__fadeIn">
 
         @foreach ($bankdetails as $bankdetail) <div class="bankCard animate__animated animate__fadeIn">
-            <img src="{{asset('assets/images/logo.svg')}}" alt="bank logo"
-                class="bankLogo animate__animated animate__fadeIn" />
+            @php
+            $awsUrl = env('AWS_S3_URL');
+            if(!empty($bankdetail->bank_logo)){
+            $bank_logo = $awsUrl.'/'.$bankdetail->bank_logo;
+            }else{
+            $bank_logo = asset('assets/images/logo.svg');
+            }
+            @endphp
+            <img src="{{$bank_logo}}" alt="bank logo" class="bankLogo animate__animated animate__fadeIn" />
             <div class="bankDetail animate__animated animate__fadeIn">
                 <div class="detailItem d-flex align-items-center">
                     <span class="key">A/c Holder</span>
@@ -210,8 +217,10 @@ $(document).ready(function() {
                 button.removeAttr('disabled');
                 button.parent().siblings('.discard').removeAttr('disabled');
                 button.parent().siblings('.discard').click();
-                button.parent('.balanceUpdate').siblings('.balanceAmount').children('.updatedAmount').html(amount); 
-                button.parent('.balanceUpdate').siblings('.actionLabel').attr('disabled', true);
+                button.parent('.balanceUpdate').siblings('.balanceAmount').children(
+                    '.updatedAmount').html(amount);
+                button.parent('.balanceUpdate').siblings('.actionLabel').attr('disabled',
+                    true);
                 $('.updatedAmount').each(function() {
                     $(this).text(formatIndianCurrency($(this).text()));
                 });

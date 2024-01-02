@@ -1,7 +1,7 @@
 @extends('layout.main')
-@section('title')Create Vendor @endsection
-@section('page-heading')Create Vendor @endsection
-@section('slug') > Create Vendor @endsection
+@section('title')Edit Vendor @endsection
+@section('page-heading')Edit Vendor @endsection
+@section('slug') > Edit Vendor @endsection
 @section('content')
 
 <!-- for selectize -->
@@ -10,41 +10,38 @@
 
 <div class="contentSection pt-3 mt-3">
     <div class="animate__animated animate__fadeIn">
-        <form id="addVendorForm" enctype="multipart/form-data">
+        <form id="editVendorForm" enctype="multipart/form-data">
             @csrf
             <div class="formRow pt-0">
+                <input type="hidden" name="vendor_id" value="{{$vendorDetail->id}}" />
                 <div class="form-group" style="flex: 2; min-width: 46%">
                     <label for="companyName" class="form-label">Company Name</label>
-                    <input name="companyName" type="text" id="companyName" class="form-control" placeholder="Name here"
+                    <input name="companyName" type="text" id="companyName" class="form-control" placeholder="Name here" value="{{$vendorDetail->company_name}}" readonly
                         required autofocus />
                 </div>
                 <div class="form-group" style="flex: 1; min-width: 40%">
                     <label for="natureOfAssesse" class="form-label">Nature of Assesse</label>
-                    <select name="natureOfAssesse" type="text" id="natureOfAssesse" class="form-control" placeholder="select ..." required ></select>
+                    <input name="natureOfAssesse" type="text" id="natureOfAssesse" value="{{$vendorDetail->nature_of_assesse}}" class="form-control" placeholder="select ..." required />
                 </div>
-                @php
-                    $role = optional(Auth::user()->roles->first())->name;
-                    if($role == 'Approver'){
-                    @endphp
+               
                 <div class="form-group" style="flex: 1 1 260px">
                     <label for="vendorCode" class="form-label">Code</label>
                     <input name="vendorCode" type="text" id="vendorCode" class="form-control"
-                        placeholder="Holder Name here" required />
+                        placeholder="Enter Code" value="{{$vendorDetail->erp_code}}" required />
                 </div>
-                @php } @endphp
                 <div class="form-group" style="flex: 1 1 260px">
                     <label for="state" class="form-label">State</label>
-                    <select name="state" type="text" id="state" class="form-control" placeholder="--state--" required ></select>
+                    <input name="state" type="text" id="state" class="form-control" value="{{$vendorDetail->state}}" placeholder="--state--" required />
                 </div>
                 <div class="form-group" style="flex: 1 1 260px">
                     <label for="pincode" class="form-label">Pincode</label>
                     <input name="pincode" type="text" id="pincode" class="form-control number" maxlength="6"
-                        pattern="^[1-9][0-9]{5}$" placeholder="XXXXXX" required />
+                        pattern="^[1-9][0-9]{5}$" placeholder="XXXXXX" value="{{$vendorDetail->pin_code}}" required />
                 </div>
                 <div class="form-group" style="width: 100%">
                     <label for="vendorAddress" class="form-label">Address</label>
                     <textarea name="vendorAddress" id="vendorAddress" class="form-control" placeholder="address here..."
-                        required></textarea>
+                        required>{{$vendorDetail->address}}</textarea>
                 </div>
             </div>
 
@@ -53,105 +50,117 @@
                 <div class="form-group" style="flex: 1 1 260px">
                     <label for="contactPersonName" class="form-label">Name</label>
                     <input name="contactPersonName" type="text" id="contactPersonName" class="form-control"
-                        placeholder="Name here" required />
+                        placeholder="Name here" value="{{$vendorDetail->name}}" required />
                 </div>
                 <div class="form-group" style="flex: 1 1 260px">
                     <label for="contactPersonDesignation" class="form-label">Designation</label>
                     <input name="contactPersonDesignation" type="text" id="contactPersonDesignation"
-                        class="form-control" placeholder="Holder Name here" required />
+                        class="form-control" placeholder="Holder Name here" value="{{$vendorDetail->designation}}" required />
                 </div>
                 <div class="form-group" style="flex: 1 1 260px">
                     <label for="contactPersonMobile" class="form-label">Mobile</label>
                     <input name="contactPersonMobile" pattern="^[9876][0-9]{9}$" type="text" id="contactPersonMobile"
-                        class="form-control number" maxlength="10" placeholder="XXXX XXX XXX" required />
+                        class="form-control number" maxlength="10" placeholder="XXXX XXX XXX" value="{{$vendorDetail->mobile}}" required />
                 </div>
                 <div class="form-group" style="flex: 1 1 260px">
                     <label for="contactPersonEmail" class="form-label">Primary Email</label>
                     <input name="contactPersonEmail" pattern="^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$" type="text"
-                        id="contactPersonEmail" class="form-control" placeholder="e.g. email@your.domai" required />
+                        id="contactPersonEmail" class="form-control" placeholder="e.g. email@your.domai" value="{{$vendorDetail->primary_email}}" readonly required />
                 </div>
                 <div class="form-group" style="flex: 1 1 260px">
                     <label for="contactPersonAltEmail" class="form-label">Secondary Email</label>
                     <input name="contactPersonAltEmail" pattern="^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$" type="text"
-                        id="contactPersonAltEmail" class="form-control" placeholder="e.g. email@your.domai" />
+                        id="contactPersonAltEmail" class="form-control" value="{{$vendorDetail->secondary_email}}" placeholder="e.g. email@your.domai" />
                 </div>
             </div>
 
+            @php 
+                if($vendorDetail->is_bank_detail_verified == 1){
+                    $bankInfo = 'readonly';
+                }else{
+                    $bankInfo = '';
+                }
+            @endphp
 
             <div class="formRow">
                 <h6 class="groupHead">Bank Info</h6>
                 <div class="form-group" style="flex: 1 1 260px">
                     <label for="accountNumber" class="form-label">A/c Number</label>
                     <input name="accountNumber" type="number" id="accountNumber" class="form-control number"
-                        placeholder="XXXXXXXXXX" required />
+                        placeholder="XXXXXXXXXX" value="{{$vendorDetail->acc_no}}" {{$bankInfo}} required />
                 </div>
                 <div class="form-group" style="flex: 1 1 260px">
                     <label for="ifsc" class="form-label">IFSC Code</label>
                     <input name="ifsc" max-length="11" pattern="^[A-Z]{4}[0][0-9]{6}$" type="text" id="ifsc"
-                        class="form-control" placeholder="XXXXXXXXXX" required />
+                        class="form-control" placeholder="XXXXXXXXXX" value="{{$vendorDetail->ifsc_code}}" {{$bankInfo}} required />
                 </div>
                 <div class="form-group" style="flex: 1 1 260px">
                     <label for="branch" class="form-label">Branch Name</label>
                     <input name="branch" type="text" id="branch" class="form-control" placeholder="Branch Name"
-                        required />
+                    value="{{$vendorDetail->branch_name}}" {{$bankInfo}} required />
                 </div>
                 <div class="form-group" style="flex: 1 1 45%">
                     <label for="bankName" class="form-label">Bank Name</label>
-                    <select name="bankName" type="text" id="bankName" class="form-control" placeholder="Bank Name here"
-                        required ></select>
+                    <input name="bankName" type="text" id="bankName" class="form-control" placeholder="Bank Name here" value="{{$vendorDetail->bank_name}}" {{$bankInfo}}
+                        required />
                 </div>
                 <div class="form-group" style="flex: 1 1 45%">
                     <label for="holderName" class="form-label">A/c Holder Name</label>
                     <input name="holderName" type="text" id="holderName" class="form-control"
-                        placeholder="Holder Name here" required />
+                        placeholder="Holder Name here" value="{{$vendorDetail->acc_holder_name}}" {{$bankInfo}} required />
                 </div>
-                @php
-                if($role == 'Approver'){
-                    @endphp
+
                 <div class="form-group" style="flex: 1 1 260px">
                     <label for="cashFlow" class="form-label">Cash Flow</label>
-                    <select name="cashFlow" type="text" id="cashFlow" class="form-control" placeholder="select ..." required ></select>
+                    <input name="cashFlow" type="text" id="cashFlow" class="form-control" value="{{$vendorDetail->cash_flow}}" placeholder="select ..." required />
                 </div>
                 <div class="form-group" style="flex: 1 1 260px">
                     <label for="vendorGroup" class="form-label">Vendor Group</label>
-                    <select name="vendorGroup" type="text" id="vendorGroup" class="form-control" placeholder="select ..." required ></select>
+                    <input name="vendorGroup" type="text" id="vendorGroup" class="form-control" placeholder="select ..." value="{{$vendorDetail->vendor_group}}" required />
                 </div>
                 <div class="form-group" style="flex: 1 1 260px">
                     <label for="paymentTerms" class="form-label">Terms of Payment</label>
-                    <select name="paymentTerms" type="text" id="paymentTerms" class="form-control" placeholder="select ..." required ></select>
+                    <input name="paymentTerms" type="text" id="paymentTerms" class="form-control" placeholder="select ..." value="{{$vendorDetail->terms_of_payment}}"required />
                 </div>
-               @php } @endphp
+
             </div>
 
             <div class="formRow">
                 <h6 class="groupHead">Other Info</h6>
                 <div class="form-group" style="flex: 1 1 260px; min-width: 40%">
                     <label for="ownerName" class="form-label">Owner Name</label>
-                    <input name="ownerName" type="text" id="ownerName" class="form-control" placeholder="Name here"
+                    <input name="ownerName" type="text" id="ownerName" class="form-control" placeholder="Name here" value="{{$vendorDetail->owner_name}}"
                         required />
                 </div>
                 <div class="form-group" style="flex: 1 1 260px; min-width: 40%">
                     <label for="natureOfService" class="form-label">Nature of Service</label>
-                    <input name="natureOfService" type="text" id="natureOfService" class="form-control" placeholder="Name here"
+                    <input name="natureOfService" type="text" id="natureOfService" class="form-control" placeholder="Name here" value="{{$vendorDetail->nature_of_service}}"
                         required />
                 </div>
                 <div class="form-group" style="flex: 1 1 260px; min-width: 40%">
                     <label for="msmeNumber" class="form-label">MSME Number</label>
-                    <input name="msmeNumber" type="number" id="msmeNumber" class="form-control" placeholder="XXXXXXXXXX"
+                    <input name="msmeNumber" type="number" id="msmeNumber" class="form-control" placeholder="XXXXXXXXXX" value="{{$vendorDetail->msme_number}}"
                         required />
                 </div>
                 <div class="form-group" style="flex: 1 1 260px; min-width: 40%">
                     <label for="gstNumber" class="form-label">GSTIN</label>
                     <input name="gstNumber" max-length="11" type="text" id="gstNumber" maxlength="16"
-                        class="form-control" placeholder="XXXXXXXXXX" required />
+                        class="form-control" placeholder="XXXXXXXXXX" value="{{$vendorDetail->gst}}" required />
                 </div>
                 <div class="form-group" style="flex: 1 1 260px; min-width: 40%">
                     <label for="gstNumber" class="form-label">Pan </label>
-                    <input name="panNumber" type="text" id="panNumber" class="form-control" placeholder="XXXXXXXXXX"
+                    <input name="panNumber" type="text" id="panNumber" class="form-control" placeholder="XXXXXXXXXX" value="{{$vendorDetail->pan}}" 
                         required />
                 </div>
             </div>
-
+            @php 
+                $awsUrl = env('AWS_S3_URL');
+                if(!empty($vendorDetail->msme_certificate)){
+                    $msmeCertificate = $awsUrl.'/'.$vendorDetail->msme_certificate;
+                }else{
+                    $msmeCertificate = null;
+                }
+            @endphp
             <div class="formRow">
                 <h6 class="groupHead">Upload Documents</h6>
 
@@ -169,9 +178,9 @@
                         <svg xmlns="http://www.w3.org/2000/svg"  width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x-circle"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
                     </a> -->
                     <label for="msmeCertificate" class="dropArea">
-                        <input type="file" id="msmeCertificate" name="msmeCertificate" class="dragAndDrop file" />
+                        <input type="file" id="msmeCertificate" name="msmeCertificate" value="{{$vendorDetail->msme_certificate}}" class="dragAndDrop file" />
                         <img class="rendoredImage animate__animated animate__fadeIn"
-                            src="{{asset('assets/images/dragAndDrop.png')}}" alt="rendoredImage" />
+                            src="{{$msmeCertificate}}" alt="rendoredImage" />
                         <span class="fileName animate__animated animate__fadeIn"></span>
                     </label>
                     <div class="process animate__animated animate__fadeIn">
@@ -190,6 +199,13 @@
                     </div>
 
                 </div>
+                @php 
+                if(!empty($vendorDetail->gst_certificate)){
+                    $gstCertificate = $awsUrl.'/'.$vendorDetail->gst_certificate;
+                }else{
+                    $gstCertificate = null;
+                }
+               @endphp
 
                 <div class="form-group fileInputGroup">
                     <label class="form-label">GSTIN Certificate</label>
@@ -205,9 +221,9 @@
                         <svg xmlns="http://www.w3.org/2000/svg"  width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x-circle"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
                     </a> -->
                     <label for="gstCertificate" class="dropArea">
-                        <input type="file" id="gstCertificate" name="gstCertificate" class="dragAndDrop file" />
+                        <input type="file" id="gstCertificate" name="gstCertificate" value="{{$vendorDetail->gst_certificate}}" class="dragAndDrop file" />
                         <img class="rendoredImage animate__animated animate__fadeIn"
-                            src="{{asset('assets/images/dragAndDrop.png')}}" alt="rendoredImage" />
+                            src="{{$gstCertificate}}" alt="rendoredImage" />
                         <span class="fileName animate__animated animate__fadeIn"></span>
                     </label>
                     <div class="process animate__animated animate__fadeIn">
@@ -226,9 +242,15 @@
                     </div>
 
                 </div>
-
+                @php 
+                if(!empty($vendorDetail->cancel_cheque)){
+                    $cancelCheque = $awsUrl.'/'.$vendorDetail->cancel_cheque;
+                }else{
+                    $cancelCheque = null;
+                }
+               @endphp
                 <div class="form-group fileInputGroup">
-                    <label class="form-label">Cencel Cheque</label>
+                    <label class="form-label">Cancel Cheque</label>
                     <svg xmlns="http://www.w3.org/2000/svg" class="clearFileInput" width="24" height="24"
                         viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                         stroke-linejoin="round" class="feather feather-x-circle">
@@ -241,9 +263,9 @@
                         <svg xmlns="http://www.w3.org/2000/svg"  width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x-circle"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
                     </a> -->
                     <label for="cancelCheque" class="dropArea">
-                        <input type="file" id="cancelCheque" name="cancelCheque" class="dragAndDrop file" />
+                        <input type="file" id="cancelCheque" name="cancelCheque" value="{{$vendorDetail->cancel_cheque}}" class="dragAndDrop file" />
                         <img class="rendoredImage animate__animated animate__fadeIn"
-                            src="{{asset('assets/images/dragAndDrop.png')}}" alt="rendoredImage" />
+                            src="{{$cancelCheque}}" alt="rendoredImage" />
                         <span class="fileName animate__animated animate__fadeIn"></span>
                     </label>
                     <div class="process animate__animated animate__fadeIn">
@@ -262,7 +284,13 @@
                     </div>
 
                 </div>
-
+                @php 
+                if(!empty($vendorDetail->upload_pan)){
+                    $panUpload = $awsUrl.'/'.$vendorDetail->upload_pan;
+                }else{
+                    $panUpload = '';
+                }
+               @endphp
                 <div class="form-group fileInputGroup">
                     <label class="form-label">Pan</label>
                     <svg xmlns="http://www.w3.org/2000/svg" class="clearFileInput" width="24" height="24"
@@ -277,9 +305,9 @@
                         <svg xmlns="http://www.w3.org/2000/svg"  width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x-circle"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
                     </a> -->
                     <label for="otherDocument" class="dropArea">
-                        <input type="file" id="otherDocument" name="panUpload" class="dragAndDrop file" />
+                        <input type="file" id="otherDocument" name="panUpload" value="{{$vendorDetail->upload_pan}}" class="dragAndDrop file" />
                         <img class="rendoredImage animate__animated animate__fadeIn"
-                            src="{{asset('assets/images/dragAndDrop.png')}}" alt="rendoredImage" />
+                            src="{{$panUpload}}" alt="rendoredImage" />
                         <span class="fileName animate__animated animate__fadeIn"></span>
                     </label>
                     <div class="process animate__animated animate__fadeIn">
@@ -301,13 +329,13 @@
             </div>
 
             <div class="d-flex align-items-center justify-content-end" style="gap: 1.5rem">
-                <button type="button" class="btn btn-sm btn-secondary animate__animated animate__fadeInUp discard"
-                    onclick="resetForm()" style="min-width: 100px">
-                    Discard
-                </button>
+                <a href="/vendor-dashboard" class="btn btn-sm btn-secondary animate__animated animate__fadeInUp discard"
+                    style="min-width: 100px">
+                    Back
+            </a>
                 <button type="submit" class="btn btn-sm btn-primary animate__animated animate__fadeInUp"
                     id="vendorSubmitButton">
-                    <span>Submit</span>
+                    <span>Update</span>
                     <svg xmlns="http://www.w3.org/2000/svg" class="icon right" width="24" height="24"
                         viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                         stroke-linejoin="round" class="feather feather-chevron-right">
@@ -323,6 +351,7 @@
 <script src="{{asset('assets/js/static-data/banks.js')}}"></script>
 <script src="{{asset('assets/js/static-data/states-district.js')}}"></script>
 <script src="{{asset('assets/js/static-data/vendor-options.js')}}"></script>
+<script>var bankInfoVerified = `<?php echo $vendorDetail->is_bank_detail_verified; ?>`;</script>
 <script>
 
 $('#natureOfAssesse').selectize({
@@ -343,6 +372,11 @@ $('#bankName').selectize({
     searchField: 'name',
     create: false
 });
+
+if(bankInfoVerified == 1){
+    $('#bankName')[0].selectize.lock();
+}
+
 $('#state').selectize({
     maxItems: 1,
     plugins: ["clear_button"],
@@ -353,7 +387,6 @@ $('#state').selectize({
     create: false
 });
 $('#cashFlow').selectize({
-    
     maxItems: 1,
     plugins: ["clear_button"],
     options: vendorOptions.CashFlow,
@@ -389,14 +422,20 @@ function resetForm() {
     $('#addVendorForm').trigger("reset");
 }
 
-$("#addVendorForm").validate({
+$("#editVendorForm").validate({
     rules: {
         companyName: {
+            required: true
+        },
+        natureOfAssesse: {
             required: true
         },
         vendorCode: {
             required: true,
             minlength: 5
+        },
+        state: {
+            required: true
         },
         pincode: {
             required: true,
@@ -431,6 +470,9 @@ $("#addVendorForm").validate({
         branch: {
             required: true
         },
+        bankName: {
+            required: true
+        },
         holderName: {
             required: true
         },
@@ -453,9 +495,15 @@ $("#addVendorForm").validate({
         companyName: {
             required: 'Required'
         },
+        natureOfAssesse: {
+            required: 'Required'
+        },
         vendorCode: {
             required: 'Required',
             minlength: 'Minimum 5 characters required'
+        },
+        state: {
+            required: 'Required'
         },
         pincode: {
             required: 'Required'
@@ -489,6 +537,9 @@ $("#addVendorForm").validate({
         branch: {
             required: 'Required'
         },
+        bankName: {
+            required: 'Required'
+        },
         holderName: {
             required: 'Required'
         },
@@ -512,7 +563,7 @@ $("#addVendorForm").validate({
         const formData = new FormData(form);
         formData.append('pfu', pfu);
         $.ajax({
-            url: '/add-vendor',
+            url: '/update-vendor',
             type: 'POST',
             data: formData,
             processData: false,
@@ -533,7 +584,7 @@ $("#addVendorForm").validate({
                     $("#loading").removeClass("working");
                     Swal.fire({
                         title: 'Success!',
-                        text: 'Vendor added successfully',
+                        text: 'Vendor Updated successfully',
                         icon: 'success',
                         confirmButtonText: 'OK'
                     }).then(() => {
@@ -547,7 +598,7 @@ $("#addVendorForm").validate({
                         icon: 'error',
                         confirmButtonText: 'OK'
                     });
-                    $('#vendorSubmitButton span').html('Submit');
+                    $('#vendorSubmitButton span').html('Update');
                     $('#vendorSubmitButton').removeAttr('disabled');
                     $('#vendorSubmitButton').siblings('.discard').removeAttr('disabled');
                     $('.btn-close').removeAttr('disabled');

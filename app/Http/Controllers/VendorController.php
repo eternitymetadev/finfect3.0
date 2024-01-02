@@ -15,6 +15,7 @@ class VendorController extends Controller
     {
         $this->middleware('auth');
         $this->middleware('permission:vendor-dashboard', ['only' => ['vendorDashboard']]);
+        $this->middleware('permission:edit-vendor', ['only' => ['editVendor']]);
     }
 
     public function vendorDashboard(Request $request)
@@ -37,9 +38,9 @@ class VendorController extends Controller
 
             $validator = \Validator::make($request->all(), [
                 'vendorCode' => 'unique:vendors,erp_code',
-              
+
             ]);
-    
+
             if ($validator->fails()) {
                 $errors = $validator->errors();
                 $formattedErrors = [];
@@ -128,6 +129,9 @@ class VendorController extends Controller
             $addVendor['gst_certificate'] = $gstpath;
             $addVendor['cancel_cheque'] = $cancelChequepath;
             $addVendor['upload_pan'] = $panPath;
+            if ($request->vendorCode) {
+                $addVendor['status'] = 1;
+            }
 
             $vendorAdded = Vendor::create($addVendor);
 
@@ -182,6 +186,142 @@ class VendorController extends Controller
                 'success' => false,
                 'message' => 'Vendor details not found',
             ]);
+        }
+
+    }
+
+    public function editVendor($id)
+    {
+        $vendor_id = decrypt($id);
+        $vendorDetail = Vendor::where('id', $vendor_id)->first();
+        return view('admin.vendor.edit-vendor', ['vendorDetail' => $vendorDetail]);
+    }
+
+    public function updateVendor(Request $request)
+    {
+        try {
+            DB::beginTransaction();
+
+            $validator = \Validator::make($request->all(), [
+                'vendorCode' => 'unique:vendors,erp_code,' . $request->vendor_id,
+
+            ]);
+
+            if ($validator->fails()) {
+                $errors = $validator->errors();
+                $formattedErrors = [];
+                foreach ($errors->keys() as $field) {
+                    $formattedErrors[$field] = $errors->get($field);
+                }
+                return response()->json(['errors' => $formattedErrors], 422);
+            }
+
+            $existingVendor = Vendor::where('id', '!=', $request->vendor_id)->where('pfu', $request->pfu)
+                ->where('pan', $request->panNumber)
+                ->first();
+
+            if ($existingVendor) {
+
+                $response['error'] = true;
+                $response['message'] = 'Vendor already exist in this pfu';
+                return response()->json($response);
+            }
+
+            $checkImg = Vendor::where('id', $request->vendor_id)->first();
+            // ------ Msme Certificate
+            if ($request->msmeCertificate) {
+                $msme = $request->file('msmeCertificate');
+                $path = Storage::disk('s3')->put('vendor', $msme);
+                $msmeCertificate = $path;
+            } else {
+                if ($checkImg) {
+                    $msmeCertificate = $checkImg->msme_certificate;
+                } else {
+                    $msmeCertificate = null;
+                }
+
+            }
+            // ------ gst Certificate
+            if ($request->gstCertificate) {
+                $gstupload = $request->file('gstCertificate');
+                $gstpath = Storage::disk('s3')->put('vendor', $gstupload);
+            } else {
+                if ($checkImg) {
+                    $gstpath = $checkImg->gst_certificate;
+                } else {
+                    $gstpath = null;
+                }
+            }
+            // ------ cancelCheque Certificate
+            if ($request->cancelCheque) {
+                $cheque_upload = $request->file('cancelCheque');
+                $cancelChequepath = Storage::disk('s3')->put('vendor', $cheque_upload);
+            } else {
+                if ($checkImg) {
+                    $cancelChequepath = $checkImg->cancel_cheque;
+                } else {
+                    $cancelChequepath = null;
+                }
+            }
+            // ------ uploadPan
+            if ($request->panUpload) {
+                $pan_upload = $request->file('panUpload');
+                $panPath = Storage::disk('s3')->put('vendor', $pan_upload);
+            } else {
+                if ($checkImg) {
+                    $panPath = $checkImg->upload_pan;
+                } else {
+                    $panPath = null;
+                }
+            }
+
+            $updateVendor['company_name'] = $request->companyName;
+            $updateVendor['nature_of_assesse'] = $request->natureOfAssesse;
+            $updateVendor['erp_code'] = $request->vendorCode;
+            $updateVendor['state'] = $request->state;
+            $updateVendor['pin_code'] = $request->pincode;
+            $updateVendor['address'] = $request->vendorAddress;
+            $updateVendor['name'] = $request->contactPersonName;
+            $updateVendor['designation'] = $request->contactPersonDesignation;
+            $updateVendor['mobile'] = $request->contactPersonMobile;
+            $updateVendor['primary_email'] = $request->contactPersonEmail;
+            $updateVendor['secondary_email'] = $request->contactPersonAltEmail;
+            $updateVendor['acc_no'] = $request->accountNumber;
+            $updateVendor['ifsc_code'] = $request->ifsc;
+            $updateVendor['branch_name'] = $request->branch;
+            $updateVendor['bank_name'] = $request->bankName;
+            $updateVendor['acc_holder_name'] = $request->holderName;
+            $updateVendor['cash_flow'] = $request->cashFlow;
+            $updateVendor['vendor_group'] = $request->vendorGroup;
+            $updateVendor['terms_of_payment'] = $request->paymentTerms;
+            $updateVendor['owner_name'] = $request->ownerName;
+            $updateVendor['nature_of_service'] = $request->natureOfService;
+            $updateVendor['msme_number'] = $request->msmeNumber;
+            $updateVendor['gst'] = $request->gstNumber;
+            $updateVendor['pan'] = $request->panNumber;
+            $updateVendor['msme_certificate'] = $msmeCertificate;
+            $updateVendor['gst_certificate'] = $gstpath;
+            $updateVendor['cancel_cheque'] = $cancelChequepath;
+            $updateVendor['upload_pan'] = $panPath;
+            if ($request->vendorCode) {
+                $updateVendor['status'] = 1;
+            }
+
+            $vendorUpdated = Vendor::where('id', $request->vendor_id)->update($updateVendor);
+
+            if ($vendorUpdated) {
+
+                $response['success'] = true;
+            } else {
+                $response['success'] = false;
+            }
+            DB::commit();
+            return response()->json($response);
+        } catch (\Exception $e) {
+            $response['success'] = false;
+            $response['message'] = $e->getMessage();
+
+            return response()->json($response, 500);
         }
 
     }
