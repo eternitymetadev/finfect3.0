@@ -1,7 +1,7 @@
 @extends('layout.main')
-@section('title')Create Vendor @endsection
+@section('title')Edit Vendor @endsection
 @section('page-heading')Edit Vendor @endsection
-@section('slug') > Create Vendor @endsection
+@section('slug') > Edit Vendor @endsection
 @section('content')
 
 <!-- for selectize -->
