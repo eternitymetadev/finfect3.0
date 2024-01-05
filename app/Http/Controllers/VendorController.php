@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Imports\VendorLedgerImport;
 use App\Models\User;
 use App\Models\Vendor;
+use App\Models\VendorLedgerBalance;
 use DB;
+use Excel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Storage;
@@ -326,4 +329,41 @@ class VendorController extends Controller
 
     }
 
+    public function publicVendor(Request $request)
+    {
+        return view('vendor.public-vendor-form');
+    }
+
+    public function vendorLedgerSheet(Request $request)
+    {
+        $loginPfu = $request->session()->get('pfu');
+        $vendorLedgerBalance = VendorLedgerBalance::where('pfu', $loginPfu)->whereDate('date_time', date('Y-m-d'))->get();
+        $lastUploadData = VendorLedgerBalance::select('id', 'date_time')->orderBy('date_time', 'desc')->first();
+
+        return view('ledger-sheet.vendor-ledger-sheet', ['vendorLedgerBalance' => $vendorLedgerBalance, 'lastUploadData' => $lastUploadData]);
+    }
+
+    public function uploadLedgerSheet(Request $request)
+    {
+
+        $file = $request->file('ledger_file');
+        $pfu = $request->pfu;
+        try {
+            Excel::import(new VendorLedgerImport($pfu), $file);
+
+            $response['success'] = true;
+            return response()->json($response);
+        } catch (\Exception $e) {
+            $response['success'] = false;
+            $response['message'] = $e->getMessage();
+
+            return response()->json($response, 500);
+        }
+    }
+    public function vendorLedgerSample()
+    {
+        $path = public_path('sample/vendor_ledger.csv');
+        return response()->download($path);
+    }
+    
 }
