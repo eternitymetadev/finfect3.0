@@ -6,6 +6,31 @@
 
 <link href="{{asset('assets/css/pages/bank-page/bankPage.css')}}" rel="stylesheet" />
 <link href="{{asset('assets/css/pages/common/common.css')}}" rel="stylesheet" />
+<style>
+#failedRows {
+    display: flex;
+    align-items:center;
+    align-content:center;
+    justify-content:center;
+    gap: 0.4rem;
+    flex-wrap: wrap;
+    max-height: 50vh;
+    min-height: 50vh;
+
+}
+
+#failedRows p {
+    margin-bottom:
+}
+
+#failedRows span {
+    font-size: 10px;
+    background: #f5a52415;
+    color: var(--warningColor);
+    padding: 2px 10px;
+    border-radius: 8px;
+}
+</style>
 
 <!-- for dataTable -->
 @include('cdns.dataTable')
@@ -45,51 +70,50 @@
 
 <div class="contentSection pt-3 mt-3">
     <div class="animate__animated animate__fadeIn">
-        @if(count($vendorInvoiceDue) <= 0)
-        <div class="noDataView">
+        @if(count($vendorInvoiceDue) <= 0) <div class="noDataView">
             <img src="{{asset('assets/images/vendor.svg')}}" alt="" />
-            <p>No records found,<br />please import new ledger balance sheet.</p>
+            <p>No records found,<br />please import vendor invoice due sheet.</p>
             <a class="actionLink" data-bs-toggle="modal" data-bs-target="#invoiceDuesUploadDialog">Import</a>
-        </div>
-        @elseif(true)
-
-        <div class="tableContainer">
-            <div class="table-responsive">
-                <table id="qwerty" class="table table-sm">
-                    <thead>
-                        <tr>
-                            <th>Vendor A/c</th>
-                            <th>Name</th>
-                            <th>Group</th>
-                            <th>Invoice No</th>
-                            <th>Invoice Data</th>
-                            <th class="forCurrency">Amount</th>
-                            <th class="forCurrency">Due Amount</th>
-                            <th>Ax Voucher</th>
-
-                            <!-- <th class="actionCol text-center">Action</th> -->
-                        </tr>
-                    </thead>
-
-                    <tbody>
-                        @foreach ($vendorInvoiceDue as $vendorInvoice) <tr>
-                            <td>{{$vendorInvoice->VendorDetail->erp_code}}</td>
-                            <td>{{$vendorInvoice->VendorDetail->name}}</td>
-                            <td>{{$vendorInvoice->VendorDetail->vendor_group}}</td>
-                            <td>{{$vendorInvoice->invoice_no}}</td>
-                            <td>{{$vendorInvoice->invoice_date}}</td>
-                            <td class="text-right"><span class="currency">{{$vendorInvoice->amount}}</span></td>
-                            <td class="text-right"><span class="currency">{{$vendorInvoice->payment_due_amount}}</span></td>
-                            <td>{{$vendorInvoice->ax_voucher_no}}</td>
-                            </tr>
-                            @endforeach
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
-        @endif
     </div>
+    @elseif(true)
+
+    <div class="tableContainer">
+        <div class="table-responsive">
+            <table id="qwerty" class="table table-sm">
+                <thead>
+                    <tr>
+                        <th>Vendor A/c</th>
+                        <th>Name</th>
+                        <th>Group</th>
+                        <th>Invoice No</th>
+                        <th>Invoice Data</th>
+                        <th class="forCurrency">Amount</th>
+                        <th class="forCurrency">Due Amount</th>
+                        <th>Ax Voucher</th>
+
+                        <!-- <th class="actionCol text-center">Action</th> -->
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach ($vendorInvoiceDue as $vendorInvoice) <tr>
+                        <td>{{$vendorInvoice->VendorDetail->erp_code}}</td>
+                        <td>{{$vendorInvoice->VendorDetail->name}}</td>
+                        <td>{{$vendorInvoice->VendorDetail->vendor_group}}</td>
+                        <td>{{$vendorInvoice->invoice_no}}</td>
+                        <td>{{$vendorInvoice->invoice_date}}</td>
+                        <td class="text-right"><span class="currency">{{$vendorInvoice->amount}}</span></td>
+                        <td class="text-right"><span class="currency">{{$vendorInvoice->payment_due_amount}}</span></td>
+                        <td>{{$vendorInvoice->ax_voucher_no}}</td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    @endif
+</div>
 
 </div>
 
@@ -102,12 +126,20 @@
             <div class="modal-body" style="max-width: 600px">
                 <div class="uploadFormDialog">
                     <img src="{{asset('assets/images/vendor.svg')}}" alt="" class="animate__animated animate__fadeIn" />
-                    <p class="subject animate__animated animate__fadeInUp">Upload ledger sheet</p>
+                    <p class="subject animate__animated animate__fadeInUp">Upload invoice due</p>
                     <div class="form-group" style="width: 100%">
-                        <input type="file"
-                            class="form-control form-control-sm file animate__animated animate__fadeIn" id="invoice_dues"/>
-                        <label class="helperText right animate__animated animate__fadeIn">Last Updated: 29 Jan 2023
-                            18:30:40</label>
+                        <input type="file" class="form-control form-control-sm file animate__animated animate__fadeIn"
+                            id="invoice_dues" />
+                            @php
+                        if(!empty($lastUploadData->date_time)){
+                        $dateTime = new DateTime($lastUploadData->date_time);
+                        $formattedDate = $dateTime->format('d M Y H:i:s');
+                        }else{
+                        $formattedDate = '-';
+                        }
+
+                        @endphp
+                        <label class="helperText right animate__animated animate__fadeIn">{{$formattedDate}}</label>
                     </div>
                     <button class="btn btn-primary animate__animated animate__fadeInUp" id="myLedgerSubmitButton">
                         Submit
@@ -124,9 +156,31 @@
     </div>
 </div>
 <!-- end of Modal to upload my ledger sheet -->
+<!-- data failed  -->
+<div class="modal" id="failedData" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false"
+    aria-labelledby="failedData" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+
+        <div class="modal-content">
+            <div class="modal-header">
+                <h6 class="modal-title" id="exampleModalLabel">Vendors Ledger Not Found</h6>
+                <button id="reloadPage" type="button" class="btn-close" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div id="failedRows">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end data failed -->
 
 <script>
 $(document).ready(function() {
+    $('#reloadPage').on('click', function(){
+        window.location.reload();
+    })
 
     // initializatoin of dataTable
     const table = $('#qwerty').DataTable({
@@ -188,17 +242,41 @@ $(document).ready(function() {
             },
             success: function(response) {
                 if (response.success) {
-                    $.toast({
-                        heading: 'Success',
-                        text: 'Data imported successfully',
-                        icon: 'success',
-                        position: 'top-right',
-                        loader: true,
-                        loaderBg: '#ffffff'
-                    })
-                    setTimeout(function() {
-                        location.reload();
-                    }, 3000);
+                    if (response.failedRows && response.failedRows.length > 0) {
+                        $('#invoiceDuesUploadDialog').modal('hide');
+                        console.log('Failed rows: ' + JSON.stringify(response.failedRows));
+                        $('#failedData').modal('show');
+                        let failedRows = $('#failedRows');
+                        response.failedRows.forEach(function(failedRow) {
+                            let innerHtml =
+                                `<span>${failedRow.vendor_code}</span>`;
+                            failedRows.append(innerHtml);
+                        });
+                        $.toast({
+                            heading: 'warning',
+                            text: 'Vendor ledger not uploaded',
+                            icon: 'warning',
+                            position: 'top-right',
+                            loader: false,
+                            loaderBg: '#ffffff',
+                            hideAfter: 7000,
+                            bgColor: '#f5a524',
+                            textColor: 'white'
+                        })
+                    } else {
+                        $.toast({
+                            heading: 'Success',
+                            text: 'Data Imported successfully',
+                            icon: 'success',
+                            position: 'top-right',
+                            loader: true,
+                            loaderBg: '#ffffff',
+                            bgColor: '#18c964',
+                        })
+                        setTimeout(function() {
+                            location.reload();
+                        }, 3000);
+                    }
 
                 } else {
                     $.toast({

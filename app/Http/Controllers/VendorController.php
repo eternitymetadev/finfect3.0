@@ -393,14 +393,24 @@ class VendorController extends Controller
 
         $file = $request->file('invoice_dues');
         $pfu = $request->pfu;
+        $failedRows = [];
         try {
-            Excel::import(new VendorInvoiceDueImport($pfu), $file);
+            $import = new VendorInvoiceDueImport($pfu);
+            Excel::import($import, $file);
 
+            $failedRows = $import->vendorLedgerNotUpload();
+            // Check if any failed rows exist
+            if (!empty($failedRows)) {
+                $response['failedRows'] = $failedRows;
+            }
+            
+            $response['failedRows'] = $failedRows;
             $response['success'] = true;
             return response()->json($response);
         } catch (\Exception $e) {
             $response['success'] = false;
             $response['message'] = $e->getMessage();
+            $response['failedRows'] = $failedRows; 
 
             return response()->json($response, 500);
         }
