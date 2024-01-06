@@ -6,6 +6,26 @@
 
 <link href="{{asset('assets/css/pages/common/common.css')}}" rel="stylesheet" />
 
+<style>
+    #failedRows{
+        display: flex;
+        gap: 0.4rem;
+        flex-wrap: wrap;
+        max-height: 50vh;
+
+    }
+    #failedRows p{
+        margin-bottom: 
+    }
+    #failedRows span{
+        font-size: 10px;
+        background: #f5a52415;
+        color: var(--warningColor);
+        padding: 2px 10px;
+        border-radius: 8px;
+    }
+</style>
+
 <!-- for dataTable -->
 @include('cdns.dataTable')
 
@@ -140,26 +160,51 @@
     </div>
 </div>
 <!-- end of Modal to upload my ledger sheet -->
+<!-- data failed  -->
+<div class="modal" id="failedData" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="failedData" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+    
+        <div class="modal-content">
+            <div class="modal-header">
+                <h6 class="modal-title" id="exampleModalLabel">Vendors Not Found</h6>
+                <button id="reloadPage" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+               <div id="failedRows">
+               </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end data failed -->
 
 <script>
 $(document).ready(function() {
 
-    // initializatoin of dataTable
-    const table = $('#qwerty').DataTable({
-        dom: '<"dt-row"<rtb>><"footer-row"lp><"clear">',
-        "language": {
-            "lengthMenu": "Rows _MENU_"
-        },
-        buttons: [
-            'excel'
-        ],
-        columnDefs: [{
-            'targets': [3, 4, 5],
-            'orderable': false,
+    $('#reloadPage').on('click', function(){
+        window.location.reload();
+    })
 
-        }]
-    });
-    table.draw();
+
+    setTimeout(() => {
+        if (true) {
+            const table = $('#qwerty').DataTable({
+                dom: '<"dt-row"<rtb>><"footer-row"lp><"clear">',
+                "language": {
+                    "lengthMenu": "Rows _MENU_"
+                },
+                buttons: ['excel'],
+                columnDefs: [{
+                    'targets': [3, 4, 5],
+                    'orderable': false
+                }]
+            });
+            table.draw();
+        }
+    }, 2000);
+
+    // initializatoin of dataTable
+
 
 
     // Add a click event listener to the button
@@ -186,6 +231,7 @@ $(document).ready(function() {
 
         $(this).html('...');
         $(this).attr('disabled', true);
+        $("#loading").addClass("working");
         $('.uploadFormDialog').css("pointer-events", "none");
         const pfu = localStorage.getItem('pfuValue');
         let formData = new FormData();
@@ -203,24 +249,45 @@ $(document).ready(function() {
             headers: {
                 'X-CSRF-TOKEN': csrfToken
             },
+            complete: function(){
+                $("#loading").removeClass("working");
+            },
             success: function(response) {
                 if (response.success) {
-                    // Handle success scenario
-                    // resetFrom();
-                    $.toast({
-                        heading: 'Success',
-                        text: 'Data Imported successfully',
-                        icon: 'success',
-                        position: 'top-right',
-                        loader: true,
-                        loaderBg: '#ffffff'
-                    })
-                    setTimeout(function() {
-                        location.reload();
-                    }, 3000);
-                    
+
                     if (response.failedRows && response.failedRows.length > 0) {
+                        $('#myLedgerSheetUploadDialog').modal('hide');
                         console.log('Failed rows: ' + JSON.stringify(response.failedRows));
+                        $('#failedData').modal('show');
+                        let failedRows = $('#failedRows');
+                        response.failedRows.forEach(function(failedRow) {
+                            let innerHtml = `<span>${failedRow.vendor_account}</span>`;
+                            failedRows.append(innerHtml);
+                        });
+                        $.toast({
+                            heading: 'warning',
+                            text: 'Vendor not uploaded in master',
+                            icon: 'warning',
+                            position: 'top-right',
+                            loader: false,
+                            loaderBg: '#ffffff',
+                            hideAfter: 7000,
+                            bgColor: '#f5a524',
+                            textColor: 'white'
+                        })
+                    } else {
+                        $.toast({
+                            heading: 'Success',
+                            text: 'Data Imported successfully',
+                            icon: 'success',
+                            position: 'top-right',
+                            loader: true,
+                            loaderBg: '#ffffff',
+                            bgColor: '#18c964',
+                        })
+                        setTimeout(function() {
+                            location.reload();
+                        }, 3000);
                     }
 
                 } else {
@@ -230,7 +297,8 @@ $(document).ready(function() {
                         icon: 'error',
                         position: 'top-right',
                         loader: false,
-                        loaderBg: '#ffffff' // Background color for the loader
+                        bgColor: '#f31260',
+                        loaderBg: '#ffffff'
                     })
                     let newDate = '20 Nov 2023 13:30:00';
                     $('#myLedgerSubmitButton').html('Update');

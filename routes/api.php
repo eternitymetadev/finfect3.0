@@ -20,5 +20,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
  Route::get('pfu-list', [ApiDataController::class, 'getPfu']);
+ Route::get('vendor-ledger', [ApiDataController::class, 'vendorLedgerSheet']);
 
 
