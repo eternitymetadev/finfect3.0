@@ -153,7 +153,7 @@
                             <polyline points="9 18 15 12 9 6"></polyline>
                         </svg>
                     </button>
-                    <a href="/sample-vendor-ledger" class="link animate__animated animate__fadeInUp">Download Smaple</a>
+                    <a href="/sample-vendor-ledger" class="link animate__animated animate__fadeInUp">Download sample</a>
                 </div>
             </div>
         </div>
