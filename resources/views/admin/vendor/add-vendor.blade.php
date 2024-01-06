@@ -20,12 +20,13 @@
                 </div>
                 <div class="form-group" style="flex: 1; min-width: 40%">
                     <label for="natureOfAssesse" class="form-label">Nature of Assesse</label>
-                    <select name="natureOfAssesse" type="text" id="natureOfAssesse" class="form-control" placeholder="select ..." required ></select>
+                    <select name="natureOfAssesse" type="text" id="natureOfAssesse" class="form-control"
+                        placeholder="select ..." required></select>
                 </div>
                 @php
-                    $role = optional(Auth::user()->roles->first())->name;
-                    if($role == 'Approver'){
-                    @endphp
+                $role = optional(Auth::user()->roles->first())->name;
+                if($role == 'Approver'){
+                @endphp
                 <div class="form-group" style="flex: 1 1 260px">
                     <label for="vendorCode" class="form-label">Code</label>
                     <input name="vendorCode" type="text" id="vendorCode" class="form-control"
@@ -34,7 +35,8 @@
                 @php } @endphp
                 <div class="form-group" style="flex: 1 1 260px">
                     <label for="state" class="form-label">State</label>
-                    <select name="state" type="text" id="state" class="form-control" placeholder="--state--" required ></select>
+                    <select name="state" type="text" id="state" class="form-control" placeholder="--state--"
+                        required></select>
                 </div>
                 <div class="form-group" style="flex: 1 1 260px">
                     <label for="pincode" class="form-label">Pincode</label>
@@ -98,7 +100,7 @@
                 <div class="form-group" style="flex: 1 1 45%">
                     <label for="bankName" class="form-label">Bank Name</label>
                     <select name="bankName" type="text" id="bankName" class="form-control" placeholder="Bank Name here"
-                        required ></select>
+                        required></select>
                 </div>
                 <div class="form-group" style="flex: 1 1 45%">
                     <label for="holderName" class="form-label">A/c Holder Name</label>
@@ -107,20 +109,23 @@
                 </div>
                 @php
                 if($role == 'Approver'){
-                    @endphp
+                @endphp
                 <div class="form-group" style="flex: 1 1 260px">
                     <label for="cashFlow" class="form-label">Cash Flow</label>
-                    <select name="cashFlow" type="text" id="cashFlow" class="form-control" placeholder="select ..." required ></select>
+                    <select name="cashFlow" type="text" id="cashFlow" class="form-control" placeholder="select ..."
+                        required></select>
                 </div>
                 <div class="form-group" style="flex: 1 1 260px">
                     <label for="vendorGroup" class="form-label">Vendor Group</label>
-                    <select name="vendorGroup" type="text" id="vendorGroup" class="form-control" placeholder="select ..." required ></select>
+                    <select name="vendorGroup" type="text" id="vendorGroup" class="form-control"
+                        placeholder="select ..." required></select>
                 </div>
                 <div class="form-group" style="flex: 1 1 260px">
                     <label for="paymentTerms" class="form-label">Terms of Payment</label>
-                    <select name="paymentTerms" type="text" id="paymentTerms" class="form-control" placeholder="select ..." required ></select>
+                    <select name="paymentTerms" type="text" id="paymentTerms" class="form-control"
+                        placeholder="select ..." required></select>
                 </div>
-               @php } @endphp
+                @php } @endphp
             </div>
 
             <div class="formRow">
@@ -132,8 +137,8 @@
                 </div>
                 <div class="form-group" style="flex: 1 1 260px; min-width: 40%">
                     <label for="natureOfService" class="form-label">Nature of Service</label>
-                    <input name="natureOfService" type="text" id="natureOfService" class="form-control" placeholder="Name here"
-                        required />
+                    <input name="natureOfService" type="text" id="natureOfService" class="form-control"
+                        placeholder="Name here" required />
                 </div>
                 <div class="form-group" style="flex: 1 1 260px; min-width: 40%">
                     <label for="msmeNumber" class="form-label">MSME Number</label>
@@ -324,7 +329,6 @@
 <script src="{{asset('assets/js/static-data/states-district.js')}}"></script>
 <script src="{{asset('assets/js/static-data/vendor-options.js')}}"></script>
 <script>
-
 $('#natureOfAssesse').selectize({
     maxItems: 1,
     plugins: ["clear_button"],
@@ -353,7 +357,7 @@ $('#state').selectize({
     create: false
 });
 $('#cashFlow').selectize({
-    
+
     maxItems: 1,
     plugins: ["clear_button"],
     options: vendorOptions.CashFlow,
@@ -531,34 +535,45 @@ $("#addVendorForm").validate({
                     // Handle success scenario
                     // resetFrom();
                     $("#loading").removeClass("working");
-                    Swal.fire({
-                        title: 'Success!',
+                    $.toast({
+                        heading: 'Success',
                         text: 'Vendor added successfully',
                         icon: 'success',
-                        confirmButtonText: 'OK'
-                    }).then(() => {
+                        position: 'top-right',
+                        loader: true,
+                        loaderBg: '#ffffff'
+                    })
+                    setTimeout(function() {
                         location.reload();
-                    });
+                    }, 3000);
 
                 } else if (response.error) {
-                    Swal.fire({
-                        title: 'Error!',
+                    $.toast({
+                        heading: 'Error',
                         text: 'Vendor already exist in this pfu',
                         icon: 'error',
-                        confirmButtonText: 'OK'
-                    });
+                        position: 'top-right',
+                        loader: false,
+                        loaderBg: '#ffffff',
+                        hideAfter: false,
+                        hideAfter: 7000
+                    })
                     $('#vendorSubmitButton span').html('Submit');
                     $('#vendorSubmitButton').removeAttr('disabled');
                     $('#vendorSubmitButton').siblings('.discard').removeAttr('disabled');
                     $('.btn-close').removeAttr('disabled');
                     $("#loading").removeClass("working");
                 } else {
-                    Swal.fire({
-                        title: 'Error!',
-                        text: 'something went wrong',
+                    $.toast({
+                        heading: 'Error',
+                        text: 'Something went wrong',
                         icon: 'error',
-                        confirmButtonText: 'OK'
-                    });
+                        position: 'top-right',
+                        loader: false,
+                        loaderBg: '#ffffff',
+                        hideAfter: false,
+                        hideAfter: 7000
+                    })
                     $('#vendorSubmitButton span').html('Submit');
                     $('#vendorSubmitButton').removeAttr('disabled');
                     $('#vendorSubmitButton').siblings('.discard').removeAttr('disabled');
@@ -571,15 +586,20 @@ $("#addVendorForm").validate({
                 console.log(xhr.responseJSON);
                 if (xhr.responseJSON && xhr.responseJSON.message) {
                     errorMessage = xhr.responseJSON.message;
-                }else if(xhr.responseJSON.errors.vendorCode && xhr.responseJSON.errors.vendorCode.length > 0){
-                    errorMessage = xhr.responseJSON.errors.vendorCode[0]; 
+                } else if (xhr.responseJSON.errors.vendorCode && xhr.responseJSON.errors
+                    .vendorCode.length > 0) {
+                    errorMessage = xhr.responseJSON.errors.vendorCode[0];
                 }
-                Swal.fire({
-                    title: 'Error!',
+                $.toast({
+                    heading: 'Error',
                     text: errorMessage,
                     icon: 'error',
-                    confirmButtonText: 'OK'
-                });
+                    position: 'top-right',
+                    loader: false,
+                    loaderBg: '#ffffff',
+                    hideAfter: false,
+                    hideAfter: 7000
+                })
 
                 $('#vendorSubmitButton span').html('Submit');
                 $('#vendorSubmitButton').removeAttr('disabled');

@@ -990,4 +990,7 @@ body:has(aside.close) .tableContainer .selectedRowsActionBar {
   .tableContainer .selectedRowsActionBar {
     max-width: calc(100vw - 2rem) !important;
   }
+}
+.jq-toast-single.jq-has-icon.jq-icon-error {
+  word-wrap: break-word;
 }/*# sourceMappingURL=globalStyle.css.map */

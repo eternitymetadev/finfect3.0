@@ -141,6 +141,7 @@
                         </a>
                     </li>
                     @endcanany
+                    @canany(['vendor-ledger'])
                     <li class="menu animate__animated animate__fadeIn">
                         <a class="nav-link" href="{{url('/vendor-ledger-sheet')}}">
                             <svg xmlns="http://www.w3.org/2000/svg" class="menuIcon" width="24px" height="24px"
@@ -154,6 +155,7 @@
                             <span>Vendor Ledger</span>
                         </a>
                     </li>
+                    @endcanany
                     <li class="menu animate__animated animate__fadeIn">
                         <a class="nav-link" href="{{url('/emp-ledger-sheet')}}">
                             <svg xmlns="http://www.w3.org/2000/svg" class="menuIcon" width="24px" height="24px"
@@ -177,7 +179,7 @@
                                     c0-0.73-0.35-1.43-0.94-1.9l-7.02-5.29c-1.22-0.93-2.97-0.9-4.16,0.07L3.02,7.96c-0.63,0.46-1,1.16-1.02,1.9v8.7
                                     C2,20.46,3.63,22,5.64,22h2.02c0.1,0,0.54-0.02,0.92-0.36C8.95,21.3,8.98,20.86,8.98,20.77z" />
                             </svg>
-                            <span>My Invoice Dues</span>
+                            <span>Vendor Invoice Dues</span>
                         </a>
                     </li>
                     

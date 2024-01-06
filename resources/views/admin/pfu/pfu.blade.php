@@ -57,89 +57,88 @@
 
 <div class="contentSection pt-3 mt-3">
     <div class="animate__animated animate__fadeIn">
-        @if(count($pfuLists) <= 0)
-        <div class="noDataView">
+        @if(count($pfuLists) <= 0) <div class="noDataView">
             <img src="{{asset('assets/images/vendor.svg')}}" alt="" />
             <p>No records found,<br />please add pfu.</p>
-        </div>
-        @elseif(true)
-
-        <div class="tableContainer">
-            <div class="table-responsive">
-                <table id="qwerty" class="table table-sm">
-                    <thead>
-                        <tr>
-                            <th>Sr No.</th>
-                            <th>PFU</th>
-                            <th>Domain</th>
-                            <th>Client Code</th>
-                            <th class="text-center">Status</th>
-                            <th class="actionCol text-center">Action</th>
-                        </tr>
-                    </thead>
-
-                    <tbody>
-                        @php
-                        $i = 1;
-                        @endphp
-                        @foreach ($pfuLists as $pfu)
-                        <tr>
-                            <td>{{$i}}</td>
-                            <td>{{$pfu->pfu}}</td>
-                            <td>{{$pfu->domain}}</td>
-                            <td>{{$pfu->client_code}}</td>
-                            <td class="text-center">
-                                @php
-                                switch($pfu->status) {
-                                case 0:
-                                $status = 'error';
-                                $statusText = 'Inactive';
-                                break;
-                                case 1:
-                                $status = 'success';
-                                $statusText = 'Active';
-                                break;
-                                case 2:
-                                $status = 'warning';
-                                $statusText = 'Pending';
-                                break;
-                                default:
-                                $status = 'success';
-                                $statusText = 'Active';
-
-                                }
-                                @endphp
-
-                                <span class="chip mx-auto {{$status}}">
-                                    {{$statusText}}
-                                </span>
-                            </td>
-                            <td class="actionCol text-center">
-                                <div class="iconButtonsContainer d-flex align-items-center justify-content-center"
-                                    style="gap: 0.5rem">
-                                    <a class="iconButton edit_pfu" data-id="{{$pfu->id}}" data-pfu="{{$pfu->pfu}}"
-                                        data-domain="{{$pfu->domain}}" data-client-code="{{$pfu->client_code}}" data-status="{{$pfu->status}}">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                            stroke-linecap="round" stroke-linejoin="round"
-                                            class="feather feather-edit-2">
-                                            <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path>
-                                        </svg>
-                                    </a>
-                                </div>
-                            </td>
-                        </tr>
-                        @php
-                        $i++;
-                        @endphp
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
-        @endif
     </div>
+    @elseif(true)
+
+    <div class="tableContainer">
+        <div class="table-responsive">
+            <table id="qwerty" class="table table-sm">
+                <thead>
+                    <tr>
+                        <th>Sr No.</th>
+                        <th>PFU</th>
+                        <th>Domain</th>
+                        <th>Client Code</th>
+                        <th class="text-center">Status</th>
+                        <th class="actionCol text-center">Action</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @php
+                    $i = 1;
+                    @endphp
+                    @foreach ($pfuLists as $pfu)
+                    <tr>
+                        <td>{{$i}}</td>
+                        <td>{{$pfu->pfu}}</td>
+                        <td>{{$pfu->domain}}</td>
+                        <td>{{$pfu->client_code}}</td>
+                        <td class="text-center">
+                            @php
+                            switch($pfu->status) {
+                            case 0:
+                            $status = 'error';
+                            $statusText = 'Inactive';
+                            break;
+                            case 1:
+                            $status = 'success';
+                            $statusText = 'Active';
+                            break;
+                            case 2:
+                            $status = 'warning';
+                            $statusText = 'Pending';
+                            break;
+                            default:
+                            $status = 'success';
+                            $statusText = 'Active';
+
+                            }
+                            @endphp
+
+                            <span class="chip mx-auto {{$status}}">
+                                {{$statusText}}
+                            </span>
+                        </td>
+                        <td class="actionCol text-center">
+                            <div class="iconButtonsContainer d-flex align-items-center justify-content-center"
+                                style="gap: 0.5rem">
+                                <a class="iconButton edit_pfu" data-id="{{$pfu->id}}" data-pfu="{{$pfu->pfu}}"
+                                    data-domain="{{$pfu->domain}}" data-client-code="{{$pfu->client_code}}"
+                                    data-status="{{$pfu->status}}">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" class="feather feather-edit-2">
+                                        <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path>
+                                    </svg>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                    @php
+                    $i++;
+                    @endphp
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    @endif
+</div>
 
 </div>
 
@@ -394,14 +393,17 @@ $(document).ready(function() {
             success: function(response) {
                 // Handle success response
                 resetFrom();
-                Swal.fire({
-                        title: 'Success!',
-                        text: 'Pfu added successful',
-                        icon: 'success',
-                        confirmButtonText: 'OK'
-                    }).then(() => {
-                        location.reload();
-                    });
+                $.toast({
+                    heading: 'Success',
+                    text: 'Pfu added successfully',
+                    icon: 'success',
+                    position: 'top-right',
+                    loader: true,
+                    loaderBg: '#ffffff'
+                })
+                setTimeout(function() {
+                    location.reload();
+                }, 3000);
             },
             error: function(xhr) {
                 console.log(xhr.responseJSON)
@@ -409,7 +411,8 @@ $(document).ready(function() {
 
                 $.each(errors, function(field, errorMessage) {
                     var errorElement = $('#' + field + '-error');
-                    errorElement.text(errorMessage); // Show only the first error message
+                    errorElement.text(
+                    errorMessage); // Show only the first error message
                     errorElement.show(); // Show error message
                 });
             },
@@ -439,7 +442,7 @@ $(document).ready(function() {
         $('#edit_client_code').val(client_code);
         if (pfu_status == 1) {
             $('.pfu_status').prop('checked', true);
-        }else{
+        } else {
             $('.pfu_status').prop('checked', false);
         }
 
@@ -462,14 +465,17 @@ $(document).ready(function() {
             },
             success: function(response) {
                 // Handle success response
-                Swal.fire({
-                    title: 'Success!',
-                    text: 'Pfu updated successful',
+                $.toast({
+                    heading: 'Success',
+                    text: 'Pfu updated successfully',
                     icon: 'success',
-                    confirmButtonText: 'OK'
-                }).then(() => {
+                    position: 'top-right',
+                    loader: true,
+                    loaderBg: '#ffffff'
+                })
+                setTimeout(function() {
                     location.reload();
-                });
+                }, 3000);
                 // Perform any other actions on successful form submission
             },
             error: function(xhr) {

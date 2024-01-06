@@ -991,6 +991,10 @@ body:has(aside.close) .tableContainer .selectedRowsActionBar {
     max-width: calc(100vw - 2rem) !important;
   }
 }
+.jq-toast-single.jq-has-icon.jq-icon-error {
+  word-wrap: break-word;
+}
+
 :root {
   scroll-behavior: smooth;
 }

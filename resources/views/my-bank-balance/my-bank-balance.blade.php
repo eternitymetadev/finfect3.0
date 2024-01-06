@@ -292,14 +292,17 @@ $(document).ready(function() {
                 } else {
                     // Handle success scenario
                     resetFrom();
-                    Swal.fire({
-                        title: 'Success!',
+                    $.toast({
+                        heading: 'Success',
                         text: 'Bank added successfully',
                         icon: 'success',
-                        confirmButtonText: 'OK'
-                    }).then(() => {
+                        position: 'top-right',
+                        loader: true,
+                        loaderBg: '#ffffff'
+                    })
+                    setTimeout(function() {
                         location.reload();
-                    });
+                    }, 3000);
                 }
             },
             error: function(xhr) {

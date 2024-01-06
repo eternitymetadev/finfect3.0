@@ -24,18 +24,19 @@ use Illuminate\Support\Facades\Route;
 // Route::get('/', function () {
 //     return view('dashboard.dashboard');
 // });
-
+Route::get('/onboarding-vendor', [VendorController::class, 'publicVendor']);
 Auth::routes(['login' => false,'register' => false]);
 
 Route::get('/', function () {
     return view('authentication.login');
-});
+})->name('login');
 
 Route::get('/dashboard', [HomeController::class, 'index'])->name('dashboard');
 // Route::post('/login', [LoginController::class, 'login']);
 Route::post('/validate-email', [LoginController::class, 'validateEmail'])->name('validate.email');
 Route::post('/validate-password', [LoginController::class, 'validatePassword'])->name('validate.password');
 Route::post('/login-pfu', [LoginController::class, 'loginPfu'])->name('login.pfu');
+
 
 Route::middleware(['auth.check'])->group(function () {
 
@@ -56,17 +57,14 @@ Route::middleware(['auth.check'])->group(function () {
     Route::get('/view-vendor-detail', [VendorController::class, 'viewVendorDetail']);
     Route::get('/edit-vendor/{id}', [VendorController::class, 'editVendor']);
     Route::post('/update-vendor', [VendorController::class, 'updateVendor']);
-
-
-    Route::get('/vendor-ledger-sheet', function () {
-        return view('ledger-sheet.vendor-ledger-sheet');
-    });
+    Route::get('/vendor-ledger-sheet', [VendorController::class, 'vendorLedgerSheet']);
+    Route::post('/upload-ledger-sheet', [VendorController::class, 'uploadLedgerSheet']);
+    Route::get('/sample-vendor-ledger', [VendorController::class, 'vendorLedgerSample']);
+    Route::get('/daily-invoice-dues', [VendorController::class, 'vendorInvoiceDue']);
+    Route::post('/upload-vendor-invoicedues', [VendorController::class, 'uploadVendorInvoice']);
 
     Route::get('/emp-ledger-sheet', function () {
         return view('ledger-sheet.emp-ledger-sheet');
-    });
-    Route::get('/daily-invoice-dues', function () {
-        return view('invoice-dues.invoice-dues');
     });
     Route::get('/transaction-sheet', function () {
         return view('transaction-sheet.transaction-sheet');
@@ -98,3 +96,4 @@ Route::middleware(['auth.check'])->group(function () {
         'products' => ProductController::class,
     ]);
 });
+
