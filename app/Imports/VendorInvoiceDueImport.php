@@ -13,6 +13,7 @@ use Maatwebsite\Excel\Concerns\WithHeadingRow;
 class VendorInvoiceDueImport implements ToModel, WithHeadingRow
 {
     protected $pfu;
+    protected $failedRows = [];
 
     public function __construct($pfu)
     {
@@ -39,7 +40,7 @@ class VendorInvoiceDueImport implements ToModel, WithHeadingRow
         $payment_due_date = strtotime($row['payment_due_date']);
         $paymentFormattedDate = date('Y-m-d', $payment_due_date);
         if (!empty($check_vendor)) {
-            $check_vendor_ledger = VendorLedgerBalance::where('vendor_id', $check_vendor->id)->first();
+            $check_vendor_ledger = VendorLedgerBalance::where('vendor_id', $check_vendor->id)->whereDate('date_time', $currentDateOnly)->first();
             if (!empty($check_vendor_ledger)) {
                 $checkDuplicate = VendorInvoiceDue::where('vendor_id', $check_vendor->id)->where('invoice_no', $row['invoice_no'])->whereDate('date_time', $currentDateOnly)->first();
                 if (empty($checkDuplicate)) {
@@ -61,10 +62,15 @@ class VendorInvoiceDueImport implements ToModel, WithHeadingRow
                     ]);
                 }
             }else{
-                echo'<pre>'; print_r($check_vendor->erp_code); 
+                $this->failedRows[] = $row;
             }
         }
 
+    }
+
+    public function vendorLedgerNotUpload()
+    {
+        return $this->failedRows;
     }
 
 }
