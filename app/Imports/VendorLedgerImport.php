@@ -12,6 +12,7 @@ use Maatwebsite\Excel\Concerns\WithHeadingRow;
 class VendorLedgerImport implements ToModel, WithHeadingRow
 {
     protected $pfu;
+    protected $failedRows = [];
 
     public function __construct($pfu)
     {
@@ -46,7 +47,13 @@ class VendorLedgerImport implements ToModel, WithHeadingRow
                     'date_time' => $currentdate,
                 ]);
             }
+        }else{
+            $this->failedRows[] = $row;
         }
 
+    }
+    public function getFailedRows()
+    {
+        return $this->failedRows;
     }
 }

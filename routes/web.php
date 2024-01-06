@@ -60,12 +60,11 @@ Route::middleware(['auth.check'])->group(function () {
     Route::get('/vendor-ledger-sheet', [VendorController::class, 'vendorLedgerSheet']);
     Route::post('/upload-ledger-sheet', [VendorController::class, 'uploadLedgerSheet']);
     Route::get('/sample-vendor-ledger', [VendorController::class, 'vendorLedgerSample']);
+    Route::get('/daily-invoice-dues', [VendorController::class, 'vendorInvoiceDue']);
+    Route::post('/upload-vendor-invoicedues', [VendorController::class, 'uploadVendorInvoice']);
 
     Route::get('/emp-ledger-sheet', function () {
         return view('ledger-sheet.emp-ledger-sheet');
-    });
-    Route::get('/daily-invoice-dues', function () {
-        return view('invoice-dues.invoice-dues');
     });
     Route::get('/transaction-sheet', function () {
         return view('transaction-sheet.transaction-sheet');

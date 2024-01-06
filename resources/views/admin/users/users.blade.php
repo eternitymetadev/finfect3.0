@@ -569,15 +569,17 @@ $(document).ready(function() {
                     } else if (response.validation === false) {
                         // Handle other types of errors or validations
                     } else if (response.success === true) {
-                        Swal.fire({
-                            title: 'Success!',
-                            text: 'User created successfully',
+                        $.toast({
+                            heading: 'Success',
+                            text: 'User Created successfully',
                             icon: 'success',
-                            confirmButtonText: 'OK'
-                        }).then(() => {
+                            position: 'top-right',
+                            loader: true,
+                            loaderBg: '#ffffff'
+                        })
+                        setTimeout(function() {
                             location.reload();
-                            resetForm();
-                        });
+                        }, 3000);
                     }
                 },
                 error: function(xhr, status, error) {
@@ -678,14 +680,17 @@ $(document).ready(function() {
                     // $('#userSubmitButton').removeAttr('disabled');
                     // $('#userSubmitButton').siblings('.discard').removeAttr('disabled');
                     // $('.btn-close').removeAttr('disabled');
-                    Swal.fire({
-                        title: 'Success!',
-                        text: 'User updated successfully',
-                        icon: 'success',
-                        confirmButtonText: 'OK'
-                    }).then(() => {
-                        location.reload();
-                    });
+                    $.toast({
+                            heading: 'Success',
+                            text: 'User Updated successfully',
+                            icon: 'success',
+                            position: 'top-right',
+                            loader: true,
+                            loaderBg: '#ffffff'
+                        })
+                        setTimeout(function() {
+                            location.reload();
+                        }, 3000);
                 }
 
             },

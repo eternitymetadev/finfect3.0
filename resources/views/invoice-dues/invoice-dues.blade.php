@@ -38,17 +38,6 @@
             </svg>
         </button>
 
-        <button id="exportInvoiceDues" class="btn btn-sm btn-primary animate__animated animate__fadeIn">
-            Export
-            <svg xmlns="http://www.w3.org/2000/svg" class="icon right" width="24" height="24" viewBox="0 0 24 24"
-                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                class="feather feather-download-cloud">
-                <polyline points="8 17 12 21 16 17"></polyline>
-                <line x1="12" y1="12" x2="12" y2="21"></line>
-                <path d="M20.88 18.09A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.29"></path>
-            </svg>
-        </button>
-
     </div>
 </div>
 <!-- topbar end -->
@@ -56,7 +45,7 @@
 
 <div class="contentSection pt-3 mt-3">
     <div class="animate__animated animate__fadeIn">
-        @if(false)
+        @if(count($vendorInvoiceDue) <= 0)
         <div class="noDataView">
             <img src="{{asset('assets/images/vendor.svg')}}" alt="" />
             <p>No records found,<br />please import new ledger balance sheet.</p>
@@ -72,60 +61,28 @@
                             <th>Vendor A/c</th>
                             <th>Name</th>
                             <th>Group</th>
-                            <th class="forCurrency">Opening Balance</th>
-                            <th class="forCurrency">Debit Balance</th>
-                            <th class="forCurrency">Closing Balance</th>
+                            <th>Invoice No</th>
+                            <th>Invoice Data</th>
+                            <th class="forCurrency">Amount</th>
+                            <th class="forCurrency">Due Amount</th>
+                            <th>Ax Voucher</th>
+
                             <!-- <th class="actionCol text-center">Action</th> -->
                         </tr>
                     </thead>
 
                     <tbody>
-                        @for ($i = 0; $i < 15; $i++) <tr>
-                            <td>Some text</td>
-                            <td>Some text</td>
-                            <td>
-                                reewrewr
-                            </td>
-                            <!-- <td>
-                                @php
-                                    switch($i) {
-                                        case 1:
-                                            $status = 'primary';
-                                            break;
-                                        case 2:
-                                            $status = 'secondary';
-                                            break;
-                                        case 3:
-                                            $status = 'success';
-                                            break;
-                                        case 4:
-                                            $status = 'warning';
-                                            break;
-                                        case 5:
-                                            $status = 'error';
-                                            break;
-                                        case 6:
-                                            $status = 'info';
-                                            break;
-                                        default:
-                                            $status = '';
-                                    }
-                                @endphp
-
-                                <span class="chip {{$status}}">
-                                    Chip Content
-                                </span>
-                            </td> -->
-                            <td class="text-right"><span class="currency">{{3434 * $i}}</span></td>
-                            <td class="text-right"><span class="currency">{{-4 * $i}}</span></td>
-                            <td class="text-right"><span class="currency">{{3234 * $i}}</span></td>
-                            <!-- <td class="actionCol text-center">
-                                <a class="iconButton mx-auto">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-download"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-                                </a>
-                            </td> -->
+                        @foreach ($vendorInvoiceDue as $vendorInvoice) <tr>
+                            <td>{{$vendorInvoice->VendorDetail->erp_code}}</td>
+                            <td>{{$vendorInvoice->VendorDetail->name}}</td>
+                            <td>{{$vendorInvoice->VendorDetail->vendor_group}}</td>
+                            <td>{{$vendorInvoice->invoice_no}}</td>
+                            <td>{{$vendorInvoice->invoice_date}}</td>
+                            <td class="text-right"><span class="currency">{{$vendorInvoice->amount}}</span></td>
+                            <td class="text-right"><span class="currency">{{$vendorInvoice->payment_due_amount}}</span></td>
+                            <td>{{$vendorInvoice->ax_voucher_no}}</td>
                             </tr>
-                            @endfor
+                            @endforeach
                     </tbody>
                 </table>
             </div>
@@ -216,7 +173,7 @@ $(document).ready(function() {
         const pfu = localStorage.getItem('pfuValue');
         let formData = new FormData();
         let fileInput = $('#invoice_dues')[0].files[0];
-        formData.append('ledger_file', fileInput);
+        formData.append('invoice_dues', fileInput);
         formData.append('pfu', pfu);
         let csrfToken = $('meta[name="csrf-token"]').attr('content');
         // Perform AJAX request
@@ -231,25 +188,29 @@ $(document).ready(function() {
             },
             success: function(response) {
                 if (response.success) {
-                    // Handle success scenario
-                    // resetFrom();
-
-                    Swal.fire({
-                        title: 'Success!',
-                        text: 'Data Imported successfully',
+                    $.toast({
+                        heading: 'Success',
+                        text: 'Data imported successfully',
                         icon: 'success',
-                        confirmButtonText: 'OK'
-                    }).then(() => {
+                        position: 'top-right',
+                        loader: true,
+                        loaderBg: '#ffffff'
+                    })
+                    setTimeout(function() {
                         location.reload();
-                    });
+                    }, 3000);
 
                 } else {
-                    Swal.fire({
-                        title: 'Error!',
-                        text: 'something went wrong',
+                    $.toast({
+                        heading: 'Error',
+                        text: 'Something went wrong',
                         icon: 'error',
-                        confirmButtonText: 'OK'
-                    });
+                        position: 'top-right',
+                        loader: false,
+                        loaderBg: '#ffffff',
+                        hideAfter: false,
+                        hideAfter: 7000
+                    })
                     let newDate = '20 Nov 2023 13:30:00';
                     $('#myLedgerSubmitButton').html('Update');
                     $('#myLedgerSubmitButton').removeAttr('disabled');
@@ -265,12 +226,16 @@ $(document).ready(function() {
                 if (xhr.responseJSON && xhr.responseJSON.message) {
                     errorMessage = xhr.responseJSON.message;
                 }
-                Swal.fire({
-                    title: 'Error!',
+                $.toast({
+                    heading: 'Error',
                     text: errorMessage,
                     icon: 'error',
-                    confirmButtonText: 'OK'
-                });
+                    position: 'top-right',
+                    loader: false,
+                    loaderBg: '#ffffff',
+                    hideAfter: false,
+                    hideAfter: 7000
+                })
 
                 let newDate = '20 Nov 2023 13:30:00';
                 $('#myLedgerSubmitButton').html('Submit');

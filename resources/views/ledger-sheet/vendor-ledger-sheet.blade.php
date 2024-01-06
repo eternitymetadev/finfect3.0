@@ -118,7 +118,7 @@
                         $dateTime = new DateTime($lastUploadData->date_time);
                         $formattedDate = $dateTime->format('d M Y H:i:s');
                         }else{
-                            $formattedDate = '-'; 
+                        $formattedDate = '-';
                         }
 
                         @endphp
@@ -207,23 +207,31 @@ $(document).ready(function() {
                 if (response.success) {
                     // Handle success scenario
                     // resetFrom();
-
-                    Swal.fire({
-                        title: 'Success!',
+                    $.toast({
+                        heading: 'Success',
                         text: 'Data Imported successfully',
                         icon: 'success',
-                        confirmButtonText: 'OK'
-                    }).then(() => {
+                        position: 'top-right',
+                        loader: true,
+                        loaderBg: '#ffffff'
+                    })
+                    setTimeout(function() {
                         location.reload();
-                    });
+                    }, 3000);
+                    
+                    if (response.failedRows && response.failedRows.length > 0) {
+                        console.log('Failed rows: ' + JSON.stringify(response.failedRows));
+                    }
 
                 } else {
-                    Swal.fire({
-                        title: 'Error!',
-                        text: 'something went wrong',
+                    $.toast({
+                        heading: 'Error',
+                        text: 'Something went wrong',
                         icon: 'error',
-                        confirmButtonText: 'OK'
-                    });
+                        position: 'top-right',
+                        loader: false,
+                        loaderBg: '#ffffff' // Background color for the loader
+                    })
                     let newDate = '20 Nov 2023 13:30:00';
                     $('#myLedgerSubmitButton').html('Update');
                     $('#myLedgerSubmitButton').removeAttr('disabled');
@@ -239,12 +247,16 @@ $(document).ready(function() {
                 if (xhr.responseJSON && xhr.responseJSON.message) {
                     errorMessage = xhr.responseJSON.message;
                 }
-                Swal.fire({
-                    title: 'Error!',
+                $.toast({
+                    heading: 'Error',
                     text: errorMessage,
                     icon: 'error',
-                    confirmButtonText: 'OK'
-                });
+                    position: 'top-right',
+                    loader: false,
+                    loaderBg: '#ffffff',
+                    hideAfter: false,
+                    hideAfter: 7000
+                })
 
                 let newDate = '20 Nov 2023 13:30:00';
                 $('#myLedgerSubmitButton').html('Submit');

@@ -582,34 +582,45 @@ $("#editVendorForm").validate({
                     // Handle success scenario
                     // resetFrom();
                     $("#loading").removeClass("working");
-                    Swal.fire({
-                        title: 'Success!',
-                        text: 'Vendor Updated successfully',
+                    $.toast({
+                        heading: 'Success',
+                        text: 'Vendor updated successfully',
                         icon: 'success',
-                        confirmButtonText: 'OK'
-                    }).then(() => {
+                        position: 'top-right',
+                        loader: true,
+                        loaderBg: '#ffffff'
+                    })
+                    setTimeout(function() {
                         location.reload();
-                    });
+                    }, 3000);
 
                 } else if (response.error) {
-                    Swal.fire({
-                        title: 'Error!',
+                    $.toast({
+                        heading: 'Error',
                         text: 'Vendor already exist in this pfu',
                         icon: 'error',
-                        confirmButtonText: 'OK'
-                    });
+                        position: 'top-right',
+                        loader: false,
+                        loaderBg: '#ffffff',
+                        hideAfter: false,
+                        hideAfter: 7000
+                    })
                     $('#vendorSubmitButton span').html('Update');
                     $('#vendorSubmitButton').removeAttr('disabled');
                     $('#vendorSubmitButton').siblings('.discard').removeAttr('disabled');
                     $('.btn-close').removeAttr('disabled');
                     $("#loading").removeClass("working");
                 } else {
-                    Swal.fire({
-                        title: 'Error!',
-                        text: 'something went wrong',
+                    $.toast({
+                        heading: 'Error',
+                        text: 'Something went wrong',
                         icon: 'error',
-                        confirmButtonText: 'OK'
-                    });
+                        position: 'top-right',
+                        loader: false,
+                        loaderBg: '#ffffff',
+                        hideAfter: false,
+                        hideAfter: 7000
+                    })
                     $('#vendorSubmitButton span').html('Submit');
                     $('#vendorSubmitButton').removeAttr('disabled');
                     $('#vendorSubmitButton').siblings('.discard').removeAttr('disabled');
@@ -625,12 +636,16 @@ $("#editVendorForm").validate({
                 }else if(xhr.responseJSON.errors.vendorCode && xhr.responseJSON.errors.vendorCode.length > 0){
                     errorMessage = xhr.responseJSON.errors.vendorCode[0]; 
                 }
-                Swal.fire({
-                    title: 'Error!',
+                $.toast({
+                    heading: 'Error',
                     text: errorMessage,
                     icon: 'error',
-                    confirmButtonText: 'OK'
-                });
+                    position: 'top-right',
+                    loader: false,
+                    loaderBg: '#ffffff',
+                    hideAfter: false,
+                    hideAfter: 7000
+                })
 
                 $('#vendorSubmitButton span').html('Submit');
                 $('#vendorSubmitButton').removeAttr('disabled');

@@ -39,4 +39,10 @@
 <script src="{{asset('assets/js/jquery/additional-validate-jq.min.js')}}"></script>
 
 <!-- swal js -->
-<script src="{{asset('assets/js/swal/swal.min.js')}}"></script>
+<!-- <script src="{{asset('assets/js/swal/swal.min.js')}}"></script> -->
+<link href="
+https://cdn.jsdelivr.net/npm/jquery-toast-plugin@1.3.2/dist/jquery.toast.min.css
+" rel="stylesheet">
+<script src="
+https://cdn.jsdelivr.net/npm/jquery-toast-plugin@1.3.2/dist/jquery.toast.min.js
+"></script>
