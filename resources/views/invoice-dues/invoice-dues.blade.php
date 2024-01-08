@@ -139,7 +139,7 @@
                         }
 
                         @endphp
-                        <label class="helperText right animate__animated animate__fadeIn">{{$formattedDate}}</label>
+                        <label class="helperText right animate__animated animate__fadeIn">Last Updated: {{$formattedDate}}</label>
                     </div>
                     <button class="btn btn-primary animate__animated animate__fadeInUp" id="myLedgerSubmitButton">
                         Submit
@@ -224,6 +224,7 @@ $(document).ready(function() {
         $(this).html('...');
         $(this).attr('disabled', true);
         $('.uploadFormDialog').css("pointer-events", "none");
+        $("#loading").addClass("working");
         const pfu = localStorage.getItem('pfuValue');
         let formData = new FormData();
         let fileInput = $('#invoice_dues')[0].files[0];
@@ -239,6 +240,9 @@ $(document).ready(function() {
             processData: false,
             headers: {
                 'X-CSRF-TOKEN': csrfToken
+            },
+            complete: function(){
+                $("#loading").removeClass("working");
             },
             success: function(response) {
                 if (response.success) {
@@ -272,7 +276,7 @@ $(document).ready(function() {
                             loader: true,
                             loaderBg: '#ffffff',
                             bgColor: '#18c964',
-                        })
+                        }) 
                         setTimeout(function() {
                             location.reload();
                         }, 3000);
@@ -306,7 +310,7 @@ $(document).ready(function() {
                 }
                 $.toast({
                     heading: 'Error',
-                    text: errorMessage,
+                    text: 'Oops! Incorrect file format',
                     icon: 'error',
                     position: 'top-right',
                     loader: false,

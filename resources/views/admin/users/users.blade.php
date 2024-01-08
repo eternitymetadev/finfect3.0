@@ -686,7 +686,8 @@ $(document).ready(function() {
                             icon: 'success',
                             position: 'top-right',
                             loader: true,
-                            loaderBg: '#ffffff'
+                            loaderBg: '#ffffff',
+                            bgColor: '#18c964',
                         })
                         setTimeout(function() {
                             location.reload();

@@ -39,7 +39,7 @@ class UserController extends Controller
         $rolesToIgnore = [$role, $role2];
        
         $authuser = Auth::user();
-        $users = User::where('id', '!=', $authuser->id)->where('id','!=', 1)->latest('id')->get();
+        $users = User::where('id', '!=', $authuser->id)->where('id','!=', 1)->where('is_vendor', 0)->latest('id')->get();
         return view('admin.users.users', [
             'users' => $users,
             'roles' => Role::whereNotIn('name', $rolesToIgnore)->pluck('name')->all(),
