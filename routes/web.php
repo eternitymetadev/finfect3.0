@@ -62,6 +62,7 @@ Route::middleware(['auth.check'])->group(function () {
     Route::get('/sample-vendor-ledger', [VendorController::class, 'vendorLedgerSample']);
     Route::get('/daily-invoice-dues', [VendorController::class, 'vendorInvoiceDue']);
     Route::post('/upload-vendor-invoicedues', [VendorController::class, 'uploadVendorInvoice']);
+    Route::post('/upload-vendors', [VendorController::class, 'uploadVendors']);
 
     Route::get('/emp-ledger-sheet', function () {
         return view('ledger-sheet.emp-ledger-sheet');

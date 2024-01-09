@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Imports\VendorInvoiceDueImport;
 use App\Imports\VendorLedgerImport;
+use App\Imports\VendorImport;
 use App\Models\User;
 use App\Models\Vendor;
 use App\Models\VendorInvoiceDue;
@@ -399,6 +400,35 @@ class VendorController extends Controller
             Excel::import($import, $file);
 
             $failedRows = $import->vendorLedgerNotUpload();
+            // Check if any failed rows exist
+            if (!empty($failedRows)) {
+                $response['failedRows'] = $failedRows;
+            }
+            
+            $response['failedRows'] = $failedRows;
+            $response['success'] = true;
+            return response()->json($response);
+        } catch (\Exception $e) {
+            $response['success'] = false;
+            $response['message'] = $e->getMessage();
+            $response['failedRows'] = $failedRows; 
+
+            return response()->json($response, 500);
+        }
+    }
+
+    public function uploadVendors(Request $request)
+    {
+        $file = $request->file('upload_vendor');
+        $pfu = $request->pfu;
+        $failedRows = [];
+
+        try {
+            $import = new VendorImport($pfu);
+            Excel::import($import, $file);
+
+            $failedRows = $import->getFailedRows();
+           
             // Check if any failed rows exist
             if (!empty($failedRows)) {
                 $response['failedRows'] = $failedRows;
